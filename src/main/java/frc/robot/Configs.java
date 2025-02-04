@@ -1,17 +1,19 @@
 package frc.robot;
 
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
-
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import frc.robot.Constants.ModuleConstants;
 
 public final class Configs {
+
     public static final class MAXSwerveModule{
 
         public static final SparkMaxConfig driveConfig = new SparkMaxConfig();
         public static final SparkMaxConfig turnConfig = new SparkMaxConfig();
 
-        static{
+        static {
             double drivingFactor = ModuleConstants.kWheelDiameterMeters * Math.PI
                     / ModuleConstants.kDrivingMotorReduction;
             double turningFactor = 2 * Math.PI;
@@ -50,7 +52,46 @@ public final class Configs {
                 .outputRange(ModuleConstants.kTurningMinOutput, ModuleConstants.kTurningMaxOutput)
                 .positionWrappingEnabled(true)
                 .positionWrappingInputRange(0, turningFactor);
+        }
+    }
 
+    public static final class ElevatorSubsystem {
+
+        public static final SparkFlexConfig rightElevatorConfig = new SparkFlexConfig();
+        public static final SparkFlexConfig leftElevatorConfig = new SparkFlexConfig();
+
+        static{
+                //RIGHT ELEVATOR CONFIG
+
+                rightElevatorConfig
+                    .idleMode(IdleMode.kBrake)
+                    .smartCurrentLimit(30);
+                rightElevatorConfig.encoder
+                    .inverted(false)
+                    .positionConversionFactor(10)
+                    .velocityConversionFactor(10);
+                rightElevatorConfig.closedLoop
+                    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                    .pidf(1, 0, 0, 0)
+                    .outputRange(-1, 1)
+                    .positionWrappingEnabled(true)
+                    .positionWrappingInputRange(0, 6);
+
+                //RIGHT ELEVATOR CONFIG
+
+                rightElevatorConfig
+                    .idleMode(IdleMode.kBrake)
+                    .smartCurrentLimit(30);
+                rightElevatorConfig.encoder
+                    .inverted(true)
+                    .positionConversionFactor(10)
+                    .velocityConversionFactor(10);
+                rightElevatorConfig.closedLoop
+                    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                    .pidf(1, 0, 0, 0)
+                    .outputRange(-1, 1)
+                    .positionWrappingEnabled(true)
+                    .positionWrappingInputRange(0, 6);
         }
     }
 }

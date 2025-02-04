@@ -170,6 +170,17 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+
+  public static final class ElevatorConstants {
+    public static final double kElevatorPos1 = 0.0;
+    public static final double kElevatorPos2 = 0.0;
+    public static final double kElevatorPos3 = 0.0;
+    public static final double kElevatorPos4 = 0.0;
+    public static final double kElevatorPos5 = 0.0;
+    public static final double kElevatorPos6 = 0.0;
+    public static final double kElevatorPos7 = 0.0;
+    public static final double kElevatorPos8 = 0.0;
+  }
   
   public static final class LightsConstants {
     public final static double RAINBOW_RAINBOWPALETTE = -.99;
