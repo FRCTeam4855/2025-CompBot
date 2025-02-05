@@ -60,7 +60,7 @@ public final class Configs {
         public static final SparkFlexConfig rightElevatorConfig = new SparkFlexConfig();
         public static final SparkFlexConfig leftElevatorConfig = new SparkFlexConfig();
 
-        static{
+        static {
                 //RIGHT ELEVATOR CONFIG
 
                 rightElevatorConfig
@@ -77,16 +77,16 @@ public final class Configs {
                     .positionWrappingEnabled(true)
                     .positionWrappingInputRange(0, 6);
 
-                //RIGHT ELEVATOR CONFIG
+                //LEFT ELEVATOR CONFIG
 
-                rightElevatorConfig
+                leftElevatorConfig
                     .idleMode(IdleMode.kBrake)
                     .smartCurrentLimit(30);
-                rightElevatorConfig.encoder
+                leftElevatorConfig.encoder
                     .inverted(true)
                     .positionConversionFactor(10)
                     .velocityConversionFactor(10);
-                rightElevatorConfig.closedLoop
+                leftElevatorConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
                     .pidf(1, 0, 0, 0)
                     .outputRange(-1, 1)
