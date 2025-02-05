@@ -173,6 +173,8 @@ public final class Constants {
 
   public static final class ElevatorConstants {
     public static final double[] elevatorPos = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    public static final int kRightElevatorCanId = 9;
+    public static final int kLeftElevatorCanId = 10;
   }
   
   public static final class LightsConstants {

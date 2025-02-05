@@ -24,8 +24,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public double elevatorPos;
 
     public ElevatorSubsystem(ElevatorSubsystem m_elevatorSubsystem) {
-        rightSpark = new SparkFlex(9, MotorType.kBrushless);
-        leftSpark = new SparkFlex(10, MotorType.kBrushless);
+        rightSpark = new SparkFlex(ElevatorConstants.kRightElevatorCanId, MotorType.kBrushless);
+        leftSpark = new SparkFlex(ElevatorConstants.kLeftElevatorCanId, MotorType.kBrushless);
         rightPIDController = rightSpark.getClosedLoopController();
         leftPIDController = leftSpark.getClosedLoopController();
         rightAbsoluteEncoder = rightSpark.getAbsoluteEncoder();
