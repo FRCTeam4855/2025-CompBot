@@ -94,4 +94,44 @@ public final class Configs {
                     .positionWrappingInputRange(0, 6);
         }
     }
+
+    public static final class ManipulatorSubsystem {
+
+        public static final SparkMaxConfig rightManipulatorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig leftManipulatorConfig = new SparkMaxConfig();
+
+        static {
+            //RIGHT MANIPULATOR CONFIG
+
+            rightManipulatorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(30);
+            rightManipulatorConfig.encoder
+                .inverted(false)
+                .positionConversionFactor(10)
+                .velocityConversionFactor(10);
+            rightManipulatorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                .pidf(1, 0, 0, 0)
+                .outputRange(-1, 1)
+                .positionWrappingEnabled(true)
+                .positionWrappingInputRange(0, 6);
+            
+            //LEFT MANIPULATOR CONFIG
+
+            leftManipulatorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(30);
+            leftManipulatorConfig.encoder
+                .inverted(false)
+                .positionConversionFactor(10)
+                .velocityConversionFactor(10);
+            leftManipulatorConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                .pidf(1, 0, 0, 0)
+                .outputRange(-1, 1)
+                .positionWrappingEnabled(true)
+                .positionWrappingInputRange(0, 6);
+        }
+    }
 }

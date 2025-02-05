@@ -176,6 +176,11 @@ public final class Constants {
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
   }
+
+  public static final class ManipulatorConstants {
+    public static final int kRightManipulatorCanId = 11;
+    public static final int kLeftManipulatorCanId = 12;
+  }
   
   public static final class LightsConstants {
     public final static double RAINBOW_RAINBOWPALETTE = -.99;

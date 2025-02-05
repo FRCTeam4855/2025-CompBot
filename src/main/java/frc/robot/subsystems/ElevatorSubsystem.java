@@ -45,7 +45,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void setElevatorPosition(int goalSetpoint) {
-        switch(goalSetpoint) {
+        switch(goalSetpoint) { //TODO put the long code block in constants and make a single array for elevator position here
             case 1: 
                 elevatorPos = ElevatorConstants.elevatorPos[0];
             case 2: 
