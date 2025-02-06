@@ -67,7 +67,7 @@ public final class Configs {
                     .idleMode(IdleMode.kBrake)
                     .smartCurrentLimit(30);
                 rightElevatorConfig.encoder
-                    .inverted(false)
+                    //.inverted(false)
                     .positionConversionFactor(10)
                     .velocityConversionFactor(10);
                 rightElevatorConfig.closedLoop
@@ -83,7 +83,7 @@ public final class Configs {
                     .idleMode(IdleMode.kBrake)
                     .smartCurrentLimit(30);
                 leftElevatorConfig.encoder
-                    .inverted(true)
+                    //.inverted(true)
                     .positionConversionFactor(10)
                     .velocityConversionFactor(10);
                 leftElevatorConfig.closedLoop
@@ -105,33 +105,26 @@ public final class Configs {
 
             rightManipulatorConfig
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(30);
+                .smartCurrentLimit(20);
             rightManipulatorConfig.encoder
-                .inverted(false)
+                // .inverted(false)
                 .positionConversionFactor(10)
                 .velocityConversionFactor(10);
             rightManipulatorConfig.closedLoop
-                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
                 .pidf(1, 0, 0, 0)
-                .outputRange(-1, 1)
-                .positionWrappingEnabled(true)
-                .positionWrappingInputRange(0, 6);
+                .outputRange(-1, 1);
             
             //LEFT MANIPULATOR CONFIG
 
             leftManipulatorConfig
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(30);
+                .smartCurrentLimit(20);
             leftManipulatorConfig.encoder
-                .inverted(false)
                 .positionConversionFactor(10)
                 .velocityConversionFactor(10);
             leftManipulatorConfig.closedLoop
-                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
                 .pidf(1, 0, 0, 0)
-                .outputRange(-1, 1)
-                .positionWrappingEnabled(true)
-                .positionWrappingInputRange(0, 6);
+                .outputRange(-1, 1);
         }
     }
 }

@@ -13,11 +13,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
+import frc.robot.commands.IntakeCoralCommand;
+import frc.robot.commands.OutputCoralCommand;
 import frc.robot.commands.TimedLeftStrafeCommand;
 import frc.robot.commands.TimedRightStrafeCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -37,6 +41,8 @@ public class RobotContainer {
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
     private final LightsSubsystem m_lights = new LightsSubsystem();
     private final Limelight m_limelight = new Limelight();
+    private final ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
+    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
    
 
     // The driver's controller
@@ -119,7 +125,20 @@ public class RobotContainer {
         new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)
             .whileTrue(new DriveWithAprilTagCommand(
             m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
-        
+
+        new JoystickButton(m_rightDriverController, 11)
+            .onTrue(new OutputCoralCommand(m_manipulator));
+
+        new JoystickButton(m_rightDriverController, 12)
+            .onTrue(new IntakeCoralCommand(m_manipulator));
+
+        new JoystickButton(m_rightDriverController, 13)
+            .onTrue(new InstantCommand(
+                () -> m_manipulator.RunManipulator(.2)));
+
+        new JoystickButton(m_rightDriverController, 14)
+            .onTrue(new InstantCommand(
+                () -> m_manipulator.StopManipulator()));
         
         // Operator Controls
 
