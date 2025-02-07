@@ -17,4 +17,8 @@ public class RaiseElevatorCommand extends Command {
         m_elevatorSubsystem.setElevatorPosition(goalSetpoint);
         m_elevatorSubsystem.raiseElevator();
     }
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

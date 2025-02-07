@@ -15,6 +15,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
 import frc.robot.commands.IntakeCoralCommand;
 import frc.robot.commands.OutputCoralCommand;
+import frc.robot.commands.RaiseElevatorCommand;
 import frc.robot.commands.TimedLeftStrafeCommand;
 import frc.robot.commands.TimedRightStrafeCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -134,11 +135,21 @@ public class RobotContainer {
 
         new JoystickButton(m_rightDriverController, 13)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(.2)));
+                () -> m_manipulator.RunManipulator(1)));
 
         new JoystickButton(m_rightDriverController, 14)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.StopManipulator()));
+
+        new JoystickButton(m_rightDriverController, 15)
+            .onTrue(new InstantCommand(
+                () -> m_manipulator.RunManipulator(-1)));
+
+        new JoystickButton(m_leftDriverController, 11)
+            .onTrue(new RaiseElevatorCommand(m_elevatorSubsystem, 1));
+
+        new JoystickButton(m_leftDriverController, 12)
+            .onTrue(new RaiseElevatorCommand(m_elevatorSubsystem, 2));
         
         // Operator Controls
 

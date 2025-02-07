@@ -17,9 +17,9 @@ import frc.robot.Constants.ManipulatorConstants;
 public class ManipulatorSubsystem extends SubsystemBase {
 
     public final SparkMax m_rightSparkMax;
-    //public final SparkMax m_leftSparkMax;
+    public final SparkMax m_leftSparkMax;
     public final SparkClosedLoopController rightPIDController;
-    //public final SparkClosedLoopController leftPIDController;
+    public final SparkClosedLoopController leftPIDController;
     private DigitalInput m_innerCoralSensor;
     private DigitalInput m_outerCoralSensor;
     public boolean innerSensor, outerSensor;
@@ -28,16 +28,16 @@ public class ManipulatorSubsystem extends SubsystemBase {
     public ManipulatorSubsystem() {
 
         m_rightSparkMax = new SparkMax(ManipulatorConstants.kRightManipulatorCanId, MotorType.kBrushless);
-        //m_leftSparkMax = new SparkMax(ManipulatorConstants.kLeftManipulatorCanId, MotorType.kBrushless);
+        m_leftSparkMax = new SparkMax(ManipulatorConstants.kLeftManipulatorCanId, MotorType.kBrushless);
         rightPIDController = m_rightSparkMax.getClosedLoopController();
-        //leftPIDController = m_leftSparkMax.getClosedLoopController();
+        leftPIDController = m_leftSparkMax.getClosedLoopController();
         m_innerCoralSensor = new DigitalInput(0);
         m_outerCoralSensor = new DigitalInput(1);
 
         m_rightSparkMax.configure(Configs.ManipulatorSubsystem.rightManipulatorConfig, 
             ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        //m_leftSparkMax.configure(Configs.ManipulatorSubsystem.leftManipulatorConfig, 
-            //ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_leftSparkMax.configure(Configs.ManipulatorSubsystem.leftManipulatorConfig, 
+            ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     @Override

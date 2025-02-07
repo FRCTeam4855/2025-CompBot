@@ -5,6 +5,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import frc.robot.Constants.ModuleConstants;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 public final class Configs {
 
@@ -71,27 +72,27 @@ public final class Configs {
                     .positionConversionFactor(10)
                     .velocityConversionFactor(10);
                 rightElevatorConfig.closedLoop
-                    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-                    .pidf(1, 0, 0, 0)
-                    .outputRange(-1, 1)
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    .pidf(.5, 0, 0, 0)
+                    .outputRange(-.05, .05)
                     .positionWrappingEnabled(true)
-                    .positionWrappingInputRange(0, 6);
+                    .positionWrappingInputRange(0, 1000);
 
                 //LEFT ELEVATOR CONFIG
 
                 leftElevatorConfig
                     .idleMode(IdleMode.kBrake)
-                    .smartCurrentLimit(30);
+                    .smartCurrentLimit(30)
+                    .follow(11, true);
                 leftElevatorConfig.encoder
                     //.inverted(true)
                     .positionConversionFactor(10)
                     .velocityConversionFactor(10);
                 leftElevatorConfig.closedLoop
-                    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-                    .pidf(1, 0, 0, 0)
-                    .outputRange(-1, 1)
+                    .pidf(.5, 0, 0, 0)
+                    .outputRange(-.05, .05)
                     .positionWrappingEnabled(true)
-                    .positionWrappingInputRange(0, 6);
+                    .positionWrappingInputRange(0, 1000);
         }
     }
 
@@ -104,7 +105,7 @@ public final class Configs {
             //RIGHT MANIPULATOR CONFIG
 
             rightManipulatorConfig
-                .idleMode(IdleMode.kBrake)
+                .idleMode(IdleMode.kCoast)
                 .smartCurrentLimit(20);
             rightManipulatorConfig.encoder
                 // .inverted(false)
@@ -113,12 +114,13 @@ public final class Configs {
             rightManipulatorConfig.closedLoop
                 .pidf(1, 0, 0, 0)
                 .outputRange(-1, 1);
-            
+
             //LEFT MANIPULATOR CONFIG
 
             leftManipulatorConfig
                 .idleMode(IdleMode.kBrake)
-                .smartCurrentLimit(20);
+                .smartCurrentLimit(20)
+                .follow(9, true);
             leftManipulatorConfig.encoder
                 .positionConversionFactor(10)
                 .velocityConversionFactor(10);
