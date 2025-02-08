@@ -1,17 +1,12 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkFlexConfig;
-
-import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
@@ -22,15 +17,19 @@ public class ElevatorSubsystem extends SubsystemBase {
     public final ManipulatorSubsystem m_manipulator;
     public final SparkFlex rightSpark;
     public final SparkFlex leftSpark;
+    public final RelativeEncoder rightEncoder;
+    public final RelativeEncoder leftEncoder;
     public final SparkClosedLoopController rightPIDController;
     public final SparkClosedLoopController leftPIDController;
-    public double elevatorPos;
+
 
     public ElevatorSubsystem(ManipulatorSubsystem m_manipulator) {
         this.m_manipulator = m_manipulator;
 
         rightSpark = new SparkFlex(ElevatorConstants.kRightElevatorCanId, MotorType.kBrushless);
         leftSpark = new SparkFlex(ElevatorConstants.kLeftElevatorCanId, MotorType.kBrushless);
+        rightEncoder = rightSpark.getEncoder();
+        leftEncoder = leftSpark.getEncoder();
         rightPIDController = rightSpark.getClosedLoopController();
         leftPIDController = leftSpark.getClosedLoopController();
 
@@ -43,15 +42,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putBoolean("Elevator Clear", m_manipulator.isElevatorClear());
-
+        SmartDashboard.putNumber("Right Elevator Pos", rightEncoder.getPosition());
+        SmartDashboard.putNumber("Left Elevator Pos", leftEncoder.getPosition());
     }
 
-    public void setElevatorPosition(int goalSetpoint) {
-        elevatorPos = ElevatorConstants.elevatorPos[goalSetpoint];
-    }
-
-    public void raiseElevator() {
-        rightPIDController.setReference(elevatorPos, SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0);
-        //leftPIDController.setReference(elevatorPos, SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    public void raiseElevator(int goalSetpoint) {
+        rightPIDController.setReference(ElevatorConstants.elevatorPos[goalSetpoint], SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
 }

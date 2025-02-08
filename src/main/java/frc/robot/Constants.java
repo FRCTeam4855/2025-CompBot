@@ -172,14 +172,14 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final double[] elevatorPos = { 0.0, 200, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-    public static final int kRightElevatorCanId = 11;
-    public static final int kLeftElevatorCanId = 12;
+    public static final double[] elevatorPos = { 0.0, -63.637993, -570.721801, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    public static final int kRightElevatorCanId = 9;
+    public static final int kLeftElevatorCanId = 10;
   }
 
   public static final class ManipulatorConstants {
-    public static final int kRightManipulatorCanId = 9;
-    public static final int kLeftManipulatorCanId = 10;
+    public static final int kRightManipulatorCanId = 11;
+    public static final int kLeftManipulatorCanId = 12;
   }
   
   public static final class LightsConstants {

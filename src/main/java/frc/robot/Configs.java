@@ -5,7 +5,6 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import frc.robot.Constants.ModuleConstants;
-import frc.robot.subsystems.ElevatorSubsystem;
 
 public final class Configs {
 
@@ -62,37 +61,33 @@ public final class Configs {
         public static final SparkFlexConfig leftElevatorConfig = new SparkFlexConfig();
 
         static {
+
                 //RIGHT ELEVATOR CONFIG
 
                 rightElevatorConfig
-                    .idleMode(IdleMode.kBrake)
+                    .idleMode(IdleMode.kCoast)
+                    .inverted(true)
                     .smartCurrentLimit(30);
                 rightElevatorConfig.encoder
-                    //.inverted(false)
-                    .positionConversionFactor(10)
-                    .velocityConversionFactor(10);
+                    .positionConversionFactor(2);
                 rightElevatorConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                    .pidf(.5, 0, 0, 0)
-                    .outputRange(-.05, .05)
-                    .positionWrappingEnabled(true)
-                    .positionWrappingInputRange(0, 1000);
+                    .pidf(4, 0, 0, 0)
+                    .outputRange(-1, 1)
+                    .positionWrappingEnabled(false);
 
                 //LEFT ELEVATOR CONFIG
 
                 leftElevatorConfig
-                    .idleMode(IdleMode.kBrake)
+                    .idleMode(IdleMode.kCoast)
                     .smartCurrentLimit(30)
-                    .follow(11, true);
+                    .follow(9, true);
                 leftElevatorConfig.encoder
-                    //.inverted(true)
-                    .positionConversionFactor(10)
-                    .velocityConversionFactor(10);
+                    .positionConversionFactor(2);
                 leftElevatorConfig.closedLoop
-                    .pidf(.5, 0, 0, 0)
-                    .outputRange(-.05, .05)
-                    .positionWrappingEnabled(true)
-                    .positionWrappingInputRange(0, 1000);
+                    .pidf(4, 0, 0, 0)
+                    .outputRange(-1, 1)
+                    .positionWrappingEnabled(false);
         }
     }
 
