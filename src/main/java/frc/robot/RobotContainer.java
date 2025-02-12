@@ -143,6 +143,10 @@ public class RobotContainer {
         new JoystickButton(m_rightDriverController, 15)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(-1)));
+        
+        new JoystickButton(m_leftDriverController, 8)
+        .onTrue(new InstantCommand(
+            () -> m_elevatorSubsystem.overrideSensor()));
 
         new JoystickButton(m_leftDriverController, 11)
             .onTrue(new InstantCommand(

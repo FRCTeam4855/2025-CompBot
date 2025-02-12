@@ -21,6 +21,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public final RelativeEncoder leftEncoder;
     public final SparkClosedLoopController rightPIDController;
     public final SparkClosedLoopController leftPIDController;
+    public boolean sensorOverride = false;
 
 
     public ElevatorSubsystem(ManipulatorSubsystem m_manipulator) {
@@ -47,6 +48,14 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void raiseElevator(int goalSetpoint) {
+        if(m_manipulator.isElevatorClear() || sensorOverride) {
         rightPIDController.setReference(ElevatorConstants.elevatorPos[goalSetpoint], SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        } else {
+            System.out.println("! ELEVATOR NOT CLEAR !");
+        }
+    }
+
+    public void overrideSensor() {
+        sensorOverride =! sensorOverride;
     }
 }

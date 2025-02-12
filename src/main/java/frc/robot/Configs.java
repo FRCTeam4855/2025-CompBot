@@ -67,7 +67,7 @@ public final class Configs {
                 rightElevatorConfig
                     .idleMode(IdleMode.kCoast)
                     .inverted(true)
-                    .smartCurrentLimit(30);
+                    .smartCurrentLimit(60);
                 rightElevatorConfig.encoder
                     .positionConversionFactor(2);
                 rightElevatorConfig.closedLoop
@@ -80,7 +80,7 @@ public final class Configs {
 
                 leftElevatorConfig
                     .idleMode(IdleMode.kCoast)
-                    .smartCurrentLimit(30)
+                    .smartCurrentLimit(60)
                     .follow(9, true);
                 leftElevatorConfig.encoder
                     .positionConversionFactor(2);
