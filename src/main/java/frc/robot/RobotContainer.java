@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
@@ -48,8 +49,10 @@ public class RobotContainer {
     // The driver's controller
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
     Joystick m_rightDriverController = new Joystick(OIConstants.kRightDriverControllerPort);
+    
     // The Operator Controller
     CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort1);
+    //CommandGenericHID m_buttonBoard = new CommandGenericHID();
 
     public static boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
@@ -122,7 +125,7 @@ public class RobotContainer {
             .whileFalse(new InstantCommand(
                 () -> speedMultiplier=OIConstants.kSpeedMultiplierDefault));
 
-        new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)
+        new JoystickButton(m_rightDriverController, OIConstants.kJS_Trigger)
             .whileTrue(new DriveWithAprilTagCommand(
             m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
 
@@ -159,6 +162,18 @@ public class RobotContainer {
         new JoystickButton(m_leftDriverController, 13)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.raiseElevator(2)));
+
+        new JoystickButton(m_leftDriverController, 16)
+            .onTrue(new InstantCommand(
+                () -> m_elevatorSubsystem.raiseElevator(3)));
+
+        new JoystickButton(m_leftDriverController, 15)
+            .onTrue(new InstantCommand(
+                () -> m_elevatorSubsystem.raiseElevator(4)));
+
+        new JoystickButton(m_leftDriverController, 14)
+            .onTrue(new InstantCommand(
+                () -> m_elevatorSubsystem.raiseElevator(5)));
 
         // Operator Controls
 

@@ -38,11 +38,11 @@ public final class Configs {
              //TURN CONFIG
 
             turnConfig
+                .inverted(true)
                 .idleMode(ModuleConstants.kDrivingMotorIdleMode)
                 .smartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
             turnConfig.absoluteEncoder
-                .inverted(false)
                 .positionConversionFactor(turningFactor)
                 .velocityConversionFactor(turningFactor / 60);
 
@@ -66,27 +66,29 @@ public final class Configs {
 
                 rightElevatorConfig
                     .idleMode(IdleMode.kCoast)
-                    .inverted(true)
-                    .smartCurrentLimit(60);
+                    .inverted(false)
+                    .closedLoopRampRate(.05)
+                    .smartCurrentLimit(40);
                 rightElevatorConfig.encoder
-                    .positionConversionFactor(2);
+                    .positionConversionFactor(1);
                 rightElevatorConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                    .pidf(4, 0, 0, 0)
-                    .outputRange(-1, 1)
+                    .pidf(.25, 0, 0, 0)
+                    .outputRange(-.5, 1)
                     .positionWrappingEnabled(false);
 
                 //LEFT ELEVATOR CONFIG
 
                 leftElevatorConfig
                     .idleMode(IdleMode.kCoast)
-                    .smartCurrentLimit(60)
+                    .smartCurrentLimit(40)
+                    .closedLoopRampRate(.05)
                     .follow(9, true);
                 leftElevatorConfig.encoder
-                    .positionConversionFactor(2);
+                    .positionConversionFactor(1);
                 leftElevatorConfig.closedLoop
-                    .pidf(4, 0, 0, 0)
-                    .outputRange(-1, 1)
+                    .pidf(.25, 0, 0, 0)
+                    .outputRange(-.5, 1)
                     .positionWrappingEnabled(false);
         }
     }
@@ -113,9 +115,9 @@ public final class Configs {
             //LEFT MANIPULATOR CONFIG
 
             leftManipulatorConfig
-                .idleMode(IdleMode.kBrake)
+                .idleMode(IdleMode.kCoast)
                 .smartCurrentLimit(20)
-                .follow(9, true);
+                .follow(11, true);
             leftManipulatorConfig.encoder
                 .positionConversionFactor(10)
                 .velocityConversionFactor(10);

@@ -47,8 +47,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    double current = m_pdp.getCurrent(6);
-    SmartDashboard.putNumber("Voltage", current);
+    //double current = m_pdp.getCurrent(6);
+    //SmartDashboard.putNumber("Voltage", current);
     SmartDashboard.putBoolean("Field Oriented", RobotContainer.fieldOriented);
     //SmartDashboard.putNumber("RightFront", MAXSwerveModule)
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
