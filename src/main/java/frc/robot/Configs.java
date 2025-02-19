@@ -74,7 +74,7 @@ public final class Configs {
                 rightElevatorConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     .pidf(.25, 0, 0, 0)
-                    .outputRange(-.5, 1)
+                    .outputRange(-1, 1)
                     .positionWrappingEnabled(false);
 
                 //LEFT ELEVATOR CONFIG
@@ -88,7 +88,7 @@ public final class Configs {
                     .positionConversionFactor(1);
                 leftElevatorConfig.closedLoop
                     .pidf(.25, 0, 0, 0)
-                    .outputRange(-.5, 1)
+                    .outputRange(-1, 1)
                     .positionWrappingEnabled(false);
         }
     }
@@ -102,8 +102,9 @@ public final class Configs {
             //RIGHT MANIPULATOR CONFIG
 
             rightManipulatorConfig
-                .idleMode(IdleMode.kCoast)
-                .smartCurrentLimit(20);
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(20)
+                .inverted(true);
             rightManipulatorConfig.encoder
                 // .inverted(false)
                 .positionConversionFactor(10)
@@ -115,7 +116,7 @@ public final class Configs {
             //LEFT MANIPULATOR CONFIG
 
             leftManipulatorConfig
-                .idleMode(IdleMode.kCoast)
+                .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20)
                 .follow(11, true);
             leftManipulatorConfig.encoder
