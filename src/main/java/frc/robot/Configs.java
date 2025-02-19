@@ -38,11 +38,11 @@ public final class Configs {
              //TURN CONFIG
 
             turnConfig
+                .inverted(true)
                 .idleMode(ModuleConstants.kDrivingMotorIdleMode)
                 .smartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
             turnConfig.absoluteEncoder
-                .inverted(false)
                 .positionConversionFactor(turningFactor)
                 .velocityConversionFactor(turningFactor / 60);
 
@@ -61,37 +61,70 @@ public final class Configs {
         public static final SparkFlexConfig leftElevatorConfig = new SparkFlexConfig();
 
         static {
+
                 //RIGHT ELEVATOR CONFIG
 
                 rightElevatorConfig
-                    .idleMode(IdleMode.kBrake)
-                    .smartCurrentLimit(30);
-                rightElevatorConfig.encoder
+                    .idleMode(IdleMode.kCoast)
                     .inverted(false)
-                    .positionConversionFactor(10)
-                    .velocityConversionFactor(10);
+                    .closedLoopRampRate(.05)
+                    .smartCurrentLimit(40);
+                rightElevatorConfig.encoder
+                    .positionConversionFactor(1);
                 rightElevatorConfig.closedLoop
-                    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-                    .pidf(1, 0, 0, 0)
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    .pidf(.25, 0, 0, 0)
                     .outputRange(-1, 1)
-                    .positionWrappingEnabled(true)
-                    .positionWrappingInputRange(0, 6);
+                    .positionWrappingEnabled(false);
 
                 //LEFT ELEVATOR CONFIG
 
                 leftElevatorConfig
-                    .idleMode(IdleMode.kBrake)
-                    .smartCurrentLimit(30);
+                    .idleMode(IdleMode.kCoast)
+                    .smartCurrentLimit(40)
+                    .closedLoopRampRate(.05)
+                    .follow(9, true);
                 leftElevatorConfig.encoder
-                    .inverted(true)
-                    .positionConversionFactor(10)
-                    .velocityConversionFactor(10);
+                    .positionConversionFactor(1);
                 leftElevatorConfig.closedLoop
-                    .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-                    .pidf(1, 0, 0, 0)
+                    .pidf(.25, 0, 0, 0)
                     .outputRange(-1, 1)
-                    .positionWrappingEnabled(true)
-                    .positionWrappingInputRange(0, 6);
+                    .positionWrappingEnabled(false);
+        }
+    }
+
+    public static final class ManipulatorSubsystem {
+
+        public static final SparkMaxConfig rightManipulatorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig leftManipulatorConfig = new SparkMaxConfig();
+
+        static {
+            //RIGHT MANIPULATOR CONFIG
+
+            rightManipulatorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(20)
+                .inverted(true);
+            rightManipulatorConfig.encoder
+                // .inverted(false)
+                .positionConversionFactor(10)
+                .velocityConversionFactor(10);
+            rightManipulatorConfig.closedLoop
+                .pidf(1, 0, 0, 0)
+                .outputRange(-1, 1);
+
+            //LEFT MANIPULATOR CONFIG
+
+            leftManipulatorConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(20)
+                .follow(11, true);
+            leftManipulatorConfig.encoder
+                .positionConversionFactor(10)
+                .velocityConversionFactor(10);
+            leftManipulatorConfig.closedLoop
+                .pidf(1, 0, 0, 0)
+                .outputRange(-1, 1);
         }
     }
 }

@@ -83,7 +83,7 @@ public final class Constants {
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
     //public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
-    public static final double kDrivingMotorReduction = 6.122; // previously (45.0 * 22) / (kDrivingMotorPinionTeeth *
+    public static final double kDrivingMotorReduction = 5.36; // previously (45.0 * 22) / (kDrivingMotorPinionTeeth *
                                                                // 15)
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
@@ -172,9 +172,15 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final double[] elevatorPos = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+    public static final double[] elevatorPos = { .75, 6.36, 13.60, 31.07, 58.10, 0.0, 0.0, 0.0 };
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
+    public static final double kElevatorConstantsGravityFF = .4;
+  }
+
+  public static final class ManipulatorConstants {
+    public static final int kRightManipulatorCanId = 11;
+    public static final int kLeftManipulatorCanId = 12;
   }
   
   public static final class LightsConstants {
