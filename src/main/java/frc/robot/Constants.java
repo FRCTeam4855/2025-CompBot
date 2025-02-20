@@ -176,6 +176,8 @@ public final class Constants {
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
     public static final double kElevatorConstantsGravityFF = .4;
+    public static final double kMaxAcceleration = 250;
+    public static final double kMaxVelocity = 100;
   }
 
   public static final class ManipulatorConstants {
