@@ -1,0 +1,108 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CenterStart-A"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Setpoint 4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "A-BottomFeeder"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Setpoint 0"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BottomFeeder-C"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Setpoint 4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C-BottomFeeder"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Setpoint 0"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BottomFeeder-C"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Setpoint 4"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "3 Coral Autons",
+  "choreoAuto": false
+}

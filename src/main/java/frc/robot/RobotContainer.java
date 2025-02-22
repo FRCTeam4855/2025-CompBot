@@ -7,10 +7,12 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
@@ -25,9 +27,12 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 //import frc.robot.subsystems.Limelight;
 /*
@@ -63,6 +68,14 @@ public class RobotContainer {
     */
     public RobotContainer() {
         //Register Named Commands
+
+        NamedCommands.registerCommand("Setpoint 4", new RunCommand(
+                    () -> m_elevatorSubsystem.raiseElevator(4), m_elevatorSubsystem));
+
+        NamedCommands.registerCommand("Setpoint 0", new RunCommand(
+                    () -> m_elevatorSubsystem.raiseElevator(0), m_elevatorSubsystem));
+
+
         // Configure the button bindings
         configureButtonBindings();
 
