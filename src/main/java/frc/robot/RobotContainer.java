@@ -5,11 +5,12 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
+//import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
@@ -18,6 +19,7 @@ import frc.robot.commands.IntakeCoralCommand;
 import frc.robot.commands.OutputCoralCommand;
 import frc.robot.commands.TimedLeftStrafeCommand;
 import frc.robot.commands.TimedRightStrafeCommand;
+import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LightsSubsystem;
@@ -44,6 +46,7 @@ public class RobotContainer {
     private final Limelight m_limelight = new Limelight();
     private final ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
+    private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
    
 
     // The driver's controller
@@ -52,6 +55,7 @@ public class RobotContainer {
     
     // The Operator Controller
     CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort1);
+    GenericHID m_operatorBoard = new GenericHID(3);
     //CommandGenericHID m_buttonBoard = new CommandGenericHID();
 
     public static boolean fieldOriented = false;
@@ -129,49 +133,73 @@ public class RobotContainer {
             .whileTrue(new DriveWithAprilTagCommand(
             m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
 
-        new JoystickButton(m_rightDriverController, 11)
+        new JoystickButton(m_operatorBoard, 1)
+            .onTrue(new InstantCommand(
+                () -> m_algaeSubsystem.RunIntake(-.5)));    
+
+        new JoystickButton(m_operatorBoard, 2)
+            .onTrue(new InstantCommand(
+                () -> m_algaeSubsystem.RunIntake(.5)));
+
+        new JoystickButton(m_operatorBoard, 3)
+            .onTrue(new InstantCommand(
+                () -> m_algaeSubsystem.RunIntake(0)));
+
+        new JoystickButton(m_operatorBoard, 13)
+            .onTrue(new InstantCommand(
+                () -> m_algaeSubsystem.ArmToPosition(2)));
+
+        new JoystickButton(m_operatorBoard, 7)
+            .onTrue(new InstantCommand(
+                () -> m_algaeSubsystem.ArmToPosition(1)));
+
+        new JoystickButton(m_operatorBoard, 6)
+            .onTrue(new InstantCommand(
+                () -> m_algaeSubsystem.ArmToPosition(0)));
+
+        new JoystickButton(m_operatorBoard, 17)
             .onTrue(new OutputCoralCommand(m_manipulator));
 
-        new JoystickButton(m_rightDriverController, 12)
+        new JoystickButton(m_operatorBoard, 16)
             .onTrue(new IntakeCoralCommand(m_manipulator));
 
-        new JoystickButton(m_rightDriverController, 13)
+        new JoystickButton(m_operatorBoard, 11)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(1)));
 
-        new JoystickButton(m_rightDriverController, 14)
+        new JoystickButton(m_operatorBoard, 12)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.StopManipulator()));
 
-        new JoystickButton(m_rightDriverController, 15)
+        new JoystickButton(m_operatorBoard, 10)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(-1)));
         
-        new JoystickButton(m_leftDriverController, 8)
+        new JoystickButton(m_operatorBoard, 15)
         .onTrue(new InstantCommand(
             () -> m_elevatorSubsystem.overrideSensor()));
 
-        new JoystickButton(m_leftDriverController, 11)
+        new JoystickButton(m_operatorBoard, 18)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.raiseElevator(0)));
 
-        new JoystickButton(m_leftDriverController, 12)
+        new JoystickButton(m_operatorBoard, 19)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.raiseElevator(1)));
 
-        new JoystickButton(m_leftDriverController, 13)
+        new JoystickButton(m_operatorBoard, 20)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.raiseElevator(2)));
 
-        new JoystickButton(m_leftDriverController, 16)
+        new JoystickButton(m_operatorBoard, 21)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.raiseElevator(3)));
 
-        new JoystickButton(m_leftDriverController, 15)
+        new JoystickButton(m_operatorBoard, 22)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.raiseElevator(4)));
 
-        new JoystickButton(m_leftDriverController, 14)
+        new JoystickButton(m_operatorBoard, 5)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.raiseElevator(5)));
 
@@ -193,30 +221,7 @@ public class RobotContainer {
             .whileTrue(new RunCommand(
                 () -> m_lights.setLEDs(LightsConstants.GOLD),
                 m_lights));
-
-////    Operator Controls 
- 
-
           }
-            /* TODO     
-             * Auto Chooser DONE
-             * Build paths and Autos DONE
-             * Integrate LEDs to commands
-             * Investigate loop overruns
-             * Remove dead code blocks DONE
-             * Find a cleaner way to declare these buttons and commands DONE
-             * Look at switch statements for defining lists of things (buttons, autons, setpoints, etc.)
-             * Program autons DONE
-             * Autons with pathweaver DONE
-             * Design a new drivestation that fits this laptop and the joysticks IN PROGRESS (depending on drake)
-             * 
-             * General Notes:
-             * I think we're using commands for too simple of tasks. I think we can handle individual things 
-             * (toggling states of things especially) with instant commands instead. I think the commands should be used when
-             * we're grouping things together to keep the buik of the logic out of this file and in the command files.
-             * Also learned that our smart dashboard calls should go in the periodic section of the subsystem. i agree
-             */
-
 
     private void toggleFieldOriented () {
         fieldOriented = !fieldOriented;

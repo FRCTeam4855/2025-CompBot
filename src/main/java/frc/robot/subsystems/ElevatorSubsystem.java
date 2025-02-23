@@ -49,7 +49,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     public void raiseElevator(int goalSetpoint) {
-        if(m_manipulator.isElevatorClear() || sensorOverride) {
+        if (m_manipulator.isElevatorClear() || sensorOverride) {
         rightPIDController.setReference(ElevatorConstants.elevatorPos[goalSetpoint], SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0, ElevatorConstants.kElevatorConstantsGravityFF, ArbFFUnits.kVoltage);
         } else {
             System.out.println("! ELEVATOR NOT CLEAR !");

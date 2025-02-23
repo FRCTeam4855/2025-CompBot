@@ -74,7 +74,7 @@ public final class Configs {
                 rightElevatorConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     .pidf(.25, 0, 0, 0)
-                    .outputRange(-1, 1)
+                    .outputRange(-.5, 1)
                     .positionWrappingEnabled(false);
 
                 //LEFT ELEVATOR CONFIG
@@ -88,7 +88,7 @@ public final class Configs {
                     .positionConversionFactor(1);
                 leftElevatorConfig.closedLoop
                     .pidf(.25, 0, 0, 0)
-                    .outputRange(-1, 1)
+                    .outputRange(-.5, 1)
                     .positionWrappingEnabled(false);
         }
     }
@@ -105,10 +105,10 @@ public final class Configs {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20)
                 .inverted(true);
-            rightManipulatorConfig.encoder
-                // .inverted(false)
-                .positionConversionFactor(10)
-                .velocityConversionFactor(10);
+            // rightManipulatorConfig.encoder
+            //     .inverted(false)
+            //     .positionConversionFactor(10)
+            //     .velocityConversionFactor(10);
             rightManipulatorConfig.closedLoop
                 .pidf(1, 0, 0, 0)
                 .outputRange(-1, 1);
@@ -119,11 +119,39 @@ public final class Configs {
                 .idleMode(IdleMode.kBrake)
                 .smartCurrentLimit(20)
                 .follow(11, true);
-            leftManipulatorConfig.encoder
-                .positionConversionFactor(10)
-                .velocityConversionFactor(10);
+            // leftManipulatorConfig.encoder
+            //     .positionConversionFactor(10)
+            //     .velocityConversionFactor(10);
             leftManipulatorConfig.closedLoop
                 .pidf(1, 0, 0, 0)
+                .outputRange(-1, 1);
+        }
+    }
+
+    public static final class AlgaeSubsystem {
+
+        public static final SparkMaxConfig algaeIntakeConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig algaeArmConfig = new SparkMaxConfig();
+
+        static {
+            algaeIntakeConfig
+                .idleMode(IdleMode.kBrake)
+                .smartCurrentLimit(20);
+            algaeIntakeConfig.closedLoop
+                .pidf(1, 0, 0, 0)
+                .outputRange(-1, 1);
+
+            algaeArmConfig
+                .idleMode(IdleMode.kBrake)
+                .inverted(true)
+                .smartCurrentLimit(20);
+            algaeArmConfig.encoder
+                .positionConversionFactor(360)
+                .velocityConversionFactor(360);
+            algaeArmConfig.closedLoop
+                .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+                .pidf(1, 0, 0, 0)
+                .positionWrappingEnabled(false)
                 .outputRange(-1, 1);
         }
     }
