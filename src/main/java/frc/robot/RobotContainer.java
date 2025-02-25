@@ -31,6 +31,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import java.time.Instant;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -69,10 +72,10 @@ public class RobotContainer {
     public RobotContainer() {
         //Register Named Commands
 
-        NamedCommands.registerCommand("Setpoint 4", new RunCommand(
+        NamedCommands.registerCommand("Setpoint 4", new InstantCommand(
                     () -> m_elevatorSubsystem.raiseElevator(4), m_elevatorSubsystem));
 
-        NamedCommands.registerCommand("Setpoint 0", new RunCommand(
+        NamedCommands.registerCommand("Setpoint 0", new InstantCommand(
                     () -> m_elevatorSubsystem.raiseElevator(0), m_elevatorSubsystem));
 
 
