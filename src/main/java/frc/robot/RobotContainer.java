@@ -135,15 +135,19 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorBoard, 1)
             .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.RunIntake(-.5)));    
+                () -> m_algaeSubsystem.RunIntake(-.75)));    
 
         new JoystickButton(m_operatorBoard, 2)
             .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.RunIntake(.5)));
+                () -> m_algaeSubsystem.RunIntake(.75)));
 
         new JoystickButton(m_operatorBoard, 3)
             .onTrue(new InstantCommand(
                 () -> m_algaeSubsystem.RunIntake(0)));
+
+        new JoystickButton(m_operatorBoard, 14)
+            .onTrue(new InstantCommand(
+                () -> m_algaeSubsystem.ArmToPosition(3)));
 
         new JoystickButton(m_operatorBoard, 13)
             .onTrue(new InstantCommand(
