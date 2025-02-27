@@ -184,7 +184,8 @@ public final class Constants {
   }
 
   public static final class AlgaeConstants {
-    public static final double[] algaePos = { 0.03, 0.3, 0.545, 0.2, 0.04, 0.04 };
+    public static final double kAlgaeSpeed = .75;
+    public static final double[] algaePos = { 0.03, 0.2, 0.3, 0.04, 0.04, 0.04 };
     public static final int kArmCanId = 13;
     public static final int kIntakeCanId = 14;
   }

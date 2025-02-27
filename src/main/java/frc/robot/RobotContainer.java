@@ -16,6 +16,7 @@ import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
 import frc.robot.commands.IntakeCoralCommand;
+import frc.robot.commands.IsElevatorAtSetpointCommand;
 import frc.robot.commands.OutputCoralCommand;
 import frc.robot.commands.TimedLeftStrafeCommand;
 import frc.robot.commands.TimedRightStrafeCommand;
@@ -27,9 +28,12 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 //import frc.robot.subsystems.Limelight;
 /*
@@ -66,7 +70,60 @@ public class RobotContainer {
     * The container for the robot. Contains subsystems, OI devices, and commands.
     */
     public RobotContainer() {
+
         //Register Named Commands
+        NamedCommands.registerCommand("AlgaeFloorPickup", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),
+            new InstantCommand(() -> m_algaeSubsystem.SetFloorPickup()),
+            new InstantCommand(() -> m_algaeSubsystem.IntakeAlgae()),
+            new InstantCommand(() -> m_algaeSubsystem.ArmToPosition(2))));
+
+        NamedCommands.registerCommand("AlgaeReefPickupOne", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(3)),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 3),
+            new InstantCommand(() -> m_algaeSubsystem.SetReefPickup()),
+            new InstantCommand(() -> m_algaeSubsystem.IntakeAlgae()),
+            new InstantCommand(() -> m_algaeSubsystem.ArmToPosition(1))));
+
+        NamedCommands.registerCommand("AlgaeReefPickupTwo", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(5)),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 5),
+            new InstantCommand(() -> m_algaeSubsystem.SetReefPickup()),
+            new InstantCommand(() -> m_algaeSubsystem.IntakeAlgae()),
+            new InstantCommand(() -> m_algaeSubsystem.ArmToPosition(2))));
+
+        NamedCommands.registerCommand("AutoDeliverLevelOne", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(1)),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 1),
+            new OutputCoralCommand(m_manipulator),
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
+
+        NamedCommands.registerCommand("AutoDeliverLevelTwo", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(2)),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 2),
+            new OutputCoralCommand(m_manipulator),
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
+
+        NamedCommands.registerCommand("AutoDeliverLevelThree", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(3)),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 3),
+            new OutputCoralCommand(m_manipulator),
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
+
+        NamedCommands.registerCommand("AutoDeliverLevelFour", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(4)),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4),
+            new OutputCoralCommand(m_manipulator),
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
+
+        NamedCommands.registerCommand("IntakeCoral", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),
+            new IntakeCoralCommand(m_manipulator)));
+
+        NamedCommands.registerCommand("DeliverCoral", new SequentialCommandGroup(
+            new OutputCoralCommand(m_manipulator),
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
+
         // Configure the button bindings
         configureButtonBindings();
 
@@ -133,31 +190,34 @@ public class RobotContainer {
             .whileTrue(new DriveWithAprilTagCommand(
             m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
 
+
+
         new JoystickButton(m_operatorBoard, 1)
             .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.RunIntake(-.75)));    
+                () -> m_algaeSubsystem.IntakeAlgae()));    
 
         new JoystickButton(m_operatorBoard, 2)
             .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.RunIntake(.75)));
+                () -> m_algaeSubsystem.DeliverAlgae()));
 
         new JoystickButton(m_operatorBoard, 3)
             .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.RunIntake(0)));
+                () -> m_algaeSubsystem.StopIntake()));
 
-        new JoystickButton(m_operatorBoard, 14)
-            .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.ArmToPosition(3)));
-
-        new JoystickButton(m_operatorBoard, 13)
-            .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.ArmToPosition(2)));
-
-        new JoystickButton(m_operatorBoard, 7)
-            .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.ArmToPosition(1)));
+        new JoystickButton(m_operatorBoard, 4)
+            .onChange(new InstantCommand(
+                () -> m_algaeSubsystem.TogglePickup()));
 
         new JoystickButton(m_operatorBoard, 6)
+            .onTrue(NamedCommands.getCommand("AlgaeReefPickupOne"));
+
+            new JoystickButton(m_operatorBoard, 7)
+            .onTrue(NamedCommands.getCommand("AlgaeReefPickupTwo"));
+
+        new JoystickButton(m_operatorBoard, 10)
+             .onTrue(NamedCommands.getCommand("AlgaeFloorPickup"));
+            
+        new JoystickButton(m_operatorBoard, 14)
             .onTrue(new InstantCommand(
                 () -> m_algaeSubsystem.ArmToPosition(0)));
 
@@ -167,45 +227,45 @@ public class RobotContainer {
         new JoystickButton(m_operatorBoard, 16)
             .onTrue(new IntakeCoralCommand(m_manipulator));
 
-        new JoystickButton(m_operatorBoard, 11)
+        new JoystickButton(m_operatorBoard, 5)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(1)));
 
-        new JoystickButton(m_operatorBoard, 12)
+        new JoystickButton(m_operatorBoard, 11)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.StopManipulator()));
 
-        new JoystickButton(m_operatorBoard, 10)
+        new JoystickButton(m_operatorBoard, 12)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(-1)));
         
         new JoystickButton(m_operatorBoard, 15)
         .onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.overrideSensor()));
+            () -> m_elevatorSubsystem.overrideSensor())); 
 
         new JoystickButton(m_operatorBoard, 18)
             .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.raiseElevator(0)));
+                () -> m_elevatorSubsystem.ElevatorToSetpoint(0)));
 
         new JoystickButton(m_operatorBoard, 19)
             .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.raiseElevator(1)));
+                () -> m_elevatorSubsystem.ElevatorToSetpoint(1)));
 
         new JoystickButton(m_operatorBoard, 20)
             .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.raiseElevator(2)));
+                () -> m_elevatorSubsystem.ElevatorToSetpoint(2)));
 
         new JoystickButton(m_operatorBoard, 21)
             .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.raiseElevator(3)));
+                () -> m_elevatorSubsystem.ElevatorToSetpoint(3)));
 
         new JoystickButton(m_operatorBoard, 22)
             .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.raiseElevator(4)));
+                () -> m_elevatorSubsystem.ElevatorToSetpoint(4)));
 
-        new JoystickButton(m_operatorBoard, 5)
+        new JoystickButton(m_operatorBoard, 13)
             .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.raiseElevator(5)));
+                () -> m_elevatorSubsystem.ElevatorToSetpoint(5)));
 
         // Operator Controls
 

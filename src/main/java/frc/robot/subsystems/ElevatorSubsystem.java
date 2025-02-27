@@ -48,7 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Left Elevator Pos", leftEncoder.getPosition());
     }
 
-    public void raiseElevator(int goalSetpoint) {
+    public void ElevatorToSetpoint(int goalSetpoint) {
         if (m_manipulator.isElevatorClear() || sensorOverride) {
         rightPIDController.setReference(ElevatorConstants.elevatorPos[goalSetpoint], SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0, ElevatorConstants.kElevatorConstantsGravityFF, ArbFFUnits.kVoltage);
         } else {
