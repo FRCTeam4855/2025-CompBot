@@ -17,6 +17,7 @@ import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
 import frc.robot.commands.IntakeCoralCommand;
+import frc.robot.commands.IsElevatorAtSetpointCommand;
 import frc.robot.commands.OutputCoralCommand;
 import frc.robot.commands.TimedLeftStrafeCommand;
 import frc.robot.commands.TimedRightStrafeCommand;
@@ -72,11 +73,16 @@ public class RobotContainer {
     public RobotContainer() {
         //Register Named Commands
 
-        NamedCommands.registerCommand("Setpoint 4", new InstantCommand(
-                    () -> m_elevatorSubsystem.raiseElevator(4), m_elevatorSubsystem));
+        NamedCommands.registerCommand("Setpoint 4", new SequentialCommandGroup(
+                    new InstantCommand(()-> m_elevatorSubsystem.raiseElevator(4), m_elevatorSubsystem),
+                    new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4)));
 
         NamedCommands.registerCommand("Setpoint 0", new InstantCommand(
-                    () -> m_elevatorSubsystem.raiseElevator(0), m_elevatorSubsystem));
+            ()-> m_elevatorSubsystem.raiseElevator(0), m_elevatorSubsystem));
+
+        NamedCommands.registerCommand("Intake Coral", new IntakeCoralCommand(m_manipulator));
+
+        NamedCommands.registerCommand("Place Coral", new OutputCoralCommand(m_manipulator));
 
 
         // Configure the button bindings

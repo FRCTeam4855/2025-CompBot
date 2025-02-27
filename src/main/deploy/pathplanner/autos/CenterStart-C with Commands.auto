@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BottomStart-B"
+                  "pathName": "CenterStart-A"
                 }
               },
               {
@@ -24,13 +24,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Place Coral"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "B-BottomFeeder"
+                  "pathName": "A-BottomFeeder"
                 }
               },
               {
@@ -43,13 +49,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Intake Coral"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BottomFeeder-C"
+                  "pathName": "BottomFeeder-C Left"
                 }
               },
               {
@@ -62,13 +74,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Place Coral"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C-BottomFeeder"
+                  "pathName": "C Left-BottomFeeder"
                 }
               },
               {
@@ -81,13 +99,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Intake Coral"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BottomFeeder-C"
+                  "pathName": "BottomFeeder-C Right"
                 }
               },
               {
@@ -97,12 +121,18 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Place Coral"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "3 Coral Autons",
+  "folder": null,
   "choreoAuto": false
 }
