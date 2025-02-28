@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.subsystems.LightsSubsystem;
+import frc.robot.Constants.LightsConstants;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -20,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  
+  private LightsSubsystem m_lights;
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
   PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
@@ -33,8 +34,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-   
-
+    m_lights = new LightsSubsystem();
 
    FollowPathCommand.warmupCommand().schedule();
   }
@@ -47,10 +47,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    //double current = m_pdp.getCurrent(6);
-    //SmartDashboard.putNumber("Voltage", current);
     SmartDashboard.putBoolean("Field Oriented", RobotContainer.fieldOriented);
-    //SmartDashboard.putNumber("RightFront", MAXSwerveModule)
+
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
@@ -69,14 +67,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();//m_autoSelectedString);
-
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    m_lights.setLEDs(LightsConstants.C1_HEARTBEAT_SLOW);
   }
 
   /** This function is called periodically during autonomous. */
@@ -93,6 +91,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     RobotContainer.fieldOriented = true;
+    m_lights.setLEDs(LightsConstants.C1_AND_C2_SINELON);
   }
 
   /** This function is called periodically during operator control. */

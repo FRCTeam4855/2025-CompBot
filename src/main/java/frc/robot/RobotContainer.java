@@ -7,12 +7,10 @@ package frc.robot;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.LightsConstants;
+import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
 import frc.robot.commands.IntakeCoralCommand;
@@ -23,22 +21,19 @@ import frc.robot.commands.TimedRightStrafeCommand;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-//import frc.robot.subsystems.Limelight;
 /*
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * This class is where the bulk of the robot should be declared.  Since Command-based is a 3.14159265358979323846
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot} 
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
@@ -46,32 +41,26 @@ public class RobotContainer {
 
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-    private final LightsSubsystem m_lights = new LightsSubsystem();
     private final Limelight m_limelight = new Limelight();
     private final ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
     private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
     private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
    
 
-    // The driver's controller
+    // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
     Joystick m_rightDriverController = new Joystick(OIConstants.kRightDriverControllerPort);
     
-    // The Operator Controller
+    // The operator controllers
     CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort1);
     GenericHID m_operatorBoard = new GenericHID(3);
-    //CommandGenericHID m_buttonBoard = new CommandGenericHID();
 
     public static boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
     private final SendableChooser<Command> autoChooser;
 
-    /**
-    * The container for the robot. Contains subsystems, OI devices, and commands.
-    */
     public RobotContainer() {
 
-        //Register Named Commands
         NamedCommands.registerCommand("AlgaeFloorPickup", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),
             new InstantCommand(() -> m_algaeSubsystem.SetFloorPickup()),
@@ -124,13 +113,9 @@ public class RobotContainer {
             new OutputCoralCommand(m_manipulator),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
-        // Configure the button bindings
         configureButtonBindings();
 
-        // Configure default commands
         m_robotDrive.setDefaultCommand(
-        // The left Joystick controls translation of the robot.
-        // The right Joystick controls rotation of the robot.
         new RunCommand(
             () -> m_robotDrive.drive(
                 -MathUtil.applyDeadband(m_leftDriverController.getRawAxis(1) * speedMultiplier, OIConstants.kDriveDeadband),
@@ -143,18 +128,9 @@ public class RobotContainer {
             SmartDashboard.putData("Auto Chooser", autoChooser);             
     }
 
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by
-     * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
-     * subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling
-     * passing it to a
-     * {@link JoystickButton}.
-     */
     private void configureButtonBindings() {
     
-////    Driver Controls
+        //Driver Controls
 
        new JoystickButton(m_leftDriverController,OIConstants.kJS_BB)
             .whileTrue(new RunCommand(
@@ -190,9 +166,9 @@ public class RobotContainer {
             .whileTrue(new DriveWithAprilTagCommand(
             m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
 
+        //Operator Controls
 
-
-        new JoystickButton(m_operatorBoard, 1)
+        new JoystickButton(m_operatorBoard, 1) //TODO low priority/not needed
             .onTrue(new InstantCommand(
                 () -> m_algaeSubsystem.IntakeAlgae()));    
 
@@ -229,7 +205,7 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorBoard, 5)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(1)));
+                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorSpeed)));
 
         new JoystickButton(m_operatorBoard, 11)
             .onTrue(new InstantCommand(
@@ -237,7 +213,7 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorBoard, 12)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(-1)));
+                () -> m_manipulator.RunManipulator(-ManipulatorConstants.kManipulatorSpeed))); 
         
         new JoystickButton(m_operatorBoard, 15)
         .onTrue(new InstantCommand(
@@ -266,38 +242,17 @@ public class RobotContainer {
         new JoystickButton(m_operatorBoard, 13)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.ElevatorToSetpoint(5)));
-
-        // Operator Controls
-
-        m_operatorController1.a()
-            .whileTrue(new RunCommand(
-                () -> m_lights.setLEDs(LightsConstants.GREEN),
-                m_lights));
-        m_operatorController1.x()
-            .whileTrue(new RunCommand(
-                () -> m_lights.setLEDs(LightsConstants.RED),
-                m_lights));
-        m_operatorController1.b()
-            .whileTrue(new RunCommand(
-                () -> m_lights.setLEDs(LightsConstants.VIOLET),
-                m_lights));
-        m_operatorController1.y()
-            .whileTrue(new RunCommand(
-                () -> m_lights.setLEDs(LightsConstants.GOLD),
-                m_lights));
           }
 
     private void toggleFieldOriented () {
         fieldOriented = !fieldOriented;
     }
 
-
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *
      * @return the command to run in autonomous
      */
-
 
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();

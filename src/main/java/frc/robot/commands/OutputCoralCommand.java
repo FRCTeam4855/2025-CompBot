@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.subsystems.ManipulatorSubsystem;
 public class OutputCoralCommand extends Command {
     
@@ -11,7 +12,7 @@ public class OutputCoralCommand extends Command {
 
     @Override
     public void initialize() {
-        m_manipulator.RunManipulator(1);
+        m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorSpeed);
     }
 
     @Override
