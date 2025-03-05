@@ -11,7 +11,7 @@ public class IntakeCoralCommand extends Command {
 
     @Override
     public void initialize() {
-        m_manipulator.RunManipulator(0.5);
+        m_manipulator.RunManipulator(0.3);
     }
 
     @Override

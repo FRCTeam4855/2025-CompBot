@@ -5,21 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "A-2"
+            "name": "Level 4"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "2-A"
+            "name": "DeliverCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Level 0"
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

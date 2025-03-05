@@ -25,6 +25,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,6 +39,10 @@ import com.pathplanner.lib.auto.NamedCommands;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+//register named commands
+
+
 
     // The robot's subsystems
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
@@ -60,6 +65,18 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
+
+        NamedCommands.registerCommand("Level 0", new InstantCommand(
+            ()-> m_elevatorSubsystem.ElevatorToSetpoint(0)));
+
+        NamedCommands.registerCommand("Level 4", new SequentialCommandGroup(
+            new InstantCommand(()-> m_elevatorSubsystem.ElevatorToSetpoint(4), m_elevatorSubsystem),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4)));
+
+        NamedCommands.registerCommand("Intake", new IntakeCoralCommand((m_manipulator)));
+
+        NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand((m_manipulator)));
+
 
         NamedCommands.registerCommand("AlgaeFloorPickup", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),

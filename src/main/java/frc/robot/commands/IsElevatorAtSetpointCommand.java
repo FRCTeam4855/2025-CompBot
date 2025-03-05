@@ -14,6 +14,11 @@ public class IsElevatorAtSetpointCommand extends Command {
     public IsElevatorAtSetpointCommand(ElevatorSubsystem m_elevatorSubsystem, int goalSetpoint) {
         this.m_elevatorSubsystem = m_elevatorSubsystem;
         this.goalSetpoint = goalSetpoint;
+        //goalPosition = Constants.ElevatorConstants.elevatorPos[goalSetpoint];
+    }
+
+    @Override
+    public void initialize() {
         goalPosition = Constants.ElevatorConstants.elevatorPos[goalSetpoint];
     }
 
