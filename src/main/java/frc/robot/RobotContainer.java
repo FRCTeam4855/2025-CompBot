@@ -79,7 +79,7 @@ public class RobotContainer {
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 5),
             new InstantCommand(() -> m_algaeSubsystem.SetReefPickup()),
             new InstantCommand(() -> m_algaeSubsystem.IntakeAlgae()),
-            new InstantCommand(() -> m_algaeSubsystem.ArmToPosition(2))));
+            new InstantCommand(() -> m_algaeSubsystem.ArmToPosition(1))));
 
         NamedCommands.registerCommand("AutoDeliverLevelOne", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(1)),
@@ -139,11 +139,11 @@ public class RobotContainer {
 
         new JoystickButton(m_leftDriverController,OIConstants.kJS_LB)
             .onTrue(new TimedLeftStrafeCommand(
-                 m_robotDrive));
+                m_robotDrive));
 
         new JoystickButton(m_leftDriverController,OIConstants.kJS_RB)
             .onTrue(new TimedRightStrafeCommand(
-                 m_robotDrive));
+                m_robotDrive));
        
         new JoystickButton(m_rightDriverController, OIConstants.kJS_RB).debounce(0.1)  //Gyro reset
             .whileTrue(new InstantCommand(
@@ -164,11 +164,11 @@ public class RobotContainer {
 
         new JoystickButton(m_rightDriverController, OIConstants.kJS_Trigger)
             .whileTrue(new DriveWithAprilTagCommand(
-            m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
+                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
 
         //Operator Controls
 
-        new JoystickButton(m_operatorBoard, 1) //TODO low priority/not needed
+        new JoystickButton(m_operatorBoard, 1) 
             .onTrue(new InstantCommand(
                 () -> m_algaeSubsystem.IntakeAlgae()));    
 
@@ -187,10 +187,10 @@ public class RobotContainer {
         new JoystickButton(m_operatorBoard, 6)
             .onTrue(NamedCommands.getCommand("AlgaeReefPickupOne"));
 
-            new JoystickButton(m_operatorBoard, 7)
+        new JoystickButton(m_operatorBoard, 7)
             .onTrue(NamedCommands.getCommand("AlgaeReefPickupTwo"));
 
-        new JoystickButton(m_operatorBoard, 10)
+        new JoystickButton(m_operatorBoard, 8)
              .onTrue(NamedCommands.getCommand("AlgaeFloorPickup"));
             
         new JoystickButton(m_operatorBoard, 14)
@@ -216,8 +216,8 @@ public class RobotContainer {
                 () -> m_manipulator.RunManipulator(-ManipulatorConstants.kManipulatorSpeed))); 
         
         new JoystickButton(m_operatorBoard, 15)
-        .onTrue(new InstantCommand(
-            () -> m_elevatorSubsystem.overrideSensor())); 
+            .onTrue(new InstantCommand(
+                () -> m_elevatorSubsystem.overrideSensor())); 
 
         new JoystickButton(m_operatorBoard, 18)
             .onTrue(new InstantCommand(
@@ -241,8 +241,8 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorBoard, 13)
             .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.ElevatorToSetpoint(5)));
-          }
+                () -> m_elevatorSubsystem.ElevatorToSetpoint(6)));
+        }
 
     private void toggleFieldOriented () {
         fieldOriented = !fieldOriented;

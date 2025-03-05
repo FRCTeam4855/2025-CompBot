@@ -35,6 +35,7 @@ public class AlgaeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm Position", m_armEncoder.getPosition());
+        SmartDashboard.putBoolean("Floor Pickup Mode", floorPickup);
     }
 
     public void IntakeAlgae() {

@@ -22,6 +22,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     public boolean innerSensor, outerSensor;
     public boolean useSensor;
     public boolean coralSensor;
+    public boolean stopManipulator = false;
     public ManipulatorSubsystem() {
 
         m_rightSparkMax = new SparkMax(ManipulatorConstants.kRightManipulatorCanId, MotorType.kBrushless);
@@ -50,11 +51,13 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
 
     public void RunManipulator(double speed) {
+        stopManipulator = false;
         m_rightSparkMax.set(speed);
         //m_leftSparkMax.set(speed);
     }
 
     public void StopManipulator() {
+        stopManipulator = true;
         m_rightSparkMax.set(0);
         //m_leftSparkMax.set(0);
     }

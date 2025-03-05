@@ -172,10 +172,10 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final double[] elevatorPos = { .75, 6.36, 13.0, 30.0, 57.0, 45.0, 0.0, 0.0 };
+    public static final double[] elevatorPos = { .75, 9.36, 16.0, 33.0, 60.0, 45.0, 4.0, 0.0 };
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
-    public static final double kElevatorConstantsGravityFF = .45;
+    public static final double kElevatorConstantsGravityFF = .6;
   }
 
   public static final class ManipulatorConstants {
@@ -186,7 +186,7 @@ public final class Constants {
 
   public static final class AlgaeConstants {
     public static final double kAlgaeSpeed = .75;
-    public static final double[] algaePos = { 0.03, 0.2, 0.3, 0.04, 0.04, 0.04 };
+    public static final double[] algaePos = { 0.54, 0.2, 0.3, 0.04, 0.04, 0.04 };
     public static final int kArmCanId = 13;
     public static final int kIntakeCanId = 14;
   }

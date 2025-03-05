@@ -17,7 +17,7 @@ public class OutputCoralCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (!m_manipulator.outerSensor) {
+        if (!m_manipulator.outerSensor || m_manipulator.stopManipulator == true) {
             m_manipulator.StopManipulator();
             return true;
         } else {

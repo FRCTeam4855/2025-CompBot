@@ -24,7 +24,6 @@ public class ElevatorSubsystem extends SubsystemBase {
     public final SparkClosedLoopController leftPIDController;
     public boolean sensorOverride = false;
 
-
     public ElevatorSubsystem(ManipulatorSubsystem m_manipulator) {
         this.m_manipulator = m_manipulator;
 
