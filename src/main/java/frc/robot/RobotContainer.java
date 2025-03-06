@@ -77,6 +77,9 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand((m_manipulator)));
 
+        NamedCommands.registerCommand("Arm to 0", new InstantCommand(
+            () -> m_algaeSubsystem.ArmToPosition(0)));
+
 
         NamedCommands.registerCommand("AlgaeFloorPickup", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),

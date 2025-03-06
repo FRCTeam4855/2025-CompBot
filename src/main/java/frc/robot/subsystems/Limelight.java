@@ -20,7 +20,7 @@ public class Limelight extends SubsystemBase {
   NetworkTableEntry aEntry = table.getEntry("ta"); //Target Area (0% of image to 100% of image)
   NetworkTableEntry tEntry = table.getEntry("tid");
 
-  public boolean isLimelightLampOn(){
+  public boolean isLimelightLampOn() {
     if (inst.getTable("limelight").getEntry("ledMode").getDouble(0) == 1){
       return true;
     } else { 
