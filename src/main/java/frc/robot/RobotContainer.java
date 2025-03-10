@@ -25,7 +25,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+//import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -73,9 +73,9 @@ public class RobotContainer {
             new InstantCommand(()-> m_elevatorSubsystem.ElevatorToSetpoint(4), m_elevatorSubsystem),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4)));
 
-        NamedCommands.registerCommand("Intake", new IntakeCoralCommand((m_manipulator)));
+        NamedCommands.registerCommand("Intake", new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
-        NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand((m_manipulator)));
+        NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
         NamedCommands.registerCommand("Arm to 0", new InstantCommand(
             () -> m_algaeSubsystem.ArmToPosition(0)));
@@ -104,33 +104,33 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutoDeliverLevelOne", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(1)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 1),
-            new OutputCoralCommand(m_manipulator),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelTwo", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(2)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 2),
-            new OutputCoralCommand(m_manipulator),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelThree", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(3)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 3),
-            new OutputCoralCommand(m_manipulator),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelFour", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(4)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4),
-            new OutputCoralCommand(m_manipulator),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("IntakeCoral", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),
-            new IntakeCoralCommand(m_manipulator)));
+            new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed)));
 
         NamedCommands.registerCommand("DeliverCoral", new SequentialCommandGroup(
-            new OutputCoralCommand(m_manipulator),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         configureButtonBindings();
@@ -218,14 +218,14 @@ public class RobotContainer {
                 () -> m_algaeSubsystem.ArmToPosition(0)));
 
         new JoystickButton(m_operatorBoard, 17)
-            .onTrue(new OutputCoralCommand(m_manipulator));
+            .onTrue(new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
         new JoystickButton(m_operatorBoard, 16)
-            .onTrue(new IntakeCoralCommand(m_manipulator));
+            .onTrue(new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
         new JoystickButton(m_operatorBoard, 5)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorSpeed)));
+                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed)));
 
         new JoystickButton(m_operatorBoard, 11)
             .onTrue(new InstantCommand(
@@ -233,7 +233,7 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorBoard, 12)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(-ManipulatorConstants.kManipulatorSpeed))); 
+                () -> m_manipulator.RunManipulator(-ManipulatorConstants.kManipulatorHighSpeed))); 
         
         new JoystickButton(m_operatorBoard, 15)
             .onTrue(new InstantCommand(

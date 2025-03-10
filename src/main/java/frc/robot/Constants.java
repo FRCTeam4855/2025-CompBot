@@ -181,7 +181,8 @@ public final class Constants {
   public static final class ManipulatorConstants {
     public static final int kRightManipulatorCanId = 11;
     public static final int kLeftManipulatorCanId = 12;
-    public static final double kManipulatorSpeed = 1;
+    public static final double kManipulatorSlowSpeed = 0.3;
+    public static final double kManipulatorHighSpeed = 1;
   }
 
   public static final class AlgaeConstants {
