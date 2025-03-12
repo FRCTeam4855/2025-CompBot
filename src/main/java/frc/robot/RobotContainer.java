@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+//import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
@@ -21,11 +21,11 @@ import frc.robot.commands.TimedRightStrafeCommand;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-//import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -40,25 +40,21 @@ import com.pathplanner.lib.auto.NamedCommands;
  */
 public class RobotContainer {
 
-//register named commands
-
-
-
     // The robot's subsystems
-    private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-    private final Limelight m_limelight = new Limelight();
-    private final ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
-    private final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
-    private final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
-   
+    public final DriveSubsystem m_robotDrive = new DriveSubsystem();
+    public final LightsSubsystem m_lights = new LightsSubsystem();
+    public Limelight m_limelight = new Limelight();
+    private final static ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
+    public final static ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
+    public final static AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
 
     // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
     Joystick m_rightDriverController = new Joystick(OIConstants.kRightDriverControllerPort);
     
     // The operator controllers
-    CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort1);
-    GenericHID m_operatorBoard = new GenericHID(3);
+    //CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort1);
+    GenericHID m_operatorBoard = new GenericHID(OIConstants.kOperatorControllerPort1);
 
     public static boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
@@ -66,6 +62,7 @@ public class RobotContainer {
 
     public RobotContainer() {
 
+        //register named commands
         NamedCommands.registerCommand("Level 0", new InstantCommand(
             ()-> m_elevatorSubsystem.ElevatorToSetpoint(0)));
 
@@ -174,12 +171,10 @@ public class RobotContainer {
             .whileTrue(new InstantCommand(
                 () -> toggleFieldOriented()));
         
-        new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)  //Precise Driving Mode set
-            .whileTrue(new InstantCommand(
-                () -> speedMultiplier=OIConstants.kSpeedMultiplierPrecise));
-
-        new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)  //Precise Driving Mode clear
-            .whileFalse(new InstantCommand(
+        new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)  
+            .whileTrue(new InstantCommand(  //Precise Driving Mode set
+                () -> speedMultiplier=OIConstants.kSpeedMultiplierPrecise)) 
+            .whileFalse(new InstantCommand( //Precise Driving Mode clear
                 () -> speedMultiplier=OIConstants.kSpeedMultiplierDefault));
 
         new JoystickButton(m_rightDriverController, OIConstants.kJS_Trigger)

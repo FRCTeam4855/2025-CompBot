@@ -127,6 +127,7 @@ public final class Constants {
     public static final int kLeftDriverControllerPort = 0;  
     public static final int kRightDriverControllerPort = 1;
     public static final int kOperatorControllerPort1 = 2;
+    public static final int kOperatorControllerPort2 = 3;
     public static final double kDriveDeadband = 0.1;
     public static final double kRotateScale = 0.5;
     public static final int kJS_Trigger = 1;  //KJS = Konstants Joystick
