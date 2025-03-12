@@ -44,9 +44,9 @@ public class RobotContainer {
     public final DriveSubsystem m_robotDrive = new DriveSubsystem();
     public final LightsSubsystem m_lights = new LightsSubsystem();
     public Limelight m_limelight = new Limelight();
-    private final static ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
-    public final static ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
-    public final static AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+    private final ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
+    public final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
+    public final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
 
     // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
@@ -56,7 +56,7 @@ public class RobotContainer {
     //CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort1);
     GenericHID m_operatorBoard = new GenericHID(OIConstants.kOperatorControllerPort1);
 
-    public static boolean fieldOriented = false;
+    public boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
     private final SendableChooser<Command> autoChooser;
 

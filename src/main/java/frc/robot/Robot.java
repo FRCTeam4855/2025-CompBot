@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putBoolean("Field Oriented", RobotContainer.fieldOriented);
+    SmartDashboard.putBoolean("Field Oriented", m_robotContainer.fieldOriented);
 
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
@@ -93,9 +93,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_algaeSubsystem.ArmToPosition(0);
-    RobotContainer.m_elevatorSubsystem.ElevatorToSetpoint(0);
-    RobotContainer.fieldOriented = true;
+    m_robotContainer.m_algaeSubsystem.ArmToPosition(0);
+    m_robotContainer.m_elevatorSubsystem.ElevatorToSetpoint(0);
+    m_robotContainer.fieldOriented = true;
     m_robotContainer.m_lights.setLEDs(LightsConstants.C1_AND_C2_SINELON);
     if (m_robotContainer.m_limelight.llPose[0] != 0) {
       m_robotContainer.m_robotDrive.resetPose(new Pose2d(m_robotContainer.m_limelight.llPose[0], m_robotContainer.m_limelight.llPose[1], Rotation2d.fromDegrees(m_robotContainer.m_limelight.llPose[5])));
