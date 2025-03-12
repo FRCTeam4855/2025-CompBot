@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 
 public class IsElevatorAtSetpointCommand extends Command {
     
@@ -14,12 +14,12 @@ public class IsElevatorAtSetpointCommand extends Command {
     public IsElevatorAtSetpointCommand(ElevatorSubsystem m_elevatorSubsystem, int goalSetpoint) {
         this.m_elevatorSubsystem = m_elevatorSubsystem;
         this.goalSetpoint = goalSetpoint;
-        //goalPosition = Constants.ElevatorConstants.elevatorPos[goalSetpoint];
+        //goalPosition = ElevatorConstants.elevatorPos[goalSetpoint];
     }
 
     @Override
     public void initialize() {
-        goalPosition = Constants.ElevatorConstants.elevatorPos[goalSetpoint];
+        goalPosition = ElevatorConstants.elevatorPos[goalSetpoint];
     }
 
     @Override 
