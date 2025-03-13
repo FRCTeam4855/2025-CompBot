@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class DriveSubsystem extends SubsystemBase {
 
+  public static int m_gyroStatus = 1;  // 0 = normal, 1 = Initializing
   /**
    * Returns the robot-relative speeds.
    *
@@ -125,8 +126,9 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     m_gyro.reset();
+    m_gyroStatus = 1;
   
-      AutoBuilder.configure(
+    AutoBuilder.configure(
       this::getPose, 
       this::resetPose, 
       this::getSpeeds, 
@@ -171,16 +173,24 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(
+    /*m_odometry.update(
         Rotation2d.fromDegrees(getStdAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
-        });
+        });*/
+    updateOdometry();
     m_field.setRobotPose(m_odometry.getPoseMeters()); //4855
     SmartDashboard.putNumber("GyroAngle", Rotation2d.fromDegrees(getStdAngle()).getDegrees());
+    if(m_gyroStatus == 1)
+    {
+      if(!m_gyro.isCalibrating())
+      {
+        m_gyroStatus = 0;
+      }
+    }
   }
 
   /**
@@ -362,6 +372,7 @@ public class DriveSubsystem extends SubsystemBase {
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
     m_gyro.zeroYaw();
+    m_gyroStatus = 1;
   }
 
   /**

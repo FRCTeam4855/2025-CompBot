@@ -295,4 +295,8 @@ public final class Constants {
     public final static double DARK_GRAY = .97;
     public final static double BLACK = .99;
   }
+
+  public static final class LimelightConstants {
+    public static final int kLimelightType = 4;
+  }
 }

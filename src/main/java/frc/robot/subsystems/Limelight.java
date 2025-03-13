@@ -3,11 +3,13 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
+import frc.robot.Constants.LimelightConstants;
 
 public class Limelight extends SubsystemBase {
 
   public double[] tagPose;
   public double[] llPose;
+  public int m_LimeLightStatus = 0;  // 0 = normal, 1 = IMU seeding, 2 = IMU Using internal, 3 = Waiting for IMU initialization
 
   public Limelight() {
     LimelightHelpers.SetIMUMode("limelight", 1);
@@ -31,5 +33,46 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("p_tx", llPose[0]);
     SmartDashboard.putNumber("p_ty", llPose[1]);
     SmartDashboard.putNumber("p_yaw", llPose[5]);
+
+    if(LimelightConstants.kLimelightType == 4 ) {
+      switch (m_LimeLightStatus) {
+        case 0:
+        {
+          if(DriveSubsystem.m_gyroStatus == 0) //gyro is ready, so proceed with seeding LL IMU
+          {
+            LimelightHelpers.SetIMUMode("limelight", 1);
+            m_LimeLightStatus = 1;
+          }
+          break;
+        }
+        case 1:
+        {
+          if(DriveSubsystem.m_gyroStatus == 0) //gyro is still ready, so proceed with seeding LL IMU.  This allows the IMU to get a heading from the gyro before switching to internal
+          {
+            m_LimeLightStatus = 3;
+          }
+          break;
+        }
+        case 3:
+        {
+          if(DriveSubsystem.m_gyroStatus == 0)  //gyro is still ready, so proceed with switching over to the LL IMU.
+          {
+            LimelightHelpers.SetIMUMode("limelight", 2);
+            m_LimeLightStatus = 2;
+          } else {  //gyro has reset, so go back to seeding
+            m_LimeLightStatus = 0;
+          }
+          break;
+        }
+        default:
+        {
+          if(DriveSubsystem.m_gyroStatus != 0)
+          { //gyro has reset, so go back to seeding
+            m_LimeLightStatus = 0;
+            break;
+          }
+        }
+      }
+    } 
   }  
 }
