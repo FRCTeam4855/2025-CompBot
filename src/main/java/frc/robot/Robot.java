@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.LightsConstants;
@@ -35,6 +37,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     FollowPathCommand.warmupCommand().schedule();
+    DataLogManager.start();
+    DriverStation.startDataLog(DataLogManager.getLog());
   }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
