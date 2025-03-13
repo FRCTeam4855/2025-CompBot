@@ -183,78 +183,78 @@ public class RobotContainer {
 
         //Operator Controls
 
-        new JoystickButton(m_operatorBoard, 1) 
-            .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.IntakeAlgae()));    
+         new JoystickButton(m_operatorBoard, 6) 
+             .onTrue(new InstantCommand(
+                 () -> m_algaeSubsystem.IntakeAlgae()));    
 
-        new JoystickButton(m_operatorBoard, 2)
+        new JoystickButton(m_operatorBoard, 7)
             .onTrue(new InstantCommand(
                 () -> m_algaeSubsystem.DeliverAlgae()));
 
-        new JoystickButton(m_operatorBoard, 3)
+        new JoystickButton(m_operatorBoard, 5)
             .onTrue(new InstantCommand(
                 () -> m_algaeSubsystem.StopIntake()));
 
-        new JoystickButton(m_operatorBoard, 4)
+        new JoystickButton(m_operatorBoard, 13)
             .onChange(new InstantCommand(
                 () -> m_algaeSubsystem.TogglePickup()));
 
-        new JoystickButton(m_operatorBoard, 6)
+        new JoystickButton(m_operatorBoard, 3)
             .onTrue(NamedCommands.getCommand("AlgaeReefPickupOne"));
 
-        new JoystickButton(m_operatorBoard, 7)
+        new JoystickButton(m_operatorBoard, 4)
             .onTrue(NamedCommands.getCommand("AlgaeReefPickupTwo"));
 
-        new JoystickButton(m_operatorBoard, 8)
+        new JoystickButton(m_operatorBoard, 2)
              .onTrue(NamedCommands.getCommand("AlgaeFloorPickup"));
             
-        new JoystickButton(m_operatorBoard, 14)
+        new JoystickButton(m_operatorBoard, 1)
             .onTrue(new InstantCommand(
-                () -> m_algaeSubsystem.ArmToPosition(0)));
+                () -> m_algaeSubsystem.ArmToPosition(0))); 
 
-        new JoystickButton(m_operatorBoard, 17)
+        new JoystickButton(m_operatorBoard, 11)
             .onTrue(new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
-        new JoystickButton(m_operatorBoard, 16)
-            .onTrue(new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
+        new JoystickButton(m_operatorBoard, 15)
+            .onTrue(new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorSlowSpeed));
 
-        new JoystickButton(m_operatorBoard, 5)
+        new JoystickButton(m_operatorBoard, 21)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed)));
 
-        new JoystickButton(m_operatorBoard, 11)
+        new JoystickButton(m_operatorBoard, 19)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.StopManipulator()));
 
-        new JoystickButton(m_operatorBoard, 12)
+        new JoystickButton(m_operatorBoard, 22)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(-ManipulatorConstants.kManipulatorHighSpeed))); 
         
-        new JoystickButton(m_operatorBoard, 15)
-            .onTrue(new InstantCommand(
+        new JoystickButton(m_operatorBoard, 12)
+            .onChange(new InstantCommand(
                 () -> m_elevatorSubsystem.overrideSensor())); 
 
         new JoystickButton(m_operatorBoard, 18)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.ElevatorToSetpoint(0)));
 
-        new JoystickButton(m_operatorBoard, 19)
+        new JoystickButton(m_operatorBoard, 17)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.ElevatorToSetpoint(1)));
 
-        new JoystickButton(m_operatorBoard, 20)
+        new JoystickButton(m_operatorBoard, 16)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.ElevatorToSetpoint(2)));
 
-        new JoystickButton(m_operatorBoard, 21)
+        new JoystickButton(m_operatorBoard, 14)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.ElevatorToSetpoint(3)));
 
-        new JoystickButton(m_operatorBoard, 22)
+        new JoystickButton(m_operatorBoard, 8)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.ElevatorToSetpoint(4)));
 
-        new JoystickButton(m_operatorBoard, 13)
+        new JoystickButton(m_operatorBoard, 20)
             .onTrue(new InstantCommand(
                 () -> m_elevatorSubsystem.ElevatorToSetpoint(6)));
         }
