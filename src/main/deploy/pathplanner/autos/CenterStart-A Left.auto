@@ -5,13 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Arm to 0"
-          }
-        },
-        {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -21,9 +15,22 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Level 4"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Level 4"
+                      }
+                    }
+                  ]
                 }
               }
             ]

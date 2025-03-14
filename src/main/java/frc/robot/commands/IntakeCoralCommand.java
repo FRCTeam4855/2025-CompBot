@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IntakeCoralCommand extends Command {
     
     ManipulatorSubsystem m_manipulator;
@@ -23,6 +24,7 @@ public class IntakeCoralCommand extends Command {
         if (m_manipulator.innerSensor && (currentSpeed != ManipulatorConstants.kManipulatorSlowSpeed)) {
             m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorSlowSpeed);
             currentSpeed = ManipulatorConstants.kManipulatorSlowSpeed;
+            SmartDashboard.putNumber("Intake Speed", currentSpeed);
         }
     }
 

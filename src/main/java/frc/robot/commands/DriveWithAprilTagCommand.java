@@ -40,8 +40,8 @@ public class DriveWithAprilTagCommand extends Command {
 	public void execute() {
 		driveSubsystem.drive(
 			-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
-			-MathUtil.applyDeadband(limelight.tagPose[0] * .5 + joystickLeft.getX() * .5, .02),
-			-MathUtil.applyDeadband(limelight.tagPose[5]/90.00 * 0.5 + joystickRight.getX() * 0.25, .05),
+			-MathUtil.applyDeadband(limelight.tagPose[0] * 0.5 + joystickLeft.getX() * .5, .02),
+			-MathUtil.applyDeadband(limelight.tagPose[5] * 0.5 + joystickRight.getX() * 0.25, .05),
 			false, true);
 	}
 
