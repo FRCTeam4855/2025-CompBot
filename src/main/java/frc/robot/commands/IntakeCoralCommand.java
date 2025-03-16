@@ -23,7 +23,7 @@ public class IntakeCoralCommand extends Command {
 
     @Override 
     public void execute() {
-        if (m_manipulator.innerSensor && (currentSpeed != ManipulatorConstants.kManipulatorSlowSpeed)) {
+        if (m_manipulator.outerSensor && (currentSpeed != ManipulatorConstants.kManipulatorSlowSpeed)) {
             m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorSlowSpeed);
             currentSpeed = ManipulatorConstants.kManipulatorSlowSpeed;
             SmartDashboard.putNumber("Intake Speed", currentSpeed);
