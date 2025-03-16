@@ -14,6 +14,7 @@ import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
 import frc.robot.commands.IntakeCoralCommand;
+import frc.robot.commands.IntakeCoralCommandClearJam;
 import frc.robot.commands.IsElevatorAtSetpointCommand;
 import frc.robot.commands.OutputCoralCommand;
 import frc.robot.commands.TimedLeftStrafeCommand;
@@ -70,7 +71,7 @@ public class RobotContainer {
             new InstantCommand(()-> m_elevatorSubsystem.ElevatorToSetpoint(4), m_elevatorSubsystem),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4)));
 
-        NamedCommands.registerCommand("Intake", new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
+        NamedCommands.registerCommand("Intake", new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
         NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
@@ -220,11 +221,11 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorBoard, 21)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed)));
+                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed), m_manipulator));
 
         new JoystickButton(m_operatorBoard, 19)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.StopManipulator()));
+                () -> m_manipulator.StopManipulator(), m_manipulator));
 
         new JoystickButton(m_operatorBoard, 22)
             .onTrue(new InstantCommand(

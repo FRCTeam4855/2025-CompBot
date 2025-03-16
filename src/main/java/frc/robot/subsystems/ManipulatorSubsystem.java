@@ -57,9 +57,7 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
 
     public void StopManipulator() {
-        stopManipulator = true;
         m_rightSparkMax.set(0);
-        //m_leftSparkMax.set(0);
     }
 
 }
