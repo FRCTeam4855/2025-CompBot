@@ -217,7 +217,7 @@ public class RobotContainer {
             .onTrue(new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
         new JoystickButton(m_operatorBoard, 15)
-            .onTrue(new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
+            .onTrue(new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorMedSpeed));
 
         new JoystickButton(m_operatorBoard, 21)
             .onTrue(new InstantCommand(

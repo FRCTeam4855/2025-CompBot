@@ -68,12 +68,12 @@ public final class Configs {
                     .idleMode(IdleMode.kCoast)
                     .inverted(false)
                     .closedLoopRampRate(.05)
-                    .smartCurrentLimit(40);
+                    .smartCurrentLimit(60);
                 rightElevatorConfig.encoder
                     .positionConversionFactor(1);
                 rightElevatorConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                    .pidf(0.5, 0, 0, 0)
+                    .pidf(0.25, 0, 0, 0)
                     .outputRange(-.4, 1)
                     .positionWrappingEnabled(false);
 
@@ -81,13 +81,13 @@ public final class Configs {
 
                 leftElevatorConfig
                     .idleMode(IdleMode.kCoast)
-                    .smartCurrentLimit(40)
+                    .smartCurrentLimit(60)
                     .closedLoopRampRate(.05)
                     .follow(9, true);
                 leftElevatorConfig.encoder
                     .positionConversionFactor(1);
                 leftElevatorConfig.closedLoop
-                    .pidf(0.5, 0, 0, 0)
+                    .pidf(0.25, 0, 0, 0)
                     .outputRange(-.4, 1)
                     .positionWrappingEnabled(false);
         }
@@ -144,7 +144,7 @@ public final class Configs {
             algaeArmConfig
                 .idleMode(IdleMode.kBrake)
                 .inverted(true)
-                .smartCurrentLimit(10);
+                .smartCurrentLimit(20);
             algaeArmConfig.encoder
                 .positionConversionFactor(360)
                 .velocityConversionFactor(360);

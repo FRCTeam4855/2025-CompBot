@@ -94,9 +94,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
     m_robotContainer.m_algaeSubsystem.ArmToPosition(0);
     m_robotContainer.m_elevatorSubsystem.ElevatorToSetpoint(0);
     m_robotContainer.fieldOriented = true;
