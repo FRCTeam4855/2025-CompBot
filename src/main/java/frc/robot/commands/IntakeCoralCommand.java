@@ -17,6 +17,7 @@ public class IntakeCoralCommand extends Command {
 
     @Override
     public void initialize() {
+        m_manipulator.stopManipulator = false;
         m_manipulator.RunManipulator(speed);
         currentSpeed = speed;
     }
@@ -33,6 +34,7 @@ public class IntakeCoralCommand extends Command {
     @Override
     public boolean isFinished() {
         if (m_manipulator.outerSensor && !m_manipulator.innerSensor) {
+            m_manipulator.StopManipulator();
             return true;
         } else {
             return false;

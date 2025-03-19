@@ -19,6 +19,7 @@ public class IntakeCoralCommandClearJam extends Command {
 
     @Override
     public void initialize() {
+        m_manipulator.stopManipulator = false;
         timer.reset();
         timer.start();
         m_manipulator.RunManipulator(speed);
