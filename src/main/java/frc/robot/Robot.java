@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
     FollowPathCommand.warmupCommand().schedule();
     DataLogManager.start();
     DriverStation.startDataLog(DataLogManager.getLog());
+    m_robotContainer.m_limelight.initialize();
   }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics

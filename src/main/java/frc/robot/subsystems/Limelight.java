@@ -8,11 +8,18 @@ public class Limelight extends SubsystemBase {
 
   public double[] tagPose;
   public double[] llPose;
-
   public Limelight() {
     LimelightHelpers.SetIMUMode("limelight", 1);
+    
+  }
+  public void setOffset(int multiplier) {
+    LimelightHelpers.setFiducial3DOffset("limelight", 1 * multiplier, 0, 0);
   }
 
+  public void initialize() {
+    LimelightHelpers.SetFidcuial3DOffset("limelight", 0, 0, 0);
+  }
+  
   @Override
   public void periodic() {
     tagPose = LimelightHelpers.getTargetPose_RobotSpace("limelight"); //tx = [0] ty = [1] tz = [2] roll = [3] pitch = [4] yaw = [5]
@@ -27,7 +34,7 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("Limelight Area", LimelightHelpers.getTA("limelight"));
     SmartDashboard.putBoolean("Limelight Has Target", LimelightHelpers.getTV("limelight"));
     SmartDashboard.putString("Limelight in AprilTag Mode", LimelightHelpers.getCurrentPipelineType("limelight"));
-
+    
     SmartDashboard.putNumber("p_tx", llPose[0]);
     SmartDashboard.putNumber("p_ty", llPose[1]);
     SmartDashboard.putNumber("p_yaw", llPose[5]);
