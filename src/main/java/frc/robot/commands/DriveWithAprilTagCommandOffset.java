@@ -7,9 +7,6 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Limelight;
 
-/**
- *
- */
 public class DriveWithAprilTagCommandOffset extends Command {
 
 	private DriveSubsystem driveSubsystem;
@@ -32,22 +29,28 @@ public class DriveWithAprilTagCommandOffset extends Command {
 	@Override
 	public void initialize() {
 		System.out.println("DriveWithAprilTagCommand Initialized");
-		if (leftBranch) {
-			limelight.setOffset(-1);
-		} else {
-			limelight.setOffset(1);
-		}
 	}
-
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	public void execute() {
-		driveSubsystem.drive(
-			-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
-			-MathUtil.applyDeadband(limelight.tagPose[0] * 0.5 + joystickLeft.getX() * .5, .01),
-			-MathUtil.applyDeadband(limelight.tagPose[4]/90 * 0.5 + joystickRight.getX() * 0.25, .02),
-			false, true);
+		if (limelight.limelightHasTarget) {
+			if (leftBranch) {
+			driveSubsystem.drive(
+				-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
+				-MathUtil.applyDeadband(limelight.tagPose[0] - .15, .01),
+				-MathUtil.applyDeadband(limelight.tagPose[4]/90 + joystickRight.getX() * 0.25, .02),
+				false, true);
+			} else {
+			driveSubsystem.drive(
+				-MathUtil.applyDeadband(joystickLeft.getY() * OIConstants.kSpeedMultiplierPrecise, JOYSTICK_AXIS_THRESHOLD),
+				-MathUtil.applyDeadband(limelight.tagPose[0] + .15, .01),
+				-MathUtil.applyDeadband(limelight.tagPose[4]/90 + joystickRight.getX() * 0.25, .02),
+				false, true);
+			}
+		} else {
+			System.out.println("!! No Valid Limelight Target !!");
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
