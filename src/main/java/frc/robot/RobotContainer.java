@@ -12,14 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.DriveWithAprilTagCommand;
 import frc.robot.commands.DriveWithAprilTagCommandOffset;
 import frc.robot.commands.IntakeCoralCommand;
 import frc.robot.commands.IntakeCoralCommandClearJam;
 import frc.robot.commands.IsElevatorAtSetpointCommand;
 import frc.robot.commands.OutputCoralCommand;
-import frc.robot.commands.TimedLeftStrafeCommand;
-import frc.robot.commands.TimedRightStrafeCommand;
 import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -53,7 +50,7 @@ public class RobotContainer {
     // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
     Joystick m_rightDriverController = new Joystick(OIConstants.kRightDriverControllerPort);
-    
+
     // The operator controllers
     //CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort1);
     GenericHID m_operatorBoard = new GenericHID(OIConstants.kOperatorControllerPort1);
@@ -78,7 +75,6 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("Arm to 0", new InstantCommand(
             () -> m_algaeSubsystem.ArmToPosition(0)));
-
 
         NamedCommands.registerCommand("AlgaeFloorPickup", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),
@@ -153,7 +149,7 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-    
+
         //Driver Controls
 
        new JoystickButton(m_leftDriverController,OIConstants.kJS_BB)
@@ -161,14 +157,6 @@ public class RobotContainer {
                 () -> m_robotDrive.setX(),
                 m_robotDrive));
 
-        // new JoystickButton(m_leftDriverController,OIConstants.kJS_LB)
-        //     .onTrue(new TimedLeftStrafeCommand(
-        //         m_robotDrive));
-
-        // new JoystickButton(m_leftDriverController,OIConstants.kJS_RB)
-        //     .onTrue(new TimedRightStrafeCommand(
-        //         m_robotDrive));
-       
         new JoystickButton(m_rightDriverController, OIConstants.kJS_RB).debounce(0.1)  //Gyro reset
             .whileTrue(new InstantCommand(
                 () -> m_robotDrive.zeroHeading(),
@@ -177,7 +165,7 @@ public class RobotContainer {
         new JoystickButton(m_rightDriverController, OIConstants.kJS_LB)  //Field oriented toggle
             .whileTrue(new InstantCommand(
                 () -> toggleFieldOriented()));
-        
+
         new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)  
             .whileTrue(new InstantCommand(  //Precise Driving Mode set
                 () -> speedMultiplier=OIConstants.kSpeedMultiplierPrecise)) 
@@ -194,7 +182,7 @@ public class RobotContainer {
 
         //Operator Controls
 
-         new JoystickButton(m_operatorBoard, 6) 
+        new JoystickButton(m_operatorBoard, 6) 
              .onTrue(new InstantCommand(
                  () -> m_algaeSubsystem.IntakeAlgae()));    
 
@@ -218,7 +206,7 @@ public class RobotContainer {
 
         new JoystickButton(m_operatorBoard, 2)
              .onTrue(NamedCommands.getCommand("AlgaeFloorPickup"));
-            
+
         new JoystickButton(m_operatorBoard, 1)
             .onTrue(new InstantCommand(
                 () -> m_algaeSubsystem.ArmToPosition(0))); 
@@ -240,7 +228,7 @@ public class RobotContainer {
         new JoystickButton(m_operatorBoard, 22)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.RunManipulator(-ManipulatorConstants.kManipulatorHighSpeed))); 
-        
+
         new JoystickButton(m_operatorBoard, 12)
             .onChange(new InstantCommand(
                 () -> m_elevatorSubsystem.overrideSensor())); 

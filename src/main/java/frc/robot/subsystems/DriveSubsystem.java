@@ -51,6 +51,8 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   RobotConfig config;
+  double autoGyroOffset = 0.0;
+  public boolean autoFlipped = false;
   // Create MAXSwerveModules
   private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
@@ -87,7 +89,6 @@ public class DriveSubsystem extends SubsystemBase {
 
   // Odometry class for tracking robot pose
   public SwerveDriveOdometry m_odometry;
-
   private Field2d m_field = new Field2d();  //4855
 
   private final SwerveDrivePoseEstimator m_poseEstimator =
@@ -165,7 +166,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return
    */
   private double getStdAngle() {
-    return m_gyro.getYaw()  * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return m_gyro.getAngle() + autoGyroOffset * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
   @Override
@@ -179,6 +180,12 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+
+      if (autoFlipped) {
+        autoGyroOffset = 180.0;
+      } else {
+        autoGyroOffset = 0.0;
+      }
     m_field.setRobotPose(m_odometry.getPoseMeters()); //4855
     SmartDashboard.putNumber("GyroAngle", Rotation2d.fromDegrees(getStdAngle()).getDegrees());
   }
@@ -236,7 +243,7 @@ public class DriveSubsystem extends SubsystemBase {
       } else {
         directionSlewRate = 500.0; //some high number that means the slew rate is effectively instantaneous
       }
-      
+
 
       double currentTime = WPIUtilJNI.now() * 1e-6;
       double elapsedTime = currentTime - m_prevTime;

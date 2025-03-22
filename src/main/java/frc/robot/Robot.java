@@ -67,13 +67,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {}
-  
+
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
 
     m_robotContainer.m_robotDrive.resetPose(new Pose2d(m_robotContainer.m_limelight.llPose[0], m_robotContainer.m_limelight.llPose[1], Rotation2d.fromDegrees(m_robotContainer.m_limelight.llPose[5])));
-    
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();//m_autoSelectedString);
 
     LimelightHelpers.SetIMUMode("limelight", 2); // Set IMU to 2D mode
@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    m_robotContainer.m_robotDrive.autoFlipped = true;
 
     m_robotContainer.m_lights.setLEDs(LightsConstants.C1_HEARTBEAT_SLOW);
   }
@@ -96,11 +97,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    
+
     m_robotContainer.m_algaeSubsystem.ArmToPosition(0);
     m_robotContainer.m_elevatorSubsystem.ElevatorToSetpoint(0);
     m_robotContainer.fieldOriented = true;

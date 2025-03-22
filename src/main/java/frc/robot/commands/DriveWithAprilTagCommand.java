@@ -7,9 +7,6 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Limelight;
 
-/**
- *
- */
 public class DriveWithAprilTagCommand extends Command {
 
 	private DriveSubsystem driveSubsystem;
