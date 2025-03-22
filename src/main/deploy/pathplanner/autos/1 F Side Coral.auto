@@ -38,7 +38,7 @@
       ]
     }
   },
-  "resetOdom": true,
-  "folder": null,
+  "resetOdom": false,
+  "folder": "Reliable",
   "choreoAuto": false
 }

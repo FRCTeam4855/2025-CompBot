@@ -173,7 +173,7 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final double[] elevatorPos = { .75, 9.36, 16.0, 33.0, 58.0, 45.0, 4.0, 0.0 };
+    public static final double[] elevatorPos = { .75, 9.36, 15.5, 33.0, 59.0, 45.0, 4.0, 0.0 };
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
     public static final double kElevatorConstantsGravityFF = .6;
@@ -183,6 +183,7 @@ public final class Constants {
     public static final int kRightManipulatorCanId = 11;
     public static final int kLeftManipulatorCanId = 12;
     public static final double kManipulatorSlowSpeed = 0.3;
+    public static final double kManipulatorMedSpeed = .75;
     public static final double kManipulatorHighSpeed = 1;
   }
 

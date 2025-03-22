@@ -47,7 +47,11 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
 
     public boolean isElevatorClear() {
-        return !innerSensor;
+        if (innerSensor || !stopManipulator) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void RunManipulator(double speed) {
@@ -57,9 +61,8 @@ public class ManipulatorSubsystem extends SubsystemBase {
     }
 
     public void StopManipulator() {
-        stopManipulator = true;
         m_rightSparkMax.set(0);
-        //m_leftSparkMax.set(0);
+        stopManipulator = true;
     }
 
 }

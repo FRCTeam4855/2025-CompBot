@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.LightsConstants;
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
     FollowPathCommand.warmupCommand().schedule();
     DataLogManager.start();
     DriverStation.startDataLog(DataLogManager.getLog());
+    m_robotContainer.m_limelight.initialize();
   }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -94,9 +96,11 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
     m_robotContainer.m_algaeSubsystem.ArmToPosition(0);
     m_robotContainer.m_elevatorSubsystem.ElevatorToSetpoint(0);
     m_robotContainer.fieldOriented = true;

@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveWithAprilTagCommand;
+import frc.robot.commands.DriveWithAprilTagCommandOffset;
 import frc.robot.commands.IntakeCoralCommand;
+import frc.robot.commands.IntakeCoralCommandClearJam;
 import frc.robot.commands.IsElevatorAtSetpointCommand;
 import frc.robot.commands.OutputCoralCommand;
 import frc.robot.commands.TimedLeftStrafeCommand;
@@ -70,7 +72,7 @@ public class RobotContainer {
             new InstantCommand(()-> m_elevatorSubsystem.ElevatorToSetpoint(4), m_elevatorSubsystem),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4)));
 
-        NamedCommands.registerCommand("Intake", new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
+        NamedCommands.registerCommand("Intake", new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
         NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
@@ -129,6 +131,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("DeliverCoral", new SequentialCommandGroup(
             new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
+        
+        NamedCommands.registerCommand("ElevatorToZero", new SequentialCommandGroup(
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(1)),
+            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 1),
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         configureButtonBindings();
 
@@ -154,13 +161,13 @@ public class RobotContainer {
                 () -> m_robotDrive.setX(),
                 m_robotDrive));
 
-        new JoystickButton(m_leftDriverController,OIConstants.kJS_LB)
-            .onTrue(new TimedLeftStrafeCommand(
-                m_robotDrive));
+        // new JoystickButton(m_leftDriverController,OIConstants.kJS_LB)
+        //     .onTrue(new TimedLeftStrafeCommand(
+        //         m_robotDrive));
 
-        new JoystickButton(m_leftDriverController,OIConstants.kJS_RB)
-            .onTrue(new TimedRightStrafeCommand(
-                m_robotDrive));
+        // new JoystickButton(m_leftDriverController,OIConstants.kJS_RB)
+        //     .onTrue(new TimedRightStrafeCommand(
+        //         m_robotDrive));
        
         new JoystickButton(m_rightDriverController, OIConstants.kJS_RB).debounce(0.1)  //Gyro reset
             .whileTrue(new InstantCommand(
@@ -177,9 +184,13 @@ public class RobotContainer {
             .whileFalse(new InstantCommand( //Precise Driving Mode clear
                 () -> speedMultiplier=OIConstants.kSpeedMultiplierDefault));
 
-        new JoystickButton(m_rightDriverController, OIConstants.kJS_Trigger)
-            .whileTrue(new DriveWithAprilTagCommand(
-                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController));
+        new JoystickButton(m_leftDriverController, OIConstants.kJS_LB)
+            .whileTrue(new DriveWithAprilTagCommandOffset(
+                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, true));
+
+        new JoystickButton(m_leftDriverController, OIConstants.kJS_RB)
+            .whileTrue(new DriveWithAprilTagCommandOffset(
+                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, false));
 
         //Operator Controls
 
@@ -216,15 +227,15 @@ public class RobotContainer {
             .onTrue(new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
 
         new JoystickButton(m_operatorBoard, 15)
-            .onTrue(new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
+            .onTrue(new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorMedSpeed));
 
         new JoystickButton(m_operatorBoard, 21)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed)));
+                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed), m_manipulator));
 
         new JoystickButton(m_operatorBoard, 19)
             .onTrue(new InstantCommand(
-                () -> m_manipulator.StopManipulator()));
+                () -> m_manipulator.StopManipulator(), m_manipulator));
 
         new JoystickButton(m_operatorBoard, 22)
             .onTrue(new InstantCommand(
@@ -235,8 +246,7 @@ public class RobotContainer {
                 () -> m_elevatorSubsystem.overrideSensor())); 
 
         new JoystickButton(m_operatorBoard, 18)
-            .onTrue(new InstantCommand(
-                () -> m_elevatorSubsystem.ElevatorToSetpoint(0)));
+            .onTrue(NamedCommands.getCommand("ElevatorToZero"));
 
         new JoystickButton(m_operatorBoard, 17)
             .onTrue(new InstantCommand(

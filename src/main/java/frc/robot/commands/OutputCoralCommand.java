@@ -13,6 +13,7 @@ public class OutputCoralCommand extends Command {
 
     @Override
     public void initialize() {
+        m_manipulator.stopManipulator = false;
         m_manipulator.RunManipulator(speed);
     }
 

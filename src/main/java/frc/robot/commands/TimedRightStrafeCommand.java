@@ -15,7 +15,7 @@ public class TimedRightStrafeCommand extends Command {
     @Override
     public void initialize() {
         new RunCommand(() -> drive.strafeRight())
-        .raceWith(new WaitCommand(.4))
+        .raceWith(new WaitCommand(.5))
         .schedule();
     }
     @Override
