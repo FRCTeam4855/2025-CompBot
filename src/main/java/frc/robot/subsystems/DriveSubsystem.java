@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.LimelightHelpers;
 import frc.utils.SwerveUtils;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
@@ -32,9 +31,11 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 
-public class DriveSubsystem extends SubsystemBase {
+public class DriveSubsystem extends Subsystem {
 
   /**
    * Returns the robot-relative speeds.
@@ -104,6 +105,27 @@ public class DriveSubsystem extends SubsystemBase {
           new Pose2d(),
           VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
           VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
+
+  @Override
+  public void robotInit() {
+    DataLogManager.log("DriveSubsystem in robotInit");
+  }
+
+  @Override
+  public void autonomousInit() {
+    DataLogManager.log("DriveSubsystem in autonomousInit");
+    autoFlipped = true;
+  }
+
+  @Override
+  public void teleopInit() {
+    DataLogManager.log("DriveSubsystem in teleopInit");
+    if (autoFlipped) {
+      autoGyroOffset = 180.0;
+    } else {
+      autoGyroOffset = 0.0;
+    }
+  }
   
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -163,10 +185,13 @@ public class DriveSubsystem extends SubsystemBase {
   /**
    * Since the NavX gyro's Z axis is reversed, this method is needed to change
    * it's output to match the standard response expected by the swerve code.
+   * The autoGyroOffset is used to flip the gyro 180 degrees if the robot has
+   * run in autonomous mode since the auto alignment location resets the gyro
+   * opposite to the desired initialization for teleop.
    * @return
    */
   private double getStdAngle() {
-    return m_gyro.getAngle() + autoGyroOffset * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return (m_gyro.getAngle() + autoGyroOffset) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
   @Override
@@ -181,11 +206,8 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
 
-      if (autoFlipped) {
-        autoGyroOffset = 180.0;
-      } else {
-        autoGyroOffset = 0.0;
-      }
+    updateOdometry();
+      
     m_field.setRobotPose(m_odometry.getPoseMeters()); //4855
     SmartDashboard.putNumber("GyroAngle", Rotation2d.fromDegrees(getStdAngle()).getDegrees());
   }
@@ -314,6 +336,13 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(0)));
   }
 
+  public void forAft(double speed) {
+    m_frontLeft.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_frontRight.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_rearLeft.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+    m_rearRight.setDesiredState(new SwerveModuleState(speed, Rotation2d.fromDegrees(0)));
+  }
+
   public void strafeLeft() {
     m_frontLeft.setDesiredState(new SwerveModuleState(.5, Rotation2d.fromDegrees(90)));
     m_frontRight.setDesiredState(new SwerveModuleState(.5, Rotation2d.fromDegrees(90)));
@@ -368,7 +397,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    m_gyro.zeroYaw();
+    m_gyro.reset();
+    autoFlipped = false;
+    autoGyroOffset = 0.0;
   }
 
   /**

@@ -8,12 +8,13 @@ import com.revrobotics.spark.SparkClosedLoopController.ArbFFUnits;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
 import frc.robot.Constants.ElevatorConstants;
 
-public class ElevatorSubsystem extends SubsystemBase {
+public class ElevatorSubsystem extends Subsystem {
 
     public final ManipulatorSubsystem m_manipulator;
     public final SparkFlex rightSpark;
@@ -23,6 +24,22 @@ public class ElevatorSubsystem extends SubsystemBase {
     public final SparkClosedLoopController rightPIDController;
     public final SparkClosedLoopController leftPIDController;
     public boolean sensorOverride = false;
+
+    @Override
+    public void robotInit() {
+        DataLogManager.log("ElevatorSubsystem in robotInit");
+    }
+
+    @Override
+    public void autonomousInit() {
+        DataLogManager.log("ElevatorSubsystem in autonomousInit");
+    }
+
+    @Override
+    public void teleopInit() {
+        DataLogManager.log("ElevatorSubsystem in teleopInit");
+        ElevatorToSetpoint(0);
+    }
 
     public ElevatorSubsystem(ManipulatorSubsystem m_manipulator) {
         this.m_manipulator = m_manipulator;

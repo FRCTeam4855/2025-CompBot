@@ -3,15 +3,16 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Configs;
 import frc.robot.Constants.ManipulatorConstants;
 
-public class ManipulatorSubsystem extends SubsystemBase {
+public class ManipulatorSubsystem extends Subsystem {
 
     public final SparkMax m_rightSparkMax;
     public final SparkMax m_leftSparkMax;
@@ -23,8 +24,23 @@ public class ManipulatorSubsystem extends SubsystemBase {
     public boolean useSensor;
     public boolean coralSensor;
     public boolean stopManipulator = false;
-    public ManipulatorSubsystem() {
 
+    @Override
+    public void robotInit() {
+        DataLogManager.log("ManipulatorSubsystem in robotInit");
+    }
+
+    @Override
+    public void autonomousInit() {
+        DataLogManager.log("ManipulatorSubsystem in autonomousInit");
+    }
+
+    @Override
+        public void teleopInit() {
+        DataLogManager.log("ManipulatorSubsystem in teleopInit");
+    }
+
+    public ManipulatorSubsystem() {
         m_rightSparkMax = new SparkMax(ManipulatorConstants.kRightManipulatorCanId, MotorType.kBrushless);
         m_leftSparkMax = new SparkMax(ManipulatorConstants.kLeftManipulatorCanId, MotorType.kBrushless);
         rightPIDController = m_rightSparkMax.getClosedLoopController();

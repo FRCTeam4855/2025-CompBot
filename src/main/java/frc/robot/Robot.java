@@ -4,19 +4,20 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.pathplanner.lib.commands.FollowPathCommand;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.LightsConstants;
+import frc.robot.subsystems.Subsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,20 +28,31 @@ import frc.robot.Constants.LightsConstants;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
+  List<Subsystem> m_allSubsystems = new ArrayList<>();
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
+    DataLogManager.start();
+    DriverStation.startDataLog(DataLogManager.getLog());
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     FollowPathCommand.warmupCommand().schedule();
-    DataLogManager.start();
-    DriverStation.startDataLog(DataLogManager.getLog());
-    m_robotContainer.m_limelight.initialize();
+
+    //Add all subsystems to the list
+    m_allSubsystems.add(m_robotContainer.m_robotDrive);
+    m_allSubsystems.add(m_robotContainer.m_limelight);
+    m_allSubsystems.add(m_robotContainer.m_lights);
+    m_allSubsystems.add(m_robotContainer.m_algaeSubsystem);
+    m_allSubsystems.add(m_robotContainer.m_elevatorSubsystem);
+    m_allSubsystems.add(m_robotContainer.m_manipulator);
+
+    m_allSubsystems.forEach(subsystem -> subsystem.robotInit());
   }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -58,7 +70,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    m_robotContainer.m_robotDrive.updateOdometry();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -67,24 +78,20 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {}
-
+  
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_allSubsystems.forEach(subsystem -> subsystem.autonomousInit());
 
     m_robotContainer.m_robotDrive.resetPose(new Pose2d(m_robotContainer.m_limelight.llPose[0], m_robotContainer.m_limelight.llPose[1], Rotation2d.fromDegrees(m_robotContainer.m_limelight.llPose[5])));
 
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();//m_autoSelectedString);
-
-    LimelightHelpers.SetIMUMode("limelight", 2); // Set IMU to 2D mode
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    m_robotContainer.m_robotDrive.autoFlipped = true;
-
-    m_robotContainer.m_lights.setLEDs(LightsConstants.C1_HEARTBEAT_SLOW);
   }
 
   /** This function is called periodically during autonomous. */
@@ -102,10 +109,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    m_robotContainer.m_algaeSubsystem.ArmToPosition(0);
-    m_robotContainer.m_elevatorSubsystem.ElevatorToSetpoint(0);
     m_robotContainer.fieldOriented = true;
-    m_robotContainer.m_lights.setLEDs(LightsConstants.C1_AND_C2_SINELON);
     if (m_robotContainer.m_limelight.llPose[0] != 0) {
       m_robotContainer.m_robotDrive.resetPose(new Pose2d(m_robotContainer.m_limelight.llPose[0], m_robotContainer.m_limelight.llPose[1], Rotation2d.fromDegrees(m_robotContainer.m_limelight.llPose[5])));
     }

@@ -6,12 +6,13 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AlgaeConstants;
 import frc.robot.Configs;
 
-public class AlgaeSubsystem extends SubsystemBase {
+public class AlgaeSubsystem extends Subsystem {
 
     public final SparkMax m_intakeSparkMax;
     public final SparkMax m_armSparkMax;
@@ -19,6 +20,22 @@ public class AlgaeSubsystem extends SubsystemBase {
     public final SparkClosedLoopController m_intakePIDController;
     public final SparkClosedLoopController m_armPIDController;
     private boolean floorPickup;
+
+    @Override
+    public void robotInit() {
+        DataLogManager.log("AlgaeSubsystem in robotInit");
+    }
+
+    @Override
+    public void autonomousInit() {
+        DataLogManager.log("AlgaeSubsystem in autonomousInit");
+    }
+
+    @Override
+    public void teleopInit() {
+        DataLogManager.log("AlgaeSubsystem in teleopInit");
+        ArmToPosition(0);
+    }
 
     public AlgaeSubsystem() {
         

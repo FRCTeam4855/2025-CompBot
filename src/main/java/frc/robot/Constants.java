@@ -134,6 +134,8 @@ public final class Constants {
     public static final int kJS_RB = 4;
     public static final int kJS_BB = 2;
     public static final int kJS_LB = 3;
+    public static final int kJS_LBLB = 10;
+    public static final int kJS_RBRB = 16;
     public static final double kSpeedMultiplierDefault = 1;   // the default speed when no accessory buttons are held down
     public static final double kSpeedMultiplierPrecise = 0.5; // the speed when the trigger is held down for precise movements
 
@@ -295,5 +297,22 @@ public final class Constants {
     public final static double GRAY = .95;
     public final static double DARK_GRAY = .97;
     public final static double BLACK = .99;
+  }
+  
+  public static final class ReefAlignConstants {
+    //public static final double X_REEF_ALIGNMENT_P = 2.5;
+	  //public static final double Y_REEF_ALIGNMENT_P = 4.5;
+    public static final double X_REEF_ALIGNMENT_P = 0.7;
+	  public static final double Y_REEF_ALIGNMENT_P = 1.0;
+	  //public static final double ROT_REEF_ALIGNMENT_P = 0.058;
+    public static final double ROT_REEF_ALIGNMENT_P = 0.022;
+	  public static final double ROT_SETPOINT_REEF_ALIGNMENT = 0;  // Rotation
+	  public static final double ROT_TOLERANCE_REEF_ALIGNMENT = 0.65;
+	  public static final double X_SETPOINT_REEF_ALIGNMENT = -0.4;  // Vertical pose
+	  public static final double X_TOLERANCE_REEF_ALIGNMENT = 0.5;
+	  public static final double Y_SETPOINT_REEF_ALIGNMENT = 0.16;  // Horizontal pose
+	  public static final double Y_TOLERANCE_REEF_ALIGNMENT = 0.05;
+	  public static final double DONT_SEE_TAG_WAIT_TIME = 0.2;
+	  public static final double POSE_VALIDATION_TIME = 0.3;
   }
 }

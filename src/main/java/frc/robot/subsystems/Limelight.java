@@ -1,14 +1,34 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 
-public class Limelight extends SubsystemBase {
+public class Limelight extends Subsystem {
 
   public double[] tagPose;
   public double[] llPose;
   public boolean limelightHasTarget;
+
+  @Override
+  public void robotInit() {
+    DataLogManager.log("LimelightSubsystem in robotInit");
+    initialize();
+  }
+
+  @Override
+  public void autonomousInit() {
+    DataLogManager.log("LimelightSubsystem in autonomousInit");
+
+    LimelightHelpers.SetIMUMode("limelight", 2); // Set IMU to 2D mode
+  }
+
+  @Override
+  public void teleopInit() {
+    DataLogManager.log("LimelightSubsystem in teleopInit");
+    LimelightHelpers.SetIMUMode("limelight", 2); // Set IMU to 2D mode
+  }
+
   public Limelight() {
     LimelightHelpers.SetIMUMode("limelight", 1);
     
