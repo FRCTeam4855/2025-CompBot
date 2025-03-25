@@ -74,9 +74,9 @@ public class RobotContainer {
             new InstantCommand(()-> m_elevatorSubsystem.ElevatorToSetpoint(4), m_elevatorSubsystem),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4)));
 
-        NamedCommands.registerCommand("Intake", new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
+        NamedCommands.registerCommand("Intake", new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights));
 
-        NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed));
+        NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights));
 
         NamedCommands.registerCommand("Arm to 0", new InstantCommand(
             () -> m_algaeSubsystem.ArmToPosition(0)));
@@ -104,33 +104,33 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutoDeliverLevelOne", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(1)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 1),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelTwo", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(2)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 2),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelThree", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(3)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 3),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelFour", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(4)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("IntakeCoral", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),
-            new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed)));
+            new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights)));
 
         NamedCommands.registerCommand("DeliverCoral", new SequentialCommandGroup(
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed),
+            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
         
         NamedCommands.registerCommand("ElevatorToZero", new SequentialCommandGroup(
@@ -139,13 +139,13 @@ public class RobotContainer {
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("Align Left Reef Branch", new SequentialCommandGroup(
-            new AlignToReefTagRelative(false, m_robotDrive),
+            new AlignToReefTagRelative(false, m_robotDrive, m_lights),
             new PushAgainstElement(m_robotDrive, .25, 0.25),
             new InstantCommand(() -> DataLogManager.log("Left reef alignment completed"))
                     ));
 
         NamedCommands.registerCommand("Align Right Reef Branch", new SequentialCommandGroup(
-            new AlignToReefTagRelative(true, m_robotDrive),
+            new AlignToReefTagRelative(true, m_robotDrive, m_lights),
             new PushAgainstElement(m_robotDrive, 0.25, 0.25),
             new InstantCommand(() -> DataLogManager.log("Right reef alignment completed"))
             ));
@@ -199,12 +199,12 @@ public class RobotContainer {
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_LB)
             .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, true).alongWith(
+                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, true, m_lights).alongWith(
                     new InstantCommand(() -> DataLogManager.log("L Driver JS_LB (DriveAprilTagL) pressed"))));
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_RB)
             .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, false).alongWith(
+                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, false, m_lights).alongWith(
                     new InstantCommand(() -> DataLogManager.log("L Driver JS_RB (DriveAprilTagR) pressed"))));
 
         new JoystickButton(m_rightDriverController, OIConstants.kJS_LBLB)
@@ -255,11 +255,11 @@ public class RobotContainer {
                     new InstantCommand(() -> DataLogManager.log("BB1 (Algae ArmToPos0) pressed")))); 
 
         new JoystickButton(m_operatorBoard, 11)
-            .onTrue(new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed).alongWith(
+            .onTrue(new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights).alongWith(
                 new InstantCommand(() -> DataLogManager.log("BB11 (OutputCoral) pressed"))));
 
         new JoystickButton(m_operatorBoard, 15)
-            .onTrue(new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorMedSpeed).alongWith(
+            .onTrue(new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorMedSpeed, m_lights).alongWith(
                 new InstantCommand(() -> DataLogManager.log("BB15 (IntakeCoral) pressed"))));
 
         new JoystickButton(m_operatorBoard, 21)

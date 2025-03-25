@@ -17,7 +17,7 @@ public class LightsSubsystem extends Subsystem {
     @Override
     public void autonomousInit() {
         DataLogManager.log("LightsSubsystem in autonomousInit");
-        setLEDs(LightsConstants.C1_HEARTBEAT_SLOW);
+        setLEDs(LightsConstants.C1_AND_C2_TWINKLES);
     }
 
     @Override

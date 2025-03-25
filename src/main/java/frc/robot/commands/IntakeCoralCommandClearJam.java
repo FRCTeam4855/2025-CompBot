@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.ManipulatorConstants;
+import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,9 +12,11 @@ public class IntakeCoralCommandClearJam extends Command {
     ManipulatorSubsystem m_manipulator;
     private double speed, currentSpeed;
     private Timer timer;
-    public IntakeCoralCommandClearJam(ManipulatorSubsystem m_manipulator, double speed) {
+    private LightsSubsystem lights;
+    public IntakeCoralCommandClearJam(ManipulatorSubsystem m_manipulator, double speed, LightsSubsystem lights) {
         this.m_manipulator = m_manipulator;
         this.speed = speed;
+        this.lights = lights;
         timer = new Timer();
         addRequirements(m_manipulator);
     }
@@ -47,6 +51,7 @@ public class IntakeCoralCommandClearJam extends Command {
     public boolean isFinished() {
             if (m_manipulator.outerSensor && !m_manipulator.innerSensor){
             m_manipulator.StopManipulator();
+            lights.setLEDs(LightsConstants.GREEN);
             return true;
         } else {
             return false;

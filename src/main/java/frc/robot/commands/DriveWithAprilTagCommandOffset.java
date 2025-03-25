@@ -3,8 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.Limelight;
 
 public class DriveWithAprilTagCommandOffset extends Command {
@@ -13,14 +15,16 @@ public class DriveWithAprilTagCommandOffset extends Command {
 	private Limelight limelight;
 	private Joystick joystickLeft, joystickRight;
 	private boolean leftBranch;
+	private LightsSubsystem lights;
 	public static final double JOYSTICK_AXIS_THRESHOLD = 0.15;
 
-	public DriveWithAprilTagCommandOffset(DriveSubsystem driveSubsystem, Limelight limelight, Joystick joystickLeft, Joystick joystickRight, boolean leftBranch) {
+	public DriveWithAprilTagCommandOffset(DriveSubsystem driveSubsystem, Limelight limelight, Joystick joystickLeft, Joystick joystickRight, boolean leftBranch, LightsSubsystem lights) {
 		this.driveSubsystem = driveSubsystem;
 		this.limelight = limelight;
 		this.joystickLeft = joystickLeft;
 		this.joystickRight = joystickRight;
 		this.leftBranch = leftBranch;
+		this.lights = lights;
 		addRequirements(driveSubsystem);
 		addRequirements(limelight);
 	}
@@ -63,6 +67,7 @@ public class DriveWithAprilTagCommandOffset extends Command {
 	@Override
 	public void end(boolean interrupted) {
 		System.out.println("driveSubsystemDriveUsingAprilTaglimelight: end");
+		lights.setLEDs(LightsConstants.C1_STROBE);
 		driveSubsystem.setStop();
 	}
 }

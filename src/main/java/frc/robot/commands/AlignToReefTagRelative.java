@@ -11,21 +11,25 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.LightsConstants;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LightsSubsystem;
 
 public class AlignToReefTagRelative extends Command {
     private PIDController xController, yController, rotController;
     private boolean isRightScore;
     private Timer dontSeeTagTimer, stopTimer;
     private DriveSubsystem drivebase;
+    private LightsSubsystem lights;
 
-    public AlignToReefTagRelative(boolean isRightScore, DriveSubsystem drivebase) {
+    public AlignToReefTagRelative(boolean isRightScore, DriveSubsystem drivebase, LightsSubsystem lights) {
         xController = new PIDController(Constants.ReefAlignConstants.X_REEF_ALIGNMENT_P, 0, 0);  // Vertical movement
         yController = new PIDController(Constants.ReefAlignConstants.Y_REEF_ALIGNMENT_P, 0, 0);  // Horitontal movement
         rotController = new PIDController(Constants.ReefAlignConstants.ROT_REEF_ALIGNMENT_P, 0, 0);  // Rotation 
         this.isRightScore = isRightScore; 
         this.drivebase = drivebase; 
+        this.lights = lights;
         addRequirements(drivebase); 
     }
 
@@ -86,6 +90,7 @@ public class AlignToReefTagRelative extends Command {
     @Override
     public void end(boolean interrupted) {
         drivebase.drive(new Translation2d(), 0, false); 
+        lights.setLEDs(LightsConstants.C1_STROBE);
     }
  
     @Override 
