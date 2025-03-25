@@ -62,6 +62,8 @@ public class ElevatorSubsystem extends Subsystem {
         SmartDashboard.putBoolean("Elevator Clear", m_manipulator.isElevatorClear());
         SmartDashboard.putNumber("Right Elevator Pos", rightEncoder.getPosition());
         SmartDashboard.putNumber("Left Elevator Pos", leftEncoder.getPosition());
+        SmartDashboard.putNumber("Right Elevator Output I", rightSpark.getOutputCurrent());
+        SmartDashboard.putNumber("Left Elevator Output I", leftSpark.getOutputCurrent());
     }
 
     public void ElevatorToSetpoint(int goalSetpoint) {
