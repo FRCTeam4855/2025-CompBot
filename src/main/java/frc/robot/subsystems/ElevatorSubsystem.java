@@ -16,7 +16,7 @@ import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends Subsystem {
 
-    public final ManipulatorSubsystem m_manipulator;
+    private final ManipulatorSubsystem m_manipulator = ManipulatorSubsystem.getInstance();
     public final SparkFlex rightSpark;
     public final SparkFlex leftSpark;
     public final RelativeEncoder rightEncoder;
@@ -41,8 +41,16 @@ public class ElevatorSubsystem extends Subsystem {
         ElevatorToSetpoint(0);
     }
 
-    public ElevatorSubsystem(ManipulatorSubsystem m_manipulator) {
-        this.m_manipulator = m_manipulator;
+    private static ElevatorSubsystem mInstance;
+    public static ElevatorSubsystem getInstance() {
+      if (mInstance == null) {
+        mInstance = new ElevatorSubsystem();
+      }
+      return mInstance;
+    }
+  
+
+    public ElevatorSubsystem() {
 
         rightSpark = new SparkFlex(ElevatorConstants.kRightElevatorCanId, MotorType.kBrushless);
         leftSpark = new SparkFlex(ElevatorConstants.kLeftElevatorCanId, MotorType.kBrushless);

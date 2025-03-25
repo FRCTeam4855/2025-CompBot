@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.LimelightHelpers;
+import frc.robot.RobotContainer;
 import frc.utils.SwerveUtils;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
@@ -92,6 +93,8 @@ public class DriveSubsystem extends Subsystem {
   public SwerveDriveOdometry m_odometry;
   private Field2d m_field = new Field2d();  //4855
 
+  private final Limelight m_limelight = Limelight.getInstance();
+
   private final SwerveDrivePoseEstimator m_poseEstimator =
       new SwerveDrivePoseEstimator(
           DriveConstants.kDriveKinematics,
@@ -115,11 +118,18 @@ public class DriveSubsystem extends Subsystem {
   public void autonomousInit() {
     DataLogManager.log("DriveSubsystem in autonomousInit");
     autoFlipped = true;
+    resetPose(new Pose2d(m_limelight.llPose[0], m_limelight.llPose[1], Rotation2d.fromDegrees(m_limelight.llPose[5])));
   }
 
   @Override
   public void teleopInit() {
     DataLogManager.log("DriveSubsystem in teleopInit");
+
+    RobotContainer.fieldOriented = true;
+    if (m_limelight.llPose[0] != 0) {
+      resetPose(new Pose2d(m_limelight.llPose[0], m_limelight.llPose[1], Rotation2d.fromDegrees(m_limelight.llPose[5])));
+    }
+
     if (autoFlipped) {
       autoGyroOffset = 180.0;
     } else {
@@ -127,6 +137,14 @@ public class DriveSubsystem extends Subsystem {
     }
   }
   
+  private static DriveSubsystem mInstance;
+  public static DriveSubsystem getInstance() {
+    if (mInstance == null) {
+      mInstance = new DriveSubsystem();
+    }
+    return mInstance;
+  }
+
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
 

@@ -9,14 +9,18 @@ import java.util.List;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.AlgaeSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LightsSubsystem;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Subsystem;
 
 /**
@@ -45,12 +49,12 @@ public class Robot extends TimedRobot {
     FollowPathCommand.warmupCommand().schedule();
 
     //Add all subsystems to the list
-    m_allSubsystems.add(m_robotContainer.m_robotDrive);
-    m_allSubsystems.add(m_robotContainer.m_limelight);
-    m_allSubsystems.add(m_robotContainer.m_lights);
-    m_allSubsystems.add(m_robotContainer.m_algaeSubsystem);
-    m_allSubsystems.add(m_robotContainer.m_elevatorSubsystem);
-    m_allSubsystems.add(m_robotContainer.m_manipulator);
+    m_allSubsystems.add(DriveSubsystem.getInstance());
+    m_allSubsystems.add(Limelight.getInstance());
+    m_allSubsystems.add(LightsSubsystem.getInstance());
+    m_allSubsystems.add(AlgaeSubsystem.getInstance());
+    m_allSubsystems.add(ElevatorSubsystem.getInstance());
+    m_allSubsystems.add(ManipulatorSubsystem.getInstance());
 
     m_allSubsystems.forEach(subsystem -> subsystem.robotInit());
   }
@@ -63,7 +67,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putBoolean("Field Oriented", m_robotContainer.fieldOriented);
+    SmartDashboard.putBoolean("Field Oriented", RobotContainer.fieldOriented);
 
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
@@ -84,11 +88,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_allSubsystems.forEach(subsystem -> subsystem.autonomousInit());
 
-    m_robotContainer.m_robotDrive.resetPose(new Pose2d(m_robotContainer.m_limelight.llPose[0], m_robotContainer.m_limelight.llPose[1], Rotation2d.fromDegrees(m_robotContainer.m_limelight.llPose[5])));
-
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    // schedule the autonomous command (example)
+    // schedule the autonomous command
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -107,11 +108,6 @@ public class Robot extends TimedRobot {
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
-    }
-
-    m_robotContainer.fieldOriented = true;
-    if (m_robotContainer.m_limelight.llPose[0] != 0) {
-      m_robotContainer.m_robotDrive.resetPose(new Pose2d(m_robotContainer.m_limelight.llPose[0], m_robotContainer.m_limelight.llPose[1], Rotation2d.fromDegrees(m_robotContainer.m_limelight.llPose[5])));
     }
   }
 

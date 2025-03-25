@@ -37,6 +37,14 @@ public class AlgaeSubsystem extends Subsystem {
         ArmToPosition(0);
     }
 
+    private static AlgaeSubsystem mInstance;
+    public static AlgaeSubsystem getInstance() {
+      if (mInstance == null) {
+        mInstance = new AlgaeSubsystem();
+      }
+      return mInstance;
+    }
+
     public AlgaeSubsystem() {
         
         m_intakeSparkMax = new SparkMax(AlgaeConstants.kIntakeCanId, MotorType.kBrushless);

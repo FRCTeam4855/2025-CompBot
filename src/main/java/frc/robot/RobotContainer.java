@@ -44,12 +44,12 @@ import com.pathplanner.lib.auto.NamedCommands;
 public class RobotContainer {
 
     // The robot's subsystems
-    public final DriveSubsystem m_robotDrive = new DriveSubsystem();
-    public final LightsSubsystem m_lights = new LightsSubsystem();
-    public Limelight m_limelight = new Limelight();
-    public final ManipulatorSubsystem m_manipulator = new ManipulatorSubsystem();
-    public final ElevatorSubsystem m_elevatorSubsystem = new ElevatorSubsystem(m_manipulator);
-    public final AlgaeSubsystem m_algaeSubsystem = new AlgaeSubsystem();
+    public final DriveSubsystem m_robotDrive = DriveSubsystem.getInstance();
+    public final LightsSubsystem m_lights = LightsSubsystem.getInstance();
+    public Limelight m_limelight = Limelight.getInstance();
+    public final ManipulatorSubsystem m_manipulator = ManipulatorSubsystem.getInstance();
+    public final ElevatorSubsystem m_elevatorSubsystem = ElevatorSubsystem.getInstance();
+    public final AlgaeSubsystem m_algaeSubsystem = AlgaeSubsystem.getInstance();
     public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
 
     // The driver controllers
@@ -60,7 +60,7 @@ public class RobotContainer {
     //CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort2);
     GenericHID m_operatorBoard = new GenericHID(OIConstants.kOperatorControllerPort1);
 
-    public boolean fieldOriented = false;
+    public static boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
     private final SendableChooser<Command> autoChooser;
 

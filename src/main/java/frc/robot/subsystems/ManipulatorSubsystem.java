@@ -40,6 +40,14 @@ public class ManipulatorSubsystem extends Subsystem {
         DataLogManager.log("ManipulatorSubsystem in teleopInit");
     }
 
+    private static ManipulatorSubsystem mInstance;
+    public static ManipulatorSubsystem getInstance() {
+      if (mInstance == null) {
+        mInstance = new ManipulatorSubsystem();
+      }
+      return mInstance;
+    }
+
     public ManipulatorSubsystem() {
         m_rightSparkMax = new SparkMax(ManipulatorConstants.kRightManipulatorCanId, MotorType.kBrushless);
         m_leftSparkMax = new SparkMax(ManipulatorConstants.kLeftManipulatorCanId, MotorType.kBrushless);
