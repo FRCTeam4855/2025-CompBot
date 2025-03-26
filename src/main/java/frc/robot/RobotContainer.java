@@ -62,7 +62,7 @@ public class RobotContainer {
     //CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort2);
     GenericHID m_operatorBoard = new GenericHID(OIConstants.kOperatorControllerPort1);
 
-    public static boolean fieldOriented = false;
+    public boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
     private final SendableChooser<Command> autoChooser;
     private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance(m_rightDriverController);
