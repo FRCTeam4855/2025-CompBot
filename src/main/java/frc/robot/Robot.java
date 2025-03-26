@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putBoolean("Field Oriented", RobotContainer.fieldOriented);
+    SmartDashboard.putBoolean("Field Oriented", m_robotContainer.fieldOriented);
 
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
     // commands, running already-scheduled commands, removing finished or interrupted commands,
