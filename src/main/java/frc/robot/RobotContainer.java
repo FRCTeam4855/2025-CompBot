@@ -26,6 +26,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -51,6 +52,7 @@ public class RobotContainer {
     public final ElevatorSubsystem m_elevatorSubsystem = ElevatorSubsystem.getInstance();
     public final AlgaeSubsystem m_algaeSubsystem = AlgaeSubsystem.getInstance();
     public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
+    
 
     // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
@@ -63,6 +65,7 @@ public class RobotContainer {
     public static boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
     private final SendableChooser<Command> autoChooser;
+    private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance(m_rightDriverController);
 
     public RobotContainer() {
 
