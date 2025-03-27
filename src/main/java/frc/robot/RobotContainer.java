@@ -170,8 +170,16 @@ public class RobotContainer {
                 fieldOriented, true),
             m_robotDrive));
 
-            autoChooser = AutoBuilder.buildAutoChooser(); 
-            SmartDashboard.putData("Auto Chooser", autoChooser);             
+
+        m_climberSubsystem.setDefaultCommand(
+            new RunCommand(
+                () -> m_climberSubsystem.ClimberWinchDriveDirect(-MathUtil.applyDeadband(m_operatorController1.getLeftY() * speedMultiplier, OIConstants.kDriveDeadband))
+                //() -> m_climberSubsystem.ClimberIntakeDriveDirect(-MathUtil.applyDeadband(m_operatorController1.getRightX() * speedMultiplier, OIConstants.kDriveDeadband))
+            )
+        );
+        
+        autoChooser = AutoBuilder.buildAutoChooser(); 
+        SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     private void configureButtonBindings() {

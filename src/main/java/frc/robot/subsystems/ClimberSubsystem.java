@@ -61,6 +61,14 @@ public class ClimberSubsystem extends Subsystem {
     public void periodic() {        
     }
     
+    public void ClimberWinchDriveDirect(double speed) {
+        m_winchSpark.set(speed);
+    }
+    
+    public void ClimberIntakeDriveDirect(double speed) {
+        m_rotateSpark.set(speed);
+    }
+    
     public void ClimberWinchToSetpoint(int goalSetpoint) {
         m_winchPIDController.setReference(ClimberConstants.climberPos[goalSetpoint], SparkMax.ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
