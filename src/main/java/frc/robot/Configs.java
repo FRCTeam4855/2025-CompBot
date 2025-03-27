@@ -155,4 +155,27 @@ public final class Configs {
                 .outputRange(-1, 1);
         }
     }
+
+    public static final class ClimberSubsystem {
+
+        public static final SparkMaxConfig climberWinchConfig = new SparkMaxConfig();
+
+        static {
+
+                //CLIMBER WINCH CONFIG
+
+                climberWinchConfig
+                    .idleMode(IdleMode.kBrake)
+                    .inverted(false)
+                    .closedLoopRampRate(.05)
+                    .smartCurrentLimit(10);
+                climberWinchConfig.encoder
+                    .positionConversionFactor(1);
+                climberWinchConfig.closedLoop
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    .pidf(1, 0, 0, 0)
+                    .outputRange(-1, 1)
+                    .positionWrappingEnabled(false);
+        }
+    }
 }

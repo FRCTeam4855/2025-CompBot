@@ -218,6 +218,10 @@ public class RobotContainer {
             .onTrue(NamedCommands.getCommand("Align Right Reef Branch").alongWith(
                 new InstantCommand(() -> DataLogManager.log("R Driver RBRB (Align R Reef) pressed"))));
 
+        new JoystickButton(m_rightDriverController, 8).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)));
+
+        new JoystickButton(m_rightDriverController, 14).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0))); //KRC
+
         //Operator Controls
 
         new JoystickButton(m_operatorBoard, 6) 

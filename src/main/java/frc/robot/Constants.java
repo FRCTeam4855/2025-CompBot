@@ -315,4 +315,10 @@ public final class Constants {
 	  public static final double DONT_SEE_TAG_WAIT_TIME = 0.2;
 	  public static final double POSE_VALIDATION_TIME = 0.3;
   }
+  
+  public static final class ClimberConstants {
+    public static final double[] climberPos = { 0.0, 1000.0};
+    public static final int kWinchCanId = 16;
+    public static final int kRotateCanId = 17;
+  }
 }
