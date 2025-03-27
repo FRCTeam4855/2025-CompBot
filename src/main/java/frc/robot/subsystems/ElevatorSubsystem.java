@@ -20,7 +20,7 @@ public class ElevatorSubsystem extends Subsystem {
     public final SparkFlex rightSpark;
     public final SparkFlex leftSpark;
     public final RelativeEncoder rightEncoder;
-    public final RelativeEncoder leftEncoder;
+    public final RelativeEncoder leftEncoder, extEncoder;
     public final SparkClosedLoopController rightPIDController;
     public final SparkClosedLoopController leftPIDController;
     public boolean sensorOverride = false;
@@ -63,6 +63,7 @@ public class ElevatorSubsystem extends Subsystem {
             PersistMode.kPersistParameters);
         leftSpark.configure(Configs.ElevatorSubsystem.leftElevatorConfig, ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
+        extEncoder = leftSpark.getExternalEncoder();
     }
 
     @Override
@@ -72,6 +73,7 @@ public class ElevatorSubsystem extends Subsystem {
         SmartDashboard.putNumber("Left Elevator Pos", leftEncoder.getPosition());
         SmartDashboard.putNumber("Right Elevator Output I", rightSpark.getOutputCurrent());
         SmartDashboard.putNumber("Left Elevator Output I", leftSpark.getOutputCurrent());
+        SmartDashboard.putNumber("Left Elevator Ext Pos", extEncoder.getPosition());
     }
 
     public void ElevatorToSetpoint(int goalSetpoint) {

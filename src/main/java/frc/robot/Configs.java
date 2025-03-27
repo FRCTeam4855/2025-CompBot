@@ -86,6 +86,8 @@ public final class Configs {
                     .follow(9, true);
                 leftElevatorConfig.encoder
                     .positionConversionFactor(1);
+                leftElevatorConfig.externalEncoder
+                    .positionConversionFactor(12);
                 leftElevatorConfig.closedLoop
                     .pidf(0.25, 0, 0, 0)
                     .outputRange(-.4, 1)
@@ -159,14 +161,13 @@ public final class Configs {
     public static final class ClimberSubsystem {
 
         public static final SparkMaxConfig climberWinchConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig climberRotateConfig = new SparkMaxConfig();
 
         static {
-
                 //CLIMBER WINCH CONFIG
-
                 climberWinchConfig
                     .idleMode(IdleMode.kBrake)
-                    .inverted(false)
+                    .inverted(true)
                     .closedLoopRampRate(.05)
                     .smartCurrentLimit(10);
                 climberWinchConfig.encoder
@@ -174,8 +175,20 @@ public final class Configs {
                 climberWinchConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     .pidf(1, 0, 0, 0)
-                    .outputRange(-1, 1)
-                    .positionWrappingEnabled(false);
+                    .outputRange(-0.25, 0.25);
+
+                //CLIMBER INTAKE ROTATION MOTOR CONFIG
+                climberRotateConfig
+                    .idleMode(IdleMode.kBrake)
+                    .inverted(false)
+                    .closedLoopRampRate(.05)
+                    .smartCurrentLimit(5);
+                climberRotateConfig.encoder
+                    .positionConversionFactor(1);
+                climberRotateConfig.closedLoop
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    .pidf(1, 0, 0, 0)
+                    .outputRange(-0.5, 0.5);
         }
     }
 }

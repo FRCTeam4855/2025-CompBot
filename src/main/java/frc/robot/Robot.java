@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.AlgaeSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
     m_allSubsystems.add(AlgaeSubsystem.getInstance());
     m_allSubsystems.add(ElevatorSubsystem.getInstance());
     m_allSubsystems.add(ManipulatorSubsystem.getInstance());
+    m_allSubsystems.add(ClimberSubsystem.getInstance());
 
     m_allSubsystems.forEach(subsystem -> subsystem.robotInit());
   }

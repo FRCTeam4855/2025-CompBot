@@ -8,6 +8,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -51,6 +52,7 @@ public class RobotContainer {
     public final ManipulatorSubsystem m_manipulator = ManipulatorSubsystem.getInstance();
     public final ElevatorSubsystem m_elevatorSubsystem = ElevatorSubsystem.getInstance();
     public final AlgaeSubsystem m_algaeSubsystem = AlgaeSubsystem.getInstance();
+    private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance();
     public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
     
 
@@ -59,13 +61,13 @@ public class RobotContainer {
     Joystick m_rightDriverController = new Joystick(OIConstants.kRightDriverControllerPort);
 
     // The operator controllers
-    //CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort2);
+    CommandXboxController m_operatorController1 = new CommandXboxController(OIConstants.kOperatorControllerPort2);
     GenericHID m_operatorBoard = new GenericHID(OIConstants.kOperatorControllerPort1);
 
     public static boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
     private final SendableChooser<Command> autoChooser;
-    private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance(m_rightDriverController);
+    
 
     public RobotContainer() {
 
@@ -218,9 +220,14 @@ public class RobotContainer {
             .onTrue(NamedCommands.getCommand("Align Right Reef Branch").alongWith(
                 new InstantCommand(() -> DataLogManager.log("R Driver RBRB (Align R Reef) pressed"))));
 
+        m_operatorController1.a().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)));
+        m_operatorController1.y().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1)));
+        m_operatorController1.x().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(0)));
+        m_operatorController1.b().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(1)));
+
         new JoystickButton(m_rightDriverController, 8).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)));
 
-        new JoystickButton(m_rightDriverController, 14).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0))); //KRC
+        new JoystickButton(m_rightDriverController, 14).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1))); //KRC
 
         //Operator Controls
 

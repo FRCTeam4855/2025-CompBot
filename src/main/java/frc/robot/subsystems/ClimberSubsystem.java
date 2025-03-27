@@ -1,8 +1,6 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -16,16 +14,15 @@ import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends Subsystem {
 
-    private Joystick m_Joystick;
-    private double position;
-    private Servo m_servo = new Servo(0);
-    public SparkMax ClimbSpark;
-    public RelativeEncoder m_encoder;
-    public SparkClosedLoopController m_PIDController;
+    private Servo m_servo = new Servo(ClimberConstants.kWinchRatchetServo);
+    public SparkMax m_winchSpark, m_rotateSpark;
+    public RelativeEncoder m_winchEncoder, m_rotateEncoder;
+    public SparkClosedLoopController m_winchPIDController, m_rotatePIDController;
 
     @Override
     public void robotInit() {
         DataLogManager.log("ClimberSubsystem in robotInit");
+        WinchRatchetSetPosition(ClimberConstants.kWinchRatchetReleased);
     }
 
     @Override
@@ -39,32 +36,40 @@ public class ClimberSubsystem extends Subsystem {
     }
 
     private static ClimberSubsystem mInstance;
-    public static ClimberSubsystem getInstance(Joystick m_Joystick) {
+    public static ClimberSubsystem getInstance() {
       if (mInstance == null) {
-        mInstance = new ClimberSubsystem(m_Joystick);
+        mInstance = new ClimberSubsystem();
       }
       return mInstance;
     }
 
-    public ClimberSubsystem(Joystick m_Joystick) {
+    public ClimberSubsystem() {
         DataLogManager.log("ClimberSubsystem constructor");
-        this.m_Joystick = m_Joystick;
 
-        ClimbSpark = new SparkMax(ClimberConstants.kWinchCanId, MotorType.kBrushless);
-        m_encoder = ClimbSpark.getEncoder();
-        m_PIDController = ClimbSpark.getClosedLoopController();
-        
-        ClimbSpark.configure(Configs.ClimberSubsystem.climberWinchConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+        m_winchSpark = new SparkMax(ClimberConstants.kWinchCanId, MotorType.kBrushless);
+        m_winchEncoder = m_winchSpark.getEncoder();
+        m_winchPIDController = m_winchSpark.getClosedLoopController();
+        m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+
+        m_rotateSpark = new SparkMax(ClimberConstants.kRotateCanId, MotorType.kBrushless);
+        m_rotateEncoder = m_rotateSpark.getEncoder();
+        m_rotatePIDController = m_rotateSpark.getClosedLoopController();
+        m_rotateSpark.configure(Configs.ClimberSubsystem.climberRotateConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
     }
 
     @Override
-    public void periodic() {
-        position = ((m_Joystick.getRawAxis(3) + 1) / 2);
-        m_servo.set(position);
-        SmartDashboard.putNumber("Servo Position", position);    
+    public void periodic() {        
     }
     
     public void ClimberWinchToSetpoint(int goalSetpoint) {
-        m_PIDController.setReference(ClimberConstants.climberPos[goalSetpoint], SparkMax.ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        m_winchPIDController.setReference(ClimberConstants.climberPos[goalSetpoint], SparkMax.ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    }
+    
+    public void ClimberIntakeToSetpoint(int goalSetpoint) {
+        m_rotatePIDController.setReference(ClimberConstants.rotatePos[goalSetpoint], SparkMax.ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    }
+
+    public void WinchRatchetSetPosition(double position) {
+        m_servo.set(position);
     }
 }
