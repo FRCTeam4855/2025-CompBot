@@ -37,7 +37,7 @@ public class IntakeCoralCommandClearJam extends Command {
             currentSpeed = ManipulatorConstants.kManipulatorSlowSpeed;
             SmartDashboard.putNumber("Intake Speed", currentSpeed);
         }
-        if(timer.hasElapsed(3.5)) {
+        if(timer.hasElapsed(3.3)) {
             m_manipulator.RunManipulator(speed);
             timer.reset();
         } else {

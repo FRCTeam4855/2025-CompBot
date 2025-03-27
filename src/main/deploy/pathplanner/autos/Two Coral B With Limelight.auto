@@ -5,22 +5,47 @@
     "data": {
       "commands": [
         {
-          "type": "sequential",
+          "type": "named",
+          "data": {
+            "name": "Arm to 0"
+          }
+        },
+        {
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CenterStart-A Left"
+                  "pathName": "BottomWallStart-B Center"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Level 4"
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.4
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Level 4"
+                      }
+                    }
+                  ]
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Align Left Reef Branch"
           }
         },
         {
@@ -30,13 +55,88 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ALeft-BottomFeeder"
+                  "pathName": "BCenter-BottomFeeder"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level 0"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Go To Feeder Station"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BottomFeeder-C Center"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.4
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Level 4"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Align Right Reef Branch"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DeliverCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "C Center-BottomFeeder"
                 }
               },
               {
@@ -52,87 +152,12 @@
           "type": "named",
           "data": {
             "name": "Intake"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BottomFeeder-C Left"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DeliverCoral"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "C Left-BottomFeeder"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 0"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BottomFeeder-C Right"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DeliverCoral"
           }
         }
       ]
     }
   },
   "resetOdom": false,
-  "folder": "Testing",
+  "folder": "Two Coral Limelight",
   "choreoAuto": false
 }

@@ -137,7 +137,7 @@ public class RobotContainer {
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
         
         NamedCommands.registerCommand("ElevatorToZero", new SequentialCommandGroup(
-            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(1)),
+            new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(7)),
             new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 1),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 

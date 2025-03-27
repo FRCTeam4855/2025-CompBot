@@ -35,7 +35,7 @@ public class LightsSubsystem extends Subsystem {
     }
 
     public LightsSubsystem() { 
-        m_Blinkin = new Spark(0);
+        m_Blinkin = new Spark(1);
         setLEDs(LightsConstants.C1_AND_C2_SINELON);
     }
 
