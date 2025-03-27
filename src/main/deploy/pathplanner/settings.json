@@ -3,16 +3,18 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "A",
-    "B",
-    "C",
-    "D",
-    "F",
-    "E"
+    "A Paths",
+    "B Paths",
+    "C Paths",
+    "D Paths",
+    "E Paths",
+    "F Paths"
   ],
   "autoFolders": [
-    "Testing",
-    "Reliable"
+    "1 Coral",
+    "2 Coral",
+    "3 Coral",
+    "Two Coral Limelight"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
