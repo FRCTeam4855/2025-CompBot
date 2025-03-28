@@ -87,7 +87,7 @@ public final class Configs {
                 leftElevatorConfig.encoder
                     .positionConversionFactor(1);
                 leftElevatorConfig.externalEncoder
-                    .positionConversionFactor(12);
+                    .positionConversionFactor(6);
                 leftElevatorConfig.closedLoop
                     .pidf(0.25, 0, 0, 0)
                     .outputRange(-.4, 1)
@@ -175,7 +175,7 @@ public final class Configs {
                 climberWinchConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     .pidf(1, 0, 0, 0)
-                    .outputRange(-0.5, 0.5);
+                    .outputRange(-1, 1);
 
                 //CLIMBER INTAKE ROTATION MOTOR CONFIG
                 climberRotateConfig
@@ -187,7 +187,7 @@ public final class Configs {
                     .positionConversionFactor(1);
                 climberRotateConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                    .pidf(1, 0, 0, 0)
+                    .pidf(0.5, 0, 0, 0)
                     .outputRange(-0.5, 0.5);
         }
     }

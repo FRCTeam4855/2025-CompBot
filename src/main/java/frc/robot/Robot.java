@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
     m_allSubsystems.add(AlgaeSubsystem.getInstance());
     m_allSubsystems.add(ElevatorSubsystem.getInstance());
     m_allSubsystems.add(ManipulatorSubsystem.getInstance());
+    m_allSubsystems.add(ElevatorSubsystem.getInstance());
     m_allSubsystems.add(ClimberSubsystem.getInstance());
 
     m_allSubsystems.forEach(subsystem -> subsystem.robotInit());
@@ -107,6 +108,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    m_allSubsystems.forEach(subsystem -> subsystem.teleopInit());
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();

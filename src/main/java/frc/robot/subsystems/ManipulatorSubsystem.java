@@ -28,6 +28,7 @@ public class ManipulatorSubsystem extends Subsystem {
     @Override
     public void robotInit() {
         DataLogManager.log("ManipulatorSubsystem in robotInit");
+        StopManipulator();
     }
 
     @Override
