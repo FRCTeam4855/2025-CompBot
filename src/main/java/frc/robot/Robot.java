@@ -50,11 +50,10 @@ public class Robot extends TimedRobot {
     FollowPathCommand.warmupCommand().schedule();
 
     //Add all subsystems to the list
-    m_allSubsystems.add(DriveSubsystem.getInstance());
     m_allSubsystems.add(Limelight.getInstance());
     m_allSubsystems.add(LightsSubsystem.getInstance());
     m_allSubsystems.add(AlgaeSubsystem.getInstance());
-    m_allSubsystems.add(ElevatorSubsystem.getInstance());
+    m_allSubsystems.add(DriveSubsystem.getInstance());
     m_allSubsystems.add(ManipulatorSubsystem.getInstance());
     m_allSubsystems.add(ElevatorSubsystem.getInstance());
     m_allSubsystems.add(ClimberSubsystem.getInstance());

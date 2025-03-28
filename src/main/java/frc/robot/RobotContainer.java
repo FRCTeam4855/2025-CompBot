@@ -46,11 +46,11 @@ import com.pathplanner.lib.auto.NamedCommands;
 public class RobotContainer {
 
     // The robot's subsystems
-    public final DriveSubsystem m_robotDrive = DriveSubsystem.getInstance();
     public final LightsSubsystem m_lights = LightsSubsystem.getInstance();
     public Limelight m_limelight = Limelight.getInstance();
     public final ManipulatorSubsystem m_manipulator = ManipulatorSubsystem.getInstance();
     public final ElevatorSubsystem m_elevatorSubsystem = ElevatorSubsystem.getInstance();
+    public final DriveSubsystem m_robotDrive = DriveSubsystem.getInstance();
     public final AlgaeSubsystem m_algaeSubsystem = AlgaeSubsystem.getInstance();
     private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance();
     public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);

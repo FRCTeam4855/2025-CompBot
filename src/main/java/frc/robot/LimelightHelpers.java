@@ -1491,8 +1491,7 @@ public class LimelightHelpers {
      * @param y Y offset in meters
      * @param z Z offset in meters
      */
-    public static void SetFidcuial3DOffset(String limelightName, double x, double y, 
-        double z) {
+    public static void SetFidcuial3DOffset(String limelightName, double x, double y, double z) {
 
         double[] entries = new double[3];
         entries[0] = x;
