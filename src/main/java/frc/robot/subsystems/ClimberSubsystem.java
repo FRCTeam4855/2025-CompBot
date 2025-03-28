@@ -25,6 +25,7 @@ public class ClimberSubsystem extends Subsystem {
     public void robotInit() {
         DataLogManager.log("ClimberSubsystem in robotInit");
         WinchRatchetSetPosition(1);
+        ClimberIntakeToSetpoint(0);
     }
 
     @Override

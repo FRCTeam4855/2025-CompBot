@@ -175,7 +175,7 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final double[] elevatorPos = { 0, 9.36, 15.5, 33.0, 57.5, 45.0, 4.0, 1.0 };
+    public static final double[] elevatorPos = { 0, 9.36, 15.5, 33.0, 58.0, 45.0, 4.0, 1.0 };
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
     public static final double kElevatorConstantsGravityFF = .6;
