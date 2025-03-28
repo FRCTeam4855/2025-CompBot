@@ -188,7 +188,7 @@ public final class Configs {
                 climberRotateConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     .pidf(0.5, 0, 0, 0)
-                    .outputRange(-0.5, 0.5);
+                    .outputRange(-1, 1);
         }
     }
 }
