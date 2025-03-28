@@ -9,14 +9,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IntakeCoralCommandClearJam extends Command {
     
-    ManipulatorSubsystem m_manipulator;
+    private ManipulatorSubsystem m_manipulator = ManipulatorSubsystem.getInstance();
     private double speed, currentSpeed;
     private Timer timer;
-    private LightsSubsystem lights;
-    public IntakeCoralCommandClearJam(ManipulatorSubsystem m_manipulator, double speed, LightsSubsystem lights) {
-        this.m_manipulator = m_manipulator;
+    private LightsSubsystem lights = LightsSubsystem.getInstance();
+    public IntakeCoralCommandClearJam(double speed) {
         this.speed = speed;
-        this.lights = lights;
         timer = new Timer();
         addRequirements(m_manipulator);
     }
@@ -45,8 +43,7 @@ public class IntakeCoralCommandClearJam extends Command {
                 m_manipulator.RunManipulator(-speed); 
         }
     }
- 
-
+    
     @Override
     public boolean isFinished() {
             if (m_manipulator.outerSensor && !m_manipulator.innerSensor){

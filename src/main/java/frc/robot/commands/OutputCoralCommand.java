@@ -6,13 +6,12 @@ import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
 public class OutputCoralCommand extends Command {
     
-    ManipulatorSubsystem m_manipulator;
+    private ManipulatorSubsystem m_manipulator = ManipulatorSubsystem.getInstance();
     private double speed;
-    private LightsSubsystem lights;
-    public OutputCoralCommand(ManipulatorSubsystem m_manipulator, double speed, LightsSubsystem lights) {
-        this.m_manipulator = m_manipulator;
+    private LightsSubsystem lights = LightsSubsystem.getInstance();
+    public OutputCoralCommand(double speed) {
         this.speed = speed;
-        this.lights = lights;
+        addRequirements(m_manipulator);
     }
 
     @Override

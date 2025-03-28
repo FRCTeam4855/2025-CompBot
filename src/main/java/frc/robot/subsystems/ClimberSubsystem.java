@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -59,6 +61,7 @@ public class ClimberSubsystem extends Subsystem {
 
     @Override
     public void periodic() {        
+        SmartDashboard.putNumber("Winch Encoder Value", m_winchEncoder.getPosition());
     }
     
     public void ClimberWinchDriveDirect(double speed) {
@@ -71,10 +74,14 @@ public class ClimberSubsystem extends Subsystem {
     
     public void ClimberWinchToSetpoint(int goalSetpoint) {
         m_winchPIDController.setReference(ClimberConstants.climberPos[goalSetpoint], SparkMax.ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        System.out.println("Winch To Setpoint");
+        System.out.println(ClimberConstants.climberPos[goalSetpoint]);
     }
     
     public void ClimberIntakeToSetpoint(int goalSetpoint) {
         m_rotatePIDController.setReference(ClimberConstants.rotatePos[goalSetpoint], SparkMax.ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        System.out.println("Intake To Setpoint");
+        System.out.println(ClimberConstants.rotatePos[goalSetpoint]);
     }
 
     public void WinchRatchetSetPosition(double position) {

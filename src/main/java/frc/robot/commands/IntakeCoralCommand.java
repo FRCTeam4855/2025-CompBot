@@ -8,13 +8,11 @@ import frc.robot.subsystems.ManipulatorSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class IntakeCoralCommand extends Command {
     
-    ManipulatorSubsystem m_manipulator;
+    private ManipulatorSubsystem m_manipulator = ManipulatorSubsystem.getInstance();
     private double speed, currentSpeed;
-    private LightsSubsystem lights;
-    public IntakeCoralCommand(ManipulatorSubsystem m_manipulator, double speed, LightsSubsystem lights) {
-        this.m_manipulator = m_manipulator;
+    private LightsSubsystem lights = LightsSubsystem.getInstance();
+    public IntakeCoralCommand(double speed) {
         this.speed = speed;
-        this.lights = lights;
 
         addRequirements(m_manipulator);
     }

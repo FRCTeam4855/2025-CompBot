@@ -166,23 +166,23 @@ public final class Configs {
         static {
                 //CLIMBER WINCH CONFIG
                 climberWinchConfig
-                    .idleMode(IdleMode.kBrake)
+                    .idleMode(IdleMode.kCoast)
                     .inverted(true)
                     .closedLoopRampRate(.05)
-                    .smartCurrentLimit(10);
+                    .smartCurrentLimit(40);
                 climberWinchConfig.encoder
                     .positionConversionFactor(1);
                 climberWinchConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     .pidf(1, 0, 0, 0)
-                    .outputRange(-0.25, 0.25);
+                    .outputRange(-0.5, 0.5);
 
                 //CLIMBER INTAKE ROTATION MOTOR CONFIG
                 climberRotateConfig
                     .idleMode(IdleMode.kBrake)
                     .inverted(false)
                     .closedLoopRampRate(.05)
-                    .smartCurrentLimit(5);
+                    .smartCurrentLimit(20);
                 climberRotateConfig.encoder
                     .positionConversionFactor(1);
                 climberRotateConfig.closedLoop

@@ -55,7 +55,6 @@ public class RobotContainer {
     private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance();
     public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
     
-
     // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
     Joystick m_rightDriverController = new Joystick(OIConstants.kRightDriverControllerPort);
@@ -77,11 +76,11 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("Level 4", new SequentialCommandGroup(
             new InstantCommand(()-> m_elevatorSubsystem.ElevatorToSetpoint(4), m_elevatorSubsystem),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4)));
+            new IsElevatorAtSetpointCommand(4)));
 
-        NamedCommands.registerCommand("Intake", new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights));
+        NamedCommands.registerCommand("Intake", new IntakeCoralCommandClearJam(ManipulatorConstants.kManipulatorHighSpeed));
 
-        NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights));
+        NamedCommands.registerCommand("DeliverCoral", new OutputCoralCommand(ManipulatorConstants.kManipulatorHighSpeed));
 
         NamedCommands.registerCommand("Arm to 0", new InstantCommand(
             () -> m_algaeSubsystem.ArmToPosition(0)));
@@ -94,70 +93,70 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("AlgaeReefPickupOne", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(3)),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 3),
+            new IsElevatorAtSetpointCommand(3),
             new InstantCommand(() -> m_algaeSubsystem.SetReefPickup()),
             new InstantCommand(() -> m_algaeSubsystem.IntakeAlgae()),
             new InstantCommand(() -> m_algaeSubsystem.ArmToPosition(1))));
 
         NamedCommands.registerCommand("AlgaeReefPickupTwo", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(5)),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 5),
+            new IsElevatorAtSetpointCommand(5),
             new InstantCommand(() -> m_algaeSubsystem.SetReefPickup()),
             new InstantCommand(() -> m_algaeSubsystem.IntakeAlgae()),
             new InstantCommand(() -> m_algaeSubsystem.ArmToPosition(1))));
 
         NamedCommands.registerCommand("AutoDeliverLevelOne", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(1)),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 1),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
+            new IsElevatorAtSetpointCommand(1),
+            new OutputCoralCommand(ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelTwo", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(2)),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 2),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
+            new IsElevatorAtSetpointCommand(2),
+            new OutputCoralCommand(ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelThree", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(3)),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 3),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
+            new IsElevatorAtSetpointCommand(3),
+            new OutputCoralCommand(ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("AutoDeliverLevelFour", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(4)),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 4),
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
+            new IsElevatorAtSetpointCommand(4),
+            new OutputCoralCommand(ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("IntakeCoral", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0)),
-            new IntakeCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights)));
+            new IntakeCoralCommand(ManipulatorConstants.kManipulatorHighSpeed)));
 
         NamedCommands.registerCommand("DeliverCoral", new SequentialCommandGroup(
-            new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights),
+            new OutputCoralCommand(ManipulatorConstants.kManipulatorHighSpeed),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
-        
+
         NamedCommands.registerCommand("ElevatorToZero", new SequentialCommandGroup(
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(7)),
-            new IsElevatorAtSetpointCommand(m_elevatorSubsystem, 1),
+            new IsElevatorAtSetpointCommand(7),
             new InstantCommand(() -> m_elevatorSubsystem.ElevatorToSetpoint(0))));
 
         NamedCommands.registerCommand("Align Left Reef Branch", new SequentialCommandGroup(
-            new AlignToReefTagRelative(false, m_robotDrive, m_lights),
-            new PushAgainstElement(m_robotDrive, .25, 0.25),
+            new AlignToReefTagRelative(false),
+            new PushAgainstElement(.25, 0.25),
             new InstantCommand(() -> DataLogManager.log("Left reef alignment completed"))
                     ));
 
         NamedCommands.registerCommand("Align Right Reef Branch", new SequentialCommandGroup(
-            new AlignToReefTagRelative(true, m_robotDrive, m_lights),
-            new PushAgainstElement(m_robotDrive, 0.25, 0.25),
+            new AlignToReefTagRelative(true),
+            new PushAgainstElement(0.25, 0.25),
             new InstantCommand(() -> DataLogManager.log("Right reef alignment completed"))
             ));
 
         //Take up any space between the robot and the human player station
         NamedCommands.registerCommand("Go To Feeder Station", 
-            new PushAgainstElement(m_robotDrive, -0.5, 0.5) );
+            new PushAgainstElement(-0.5, 0.5) );
 
         configureButtonBindings();
 
@@ -170,13 +169,12 @@ public class RobotContainer {
                 fieldOriented, true),
             m_robotDrive));
 
-
-        m_climberSubsystem.setDefaultCommand(
-            new RunCommand(
-                () -> m_climberSubsystem.ClimberWinchDriveDirect(-MathUtil.applyDeadband(m_operatorController1.getLeftY() * speedMultiplier, OIConstants.kDriveDeadband))
-                //() -> m_climberSubsystem.ClimberIntakeDriveDirect(-MathUtil.applyDeadband(m_operatorController1.getRightX() * speedMultiplier, OIConstants.kDriveDeadband))
-            )
-        );
+        // m_climberSubsystem.setDefaultCommand(
+        //     new RunCommand(
+        //         () -> m_climberSubsystem.ClimberWinchDriveDirect(MathUtil.applyDeadband(m_operatorController1.getLeftY() * speedMultiplier, OIConstants.kDriveDeadband)), m_climberSubsystem, m_climberSubsystem
+        //         //() -> m_climberSubsystem.ClimberIntakeDriveDirect(MathUtil.applyDeadband(m_operatorController1.getRightX() * speedMultiplier, OIConstants.kDriveDeadband)), m_climberSubsystem
+        //     )
+        // );
         
         autoChooser = AutoBuilder.buildAutoChooser(); 
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -212,12 +210,12 @@ public class RobotContainer {
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_LB)
             .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, true, m_lights).alongWith(
+                m_leftDriverController, m_rightDriverController, true).alongWith(
                     new InstantCommand(() -> DataLogManager.log("L Driver JS_LB (DriveAprilTagL) pressed"))));
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_RB)
             .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_robotDrive, m_limelight, m_leftDriverController, m_rightDriverController, false, m_lights).alongWith(
+                m_leftDriverController, m_rightDriverController, false).alongWith(
                     new InstantCommand(() -> DataLogManager.log("L Driver JS_RB (DriveAprilTagR) pressed"))));
 
         new JoystickButton(m_rightDriverController, OIConstants.kJS_LBLB)
@@ -228,8 +226,8 @@ public class RobotContainer {
             .onTrue(NamedCommands.getCommand("Align Right Reef Branch").alongWith(
                 new InstantCommand(() -> DataLogManager.log("R Driver RBRB (Align R Reef) pressed"))));
 
-        m_operatorController1.a().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)));
-        m_operatorController1.y().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1)));
+        m_operatorController1.a().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0), m_climberSubsystem));
+        m_operatorController1.y().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1), m_climberSubsystem));
         m_operatorController1.x().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(0)));
         m_operatorController1.b().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(1)));
 
@@ -277,11 +275,11 @@ public class RobotContainer {
                     new InstantCommand(() -> DataLogManager.log("BB1 (Algae ArmToPos0) pressed")))); 
 
         new JoystickButton(m_operatorBoard, 11)
-            .onTrue(new OutputCoralCommand(m_manipulator, ManipulatorConstants.kManipulatorHighSpeed, m_lights).alongWith(
+            .onTrue(new OutputCoralCommand(ManipulatorConstants.kManipulatorHighSpeed).alongWith(
                 new InstantCommand(() -> DataLogManager.log("BB11 (OutputCoral) pressed"))));
 
         new JoystickButton(m_operatorBoard, 15)
-            .onTrue(new IntakeCoralCommandClearJam(m_manipulator, ManipulatorConstants.kManipulatorMedSpeed, m_lights).alongWith(
+            .onTrue(new IntakeCoralCommandClearJam(ManipulatorConstants.kManipulatorMedSpeed).alongWith(
                 new InstantCommand(() -> DataLogManager.log("BB15 (IntakeCoral) pressed"))));
 
         new JoystickButton(m_operatorBoard, 21)

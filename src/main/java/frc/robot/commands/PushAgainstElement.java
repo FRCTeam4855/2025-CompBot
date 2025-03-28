@@ -5,13 +5,13 @@
  import edu.wpi.first.wpilibj.Timer;
 
 public class PushAgainstElement extends Command {
-    DriveSubsystem drive;
+    private DriveSubsystem drive = DriveSubsystem.getInstance();
     double speed;
     double time;
     private Timer timer;
 
-    public PushAgainstElement(DriveSubsystem Drive, double speed, double time) {
-        this.drive = Drive;
+    public PushAgainstElement(double speed, double time) {
+
         this.speed = speed;
         this.time = time;
         timer = new Timer();

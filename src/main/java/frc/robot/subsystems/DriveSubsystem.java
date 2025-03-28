@@ -79,7 +79,7 @@ public class DriveSubsystem extends Subsystem {
   // The gyro sensor
   //private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
   private final AHRS m_gyro = new AHRS(NavXComType.kMXP_SPI);
- 
+
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
   private double m_currentTranslationDir = 0.0;
@@ -136,7 +136,7 @@ public class DriveSubsystem extends Subsystem {
       autoGyroOffset = 0.0;
     }
   }
-  
+
   private static DriveSubsystem mInstance;
   public static DriveSubsystem getInstance() {
     if (mInstance == null) {
@@ -166,7 +166,7 @@ public class DriveSubsystem extends Subsystem {
     }
 
     m_gyro.reset();
-  
+
       AutoBuilder.configure(
       this::getPose, 
       this::resetPose, 

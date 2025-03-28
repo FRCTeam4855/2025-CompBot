@@ -11,20 +11,17 @@ import frc.robot.subsystems.Limelight;
 
 public class DriveWithAprilTagCommandOffset extends Command {
 
-	private DriveSubsystem driveSubsystem;
-	private Limelight limelight;
+	private DriveSubsystem driveSubsystem = DriveSubsystem.getInstance();
+	private Limelight limelight = Limelight.getInstance();
 	private Joystick joystickLeft, joystickRight;
 	private boolean leftBranch;
-	private LightsSubsystem lights;
+	private LightsSubsystem lights = LightsSubsystem.getInstance();
 	public static final double JOYSTICK_AXIS_THRESHOLD = 0.15;
 
-	public DriveWithAprilTagCommandOffset(DriveSubsystem driveSubsystem, Limelight limelight, Joystick joystickLeft, Joystick joystickRight, boolean leftBranch, LightsSubsystem lights) {
-		this.driveSubsystem = driveSubsystem;
-		this.limelight = limelight;
+	public DriveWithAprilTagCommandOffset(Joystick joystickLeft, Joystick joystickRight, boolean leftBranch) {
 		this.joystickLeft = joystickLeft;
 		this.joystickRight = joystickRight;
 		this.leftBranch = leftBranch;
-		this.lights = lights;
 		addRequirements(driveSubsystem);
 		addRequirements(limelight);
 	}

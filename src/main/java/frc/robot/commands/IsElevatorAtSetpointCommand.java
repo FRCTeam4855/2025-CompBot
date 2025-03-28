@@ -6,13 +6,12 @@ import frc.robot.Constants.ElevatorConstants;
 
 public class IsElevatorAtSetpointCommand extends Command {
     
-    ElevatorSubsystem m_elevatorSubsystem;
+    private ElevatorSubsystem m_elevatorSubsystem = ElevatorSubsystem.getInstance();
     double elevatorPosition;
     int goalSetpoint;
     double goalPosition;
 
-    public IsElevatorAtSetpointCommand(ElevatorSubsystem m_elevatorSubsystem, int goalSetpoint) {
-        this.m_elevatorSubsystem = m_elevatorSubsystem;
+    public IsElevatorAtSetpointCommand(int goalSetpoint) {
         this.goalSetpoint = goalSetpoint;
         //goalPosition = ElevatorConstants.elevatorPos[goalSetpoint];
     }

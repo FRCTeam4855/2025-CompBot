@@ -20,16 +20,14 @@ public class AlignToReefTagRelative extends Command {
     private PIDController xController, yController, rotController;
     private boolean isRightScore;
     private Timer dontSeeTagTimer, stopTimer;
-    private DriveSubsystem drivebase;
-    private LightsSubsystem lights;
+    private DriveSubsystem drivebase = DriveSubsystem.getInstance();
+    private LightsSubsystem lights = LightsSubsystem.getInstance();
 
-    public AlignToReefTagRelative(boolean isRightScore, DriveSubsystem drivebase, LightsSubsystem lights) {
+    public AlignToReefTagRelative(boolean isRightScore) {
         xController = new PIDController(Constants.ReefAlignConstants.X_REEF_ALIGNMENT_P, 0, 0);  // Vertical movement
         yController = new PIDController(Constants.ReefAlignConstants.Y_REEF_ALIGNMENT_P, 0, 0);  // Horitontal movement
         rotController = new PIDController(Constants.ReefAlignConstants.ROT_REEF_ALIGNMENT_P, 0, 0);  // Rotation 
         this.isRightScore = isRightScore; 
-        this.drivebase = drivebase; 
-        this.lights = lights;
         addRequirements(drivebase); 
     }
 
