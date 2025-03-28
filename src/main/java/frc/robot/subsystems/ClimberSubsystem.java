@@ -24,7 +24,7 @@ public class ClimberSubsystem extends Subsystem {
     @Override
     public void robotInit() {
         DataLogManager.log("ClimberSubsystem in robotInit");
-        WinchRatchetSetPosition(ClimberConstants.kWinchRatchetReleased);
+        WinchRatchetSetPosition(1);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ClimberSubsystem extends Subsystem {
         System.out.println(ClimberConstants.rotatePos[goalSetpoint]);
     }
 
-    public void WinchRatchetSetPosition(double position) {
-        m_servo.set(position);
+    public void WinchRatchetSetPosition(int position) {
+        m_servo.set(ClimberConstants.ratchetPos[position]);
     }
 }
