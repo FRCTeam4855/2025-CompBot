@@ -96,5 +96,5 @@ public class AlignToReefTagRelative extends Command {
             // Requires the robot to stay in the correct position for 0.3 seconds, as long as it gets a tag in the camera
             return this.dontSeeTagTimer.hasElapsed(Constants.ReefAlignConstants.DONT_SEE_TAG_WAIT_TIME) ||
             stopTimer.hasElapsed(Constants.ReefAlignConstants.POSE_VALIDATION_TIME);
-    }
+        }
 }

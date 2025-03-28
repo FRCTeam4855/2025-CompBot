@@ -182,7 +182,7 @@ public final class Configs {
                     .idleMode(IdleMode.kBrake)
                     .inverted(false)
                     .closedLoopRampRate(.05)
-                    .smartCurrentLimit(20);
+                    .smartCurrentLimit(25);
                 climberRotateConfig.encoder
                     .positionConversionFactor(1);
                 climberRotateConfig.closedLoop
