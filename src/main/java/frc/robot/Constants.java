@@ -317,12 +317,13 @@ public final class Constants {
   }
   
   public static final class ClimberConstants {
+    public static final double kWinchRatchetReleased = 0.0;
+    public static final double kWinchRatchetEngaged = 0.25;
     public static final double[] climberPos = { 150.0, 500.0};
-    public static final double[] rotatePos = { 0.0, -8};
+    public static final double[] rotatePos = { 0.5, -8};
+    public static final double[] ratchetPos = { kWinchRatchetEngaged, kWinchRatchetReleased};
     public static final int kWinchCanId = 16;
     public static final int kRotateCanId = 17;
     public static final int kWinchRatchetServo = 0;
-    public static final double kWinchRatchetReleased = 0.0;
-    public static final double kWinchRatchetEngaged = 0.25;
   }
 }

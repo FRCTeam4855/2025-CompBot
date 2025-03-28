@@ -154,6 +154,21 @@ public class RobotContainer {
             new InstantCommand(() -> DataLogManager.log("Right reef alignment completed"))
             ));
 
+        NamedCommands.registerCommand("Prepare to climb", new SequentialCommandGroup(
+            new InstantCommand(() -> m_climberSubsystem.WinchRatchetSetPosition(1)),
+            new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(1)),
+            new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1)),
+            new InstantCommand(() -> DataLogManager.log("Climber preparation Completed"))
+            )
+        );
+
+        NamedCommands.registerCommand("Climb", new SequentialCommandGroup(
+            new InstantCommand(() -> m_climberSubsystem.WinchRatchetSetPosition(0)),
+            new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)),
+            new InstantCommand(() -> DataLogManager.log("Climbing"))
+            )
+        );
+
         //Take up any space between the robot and the human player station
         NamedCommands.registerCommand("Go To Feeder Station", 
             new PushAgainstElement(-0.5, 0.5) );
@@ -171,7 +186,7 @@ public class RobotContainer {
 
         // m_climberSubsystem.setDefaultCommand(
         //     new RunCommand(
-        //         () -> m_climberSubsystem.ClimberWinchDriveDirect(MathUtil.applyDeadband(m_operatorController1.getLeftY() * speedMultiplier, OIConstants.kDriveDeadband)), m_climberSubsystem, m_climberSubsystem
+        //         () -> m_climberSubsystem.ClimberWinchDriveDirect(MathUtil.applyDeadband(m_operatorController1.getLeftY() * speedMultiplier, OIConstants.kDriveDeadband)), m_climberSubsystem
         //         //() -> m_climberSubsystem.ClimberIntakeDriveDirect(MathUtil.applyDeadband(m_operatorController1.getRightX() * speedMultiplier, OIConstants.kDriveDeadband)), m_climberSubsystem
         //     )
         // );
@@ -231,9 +246,9 @@ public class RobotContainer {
         m_operatorController1.x().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(0)));
         m_operatorController1.b().onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(1)));
 
-        new JoystickButton(m_rightDriverController, 8).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)));
+        /*new JoystickButton(m_rightDriverController, 8).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)));
 
-        new JoystickButton(m_rightDriverController, 14).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1))); //KRC
+        new JoystickButton(m_rightDriverController, 14).onTrue(new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1))); */
 
         //Operator Controls
 
@@ -253,9 +268,18 @@ public class RobotContainer {
                     new InstantCommand(() -> DataLogManager.log("BB5 (StopIntake) pressed"))));
 
         new JoystickButton(m_operatorBoard, 13)
-            .onChange(new InstantCommand(
+            .onChange(NamedCommands.getCommand("Prepare to climb").alongWith(
+                new InstantCommand(() -> DataLogManager.log("BB13 (Prepare to Climb) engaged"))));
+                /*.onChange(new InstantCommand(
                 () -> m_algaeSubsystem.TogglePickup()).alongWith(
-                    new InstantCommand(() -> DataLogManager.log("BB13 (AlgaeTogglePickup) pressed"))));
+                    new InstantCommand(() -> DataLogManager.log("BB13 (AlgaeTogglePickup) pressed"))));*/
+
+        new JoystickButton(m_operatorBoard, 21)
+            .onTrue(NamedCommands.getCommand("Climb").alongWith(
+                new InstantCommand(() -> DataLogManager.log("BB21 (Climbing"))));
+                /*() -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed), m_manipulator).alongWith(
+                    new InstantCommand(() -> DataLogManager.log("BB21 (DischargeCoral) pressed"))));*/
+        
 
         new JoystickButton(m_operatorBoard, 3)
             .onTrue(NamedCommands.getCommand("AlgaeReefPickupOne").alongWith(
@@ -282,11 +306,7 @@ public class RobotContainer {
             .onTrue(new IntakeCoralCommandClearJam(ManipulatorConstants.kManipulatorMedSpeed).alongWith(
                 new InstantCommand(() -> DataLogManager.log("BB15 (IntakeCoral) pressed"))));
 
-        new JoystickButton(m_operatorBoard, 21)
-            .onTrue(new InstantCommand(
-                () -> m_manipulator.RunManipulator(ManipulatorConstants.kManipulatorHighSpeed), m_manipulator).alongWith(
-                    new InstantCommand(() -> DataLogManager.log("BB21 (DischargeCoral) pressed"))));
-
+        
         new JoystickButton(m_operatorBoard, 19)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.StopManipulator(), m_manipulator).alongWith(
