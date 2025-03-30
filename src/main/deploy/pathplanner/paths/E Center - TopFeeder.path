@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7161885245901636,
-        "y": 5.427561475409837
+        "x": 3.4125,
+        "y": 5.819
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.526374373998839,
-        "y": 5.590259318773828
+        "x": 3.2226858494086756,
+        "y": 5.981697843363992
       },
       "isLocked": false,
       "linkedName": "E Center"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

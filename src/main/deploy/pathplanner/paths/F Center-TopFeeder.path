@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.238627049180328,
-        "y": 5.451536885245901
+        "x": 5.7,
+        "y": 6.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.719448966988549,
-        "y": 6.939079693465079
+        "x": 6.18082191780822,
+        "y": 7.487542808219177
       },
       "isLocked": false,
       "linkedName": "F Center"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

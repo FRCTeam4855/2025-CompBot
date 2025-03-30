@@ -209,6 +209,7 @@ public class DriveSubsystem extends Subsystem {
    * @return
    */
   private double getStdAngle() {
+    // (m_gyro.getAngle() + 180) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
     return (m_gyro.getAngle() + autoGyroOffset) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
@@ -484,34 +485,36 @@ private void drive(ChassisSpeeds speeds, boolean fieldRelative) {
       }
     );
 
-    boolean useMegaTag2 = true; //set to false to use MegaTag1
+    boolean useMegaTag2 = false; //set to false to use MegaTag1
     boolean doRejectUpdate = false;
     if(useMegaTag2 == false)
     {
       LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
       
-      if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
-      {
-        if(mt1.rawFiducials[0].ambiguity > .7)
+      if(mt1 != null) {
+        if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
+        {
+          if(mt1.rawFiducials[0].ambiguity > .7)
+          {
+            doRejectUpdate = true;
+          }
+          if(mt1.rawFiducials[0].distToCamera > 3)
+          {
+            doRejectUpdate = true;
+          }
+        }
+        if(mt1.tagCount == 0)
         {
           doRejectUpdate = true;
         }
-        if(mt1.rawFiducials[0].distToCamera > 3)
-        {
-          doRejectUpdate = true;
-        }
-      }
-      if(mt1.tagCount == 0)
-      {
-        doRejectUpdate = true;
-      }
 
-      if(!doRejectUpdate)
-      {
-        m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
-        m_poseEstimator.addVisionMeasurement(
+        if(!doRejectUpdate)
+        {
+          m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+          m_poseEstimator.addVisionMeasurement(
             mt1.pose,
             mt1.timestampSeconds);
+        }
       }
     }
     else if (useMegaTag2 == true)
@@ -522,16 +525,18 @@ private void drive(ChassisSpeeds speeds, boolean fieldRelative) {
       {
         doRejectUpdate = true;
       }
-      if(mt2.tagCount == 0)
-      {
-        doRejectUpdate = true;
-      }
-      if(!doRejectUpdate)
-      {
-        m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
-        m_poseEstimator.addVisionMeasurement(
+      if(mt2 != null) {
+        if(mt2.tagCount == 0)
+        {
+          doRejectUpdate = true;
+        }
+        if(!doRejectUpdate)
+        {
+          m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+          m_poseEstimator.addVisionMeasurement(
             mt2.pose,
             mt2.timestampSeconds);
+        }
       }
     }
   }

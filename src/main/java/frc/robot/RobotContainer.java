@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.LightsConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AlignToReefTagRelative;
-import frc.robot.commands.DriveWithAprilTagCommandOffset;
 import frc.robot.commands.IntakeCoralCommand;
 import frc.robot.commands.IntakeCoralCommandClearJam;
 import frc.robot.commands.IsElevatorAtSetpointCommand;
@@ -64,7 +64,6 @@ public class RobotContainer {
     public static boolean fieldOriented = false;
     public double speedMultiplier = OIConstants.kSpeedMultiplierDefault;
     private final SendableChooser<Command> autoChooser;
-    
 
     public RobotContainer() {
 
@@ -153,6 +152,7 @@ public class RobotContainer {
             ));
 
         NamedCommands.registerCommand("Prepare to climb", new SequentialCommandGroup(
+            new InstantCommand(() -> m_lights.setLEDs(LightsConstants.STROBE_RED)),
             new InstantCommand(() -> m_climberSubsystem.WinchRatchetSetPosition(1)),
             new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(1)),
             new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1)),
@@ -212,21 +212,21 @@ public class RobotContainer {
             .whileFalse(new InstantCommand( //Precise Driving Mode clear
                 () -> speedMultiplier=OIConstants.kSpeedMultiplierDefault));
 
+        // new JoystickButton(m_leftDriverController, OIConstants.kJS_LB)
+        //     .whileTrue(new DriveWithAprilTagCommandOffset(
+        //         m_leftDriverController, m_rightDriverController, true).alongWith(
+        //             new InstantCommand(() -> DataLogManager.log("L Driver JS_LB (DriveAprilTagL) pressed"))));
+
+        // new JoystickButton(m_leftDriverController, OIConstants.kJS_RB)
+        //     .whileTrue(new DriveWithAprilTagCommandOffset(
+        //         m_leftDriverController, m_rightDriverController, false).alongWith(
+        //             new InstantCommand(() -> DataLogManager.log("L Driver JS_RB (DriveAprilTagR) pressed"))));
+
         new JoystickButton(m_leftDriverController, OIConstants.kJS_LB)
-            .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_leftDriverController, m_rightDriverController, true).alongWith(
-                    new InstantCommand(() -> DataLogManager.log("L Driver JS_LB (DriveAprilTagL) pressed"))));
-
-        new JoystickButton(m_leftDriverController, OIConstants.kJS_RB)
-            .whileTrue(new DriveWithAprilTagCommandOffset(
-                m_leftDriverController, m_rightDriverController, false).alongWith(
-                    new InstantCommand(() -> DataLogManager.log("L Driver JS_RB (DriveAprilTagR) pressed"))));
-
-        new JoystickButton(m_rightDriverController, OIConstants.kJS_LBLB)
             .onTrue(NamedCommands.getCommand("Align Left Reef Branch").alongWith(
                 new InstantCommand(() -> DataLogManager.log("R Driver LBLB (Align L Reef) pressed"))));
 
-        new JoystickButton(m_rightDriverController, OIConstants.kJS_RBRB)
+        new JoystickButton(m_leftDriverController, OIConstants.kJS_RB)
             .onTrue(NamedCommands.getCommand("Align Right Reef Branch").alongWith(
                 new InstantCommand(() -> DataLogManager.log("R Driver RBRB (Align R Reef) pressed"))));
 
