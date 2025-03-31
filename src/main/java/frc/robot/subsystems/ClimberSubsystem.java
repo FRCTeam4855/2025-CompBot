@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.RelativeEncoder;
@@ -20,11 +21,16 @@ public class ClimberSubsystem extends Subsystem {
     public SparkMax m_winchSpark, m_rotateSpark;
     public RelativeEncoder m_winchEncoder, m_rotateEncoder;
     public SparkClosedLoopController m_winchPIDController, m_rotatePIDController;
+    private SendableChooser<Integer> climberStartPos = new SendableChooser<>();
 
     @Override
     public void robotInit() {
         DataLogManager.log("ClimberSubsystem in robotInit");
         WinchRatchetSetPosition(1);
+        ClimberIntakeToSetpoint(0);
+        SmartDashboard.putData("ClimberPosChooser", climberStartPos);
+        climberStartPos.addOption("Match", 3);
+        climberStartPos.addOption("Practice", 2);
     }
 
     @Override
@@ -35,6 +41,7 @@ public class ClimberSubsystem extends Subsystem {
     @Override
     public void teleopInit() {
         DataLogManager.log("ClimberSubsystem in teleopInit");
+        ClimberWinchToSetpoint(climberStartPos.getSelected());
     }
 
     private static ClimberSubsystem mInstance;

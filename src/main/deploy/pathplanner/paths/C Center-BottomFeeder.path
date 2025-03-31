@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.596311475409836,
-        "y": 2.442622950819673
+        "x": 3.2175,
+        "y": 1.9482499999999994
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.398973421065755,
-        "y": 2.289137797440942
+        "x": 3.020161945655919,
+        "y": 1.7947648466212685
       },
       "isLocked": false,
       "linkedName": "C Center"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

@@ -11,41 +11,41 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
+          "data": {
+            "pathName": "BottomWallStart-B Center"
+          }
+        },
+        {
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "BottomWallStart-B Center"
-                }
-              },
-              {
-                "type": "sequential",
+                "type": "race",
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
+                      "type": "named",
                       "data": {
-                        "waitTime": 1.4
+                        "name": "Align Left Reef Branch"
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "Level 4"
+                        "waitTime": 10.0
                       }
                     }
                   ]
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level 4"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Left Reef Branch"
           }
         },
         {
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BCenter-BottomFeeder"
+                  "pathName": "B-BottomFeeder"
                 }
               },
               {
@@ -86,7 +86,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -96,22 +96,9 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.4
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Level 4"
-                      }
-                    }
-                  ]
+                  "name": "Align Right Reef Branch"
                 }
               }
             ]
@@ -120,7 +107,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Align Right Reef Branch"
+            "name": "Level 4"
           }
         },
         {
@@ -136,7 +123,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C Center-BottomFeeder"
+                  "pathName": "C Right-BottomFeeder"
                 }
               },
               {
@@ -146,6 +133,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Go To Feeder Station"
           }
         },
         {

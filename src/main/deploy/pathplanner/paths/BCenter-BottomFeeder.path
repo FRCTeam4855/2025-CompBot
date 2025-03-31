@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.3105532786885234,
-        "y": 2.5744877049180332
+        "x": 5.7,
+        "y": 2.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.5132172131147525,
-        "y": 1.9173565573770501
+        "x": 5.902663934426229,
+        "y": 1.3428688524590169
       },
       "isLocked": false,
       "linkedName": "B Center"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
