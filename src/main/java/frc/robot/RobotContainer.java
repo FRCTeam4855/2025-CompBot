@@ -161,6 +161,7 @@ public class RobotContainer {
         );
 
         NamedCommands.registerCommand("Climb", new SequentialCommandGroup(
+            new InstantCommand(() -> m_lights.setLEDs(LightsConstants.RED)),
             new InstantCommand(() -> m_climberSubsystem.WinchRatchetSetPosition(0)),
             new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)),
             new InstantCommand(() -> DataLogManager.log("Climbing"))

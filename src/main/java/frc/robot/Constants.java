@@ -175,7 +175,7 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final double[] elevatorPos = { 0.0, 0.75, 15.5, 33.0, 59.0, 45.0, 4.0, 1.0 };
+    public static final double[] elevatorPos = { 0.0, 0.75, 15.5, 33.0, 59.75, 45.0, 4.0, 1.0 };
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
     public static final double kElevatorConstantsGravityFF = .6;
@@ -319,7 +319,7 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final double kWinchRatchetReleased = 0.0;
     public static final double kWinchRatchetEngaged = 0.25;
-    public static final double[] climberPos = { 150.0, 500.0, 0.0, 300.0 };
+    public static final double[] climberPos = { 140.0, 500.0, 0.0, 300.0 };
     public static final double[] rotatePos = { 0.5, -8 };
     public static final double[] ratchetPos = { kWinchRatchetEngaged, kWinchRatchetReleased};
     public static final int kWinchCanId = 16;

@@ -21,9 +21,22 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "Align Left Reef Branch"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Left Reef Branch"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 10.0
+                      }
+                    }
+                  ]
                 }
               },
               {
