@@ -18,7 +18,7 @@ public class IsElevatorAtSetpointCommand extends Command {
 
     @Override
     public void initialize() {
-        goalPosition = ElevatorConstants.elevatorPos[goalSetpoint];
+        goalPosition = ElevatorConstants.elevatorPos[goalSetpoint] + m_elevatorSubsystem.elevatorAdjustment;
     }
 
     @Override 

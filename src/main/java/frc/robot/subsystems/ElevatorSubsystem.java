@@ -24,6 +24,7 @@ public class ElevatorSubsystem extends Subsystem {
     public final SparkClosedLoopController rightPIDController;
     public final SparkClosedLoopController leftPIDController;
     public boolean sensorOverride = false;
+    public double elevatorAdjustment = 0;
 
     @Override
     public void robotInit() {
@@ -76,9 +77,17 @@ public class ElevatorSubsystem extends Subsystem {
         SmartDashboard.putNumber("Left Elevator Ext Pos", extEncoder.getPosition());
     }
 
+    public void AdjustElevator(double offset) {
+        elevatorAdjustment = elevatorAdjustment + offset;
+    }
+
+    public void ElevatorAdjustReset() {
+        elevatorAdjustment = 0;
+    }
+
     public void ElevatorToSetpoint(int goalSetpoint) {
         if (m_manipulator.isElevatorClear() || sensorOverride) {
-        rightPIDController.setReference(ElevatorConstants.elevatorPos[goalSetpoint], SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0, ElevatorConstants.kElevatorConstantsGravityFF, ArbFFUnits.kVoltage);
+        rightPIDController.setReference(ElevatorConstants.elevatorPos[goalSetpoint] + elevatorAdjustment, SparkFlex.ControlType.kPosition, ClosedLoopSlot.kSlot0, ElevatorConstants.kElevatorConstantsGravityFF, ArbFFUnits.kVoltage);
         } else {
             System.out.println("! ELEVATOR NOT CLEAR !");
         }

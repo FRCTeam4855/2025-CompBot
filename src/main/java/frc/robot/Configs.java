@@ -174,7 +174,7 @@ public final class Configs {
                     .positionConversionFactor(1);
                 climberWinchConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                    .pidf(1, 0, 0, 0)
+                    .pidf(.5, 0, 0, 0)
                     .outputRange(-1, 1);
 
                 //CLIMBER INTAKE ROTATION MOTOR CONFIG
