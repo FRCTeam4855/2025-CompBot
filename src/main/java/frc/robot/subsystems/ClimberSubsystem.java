@@ -29,8 +29,8 @@ public class ClimberSubsystem extends Subsystem {
         WinchRatchetSetPosition(1);
         ClimberIntakeToSetpoint(0);
         SmartDashboard.putData("ClimberPosChooser", climberStartPos);
+        climberStartPos.setDefaultOption("Practice", 2);
         climberStartPos.addOption("Match", 3);
-        climberStartPos.addOption("Practice", 2);
     }
 
     @Override
