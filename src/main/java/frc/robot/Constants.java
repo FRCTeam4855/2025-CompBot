@@ -10,6 +10,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+
 import com.pathplanner.lib.config.PIDConstants;
 
 /**
@@ -326,4 +328,18 @@ public final class Constants {
     public static final int kRotateCanId = 17;
     public static final int kWinchRatchetServo = 0;
   }
+
+  public static final class PowerSubsystemConstants {
+    public static final int kPDP_CAN_ID = 9;
+    public static final ModuleType kPDP_ModuleType = ModuleType.kRev;
+  }
+
+  public static final class LimelightConstants {
+    public static final int[] kAllIDs = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 };
+    public static final int[] kRedCenterAutoIDs = { 6, 8, 10 };
+    public static final int[] kRedSideAutoIDs = { 6, 8, 9, 11 };
+    public static final int[] kBlueCenterAutoIDs = { 17, 19, 21 };
+    public static final int[] kBlueSideAutoIDs = { 17, 19, 20, 22 };
+  }
 }
+

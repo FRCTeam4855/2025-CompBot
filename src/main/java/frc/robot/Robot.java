@@ -20,6 +20,7 @@ import frc.robot.subsystems.AlgaeSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ManipulatorSubsystem;
+import frc.robot.subsystems.PowerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LightsSubsystem;
 import frc.robot.subsystems.Limelight;
@@ -61,6 +62,8 @@ public class Robot extends TimedRobot {
     m_allSubsystems.add(ManipulatorSubsystem.getInstance());
     m_allSubsystems.add(ElevatorSubsystem.getInstance());
     m_allSubsystems.add(ClimberSubsystem.getInstance());
+    m_allSubsystems.add(PowerSubsystem.getInstance());
+    
 
     m_allSubsystems.forEach(subsystem -> subsystem.robotInit());
   }
