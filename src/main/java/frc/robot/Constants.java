@@ -129,7 +129,7 @@ public final class Constants {
     public static final int kOperatorControllerPort1 = 2;
     public static final int kOperatorControllerPort2 = 3;
     public static final double kDriveDeadband = 0.1;
-    public static final double kRotateScale = 0.5;
+    public static final double kRotateScale = 0.75;
     public static final int kJS_Trigger = 1;  //KJS = Konstants Joystick
     public static final int kJS_RB = 4;
     public static final int kJS_BB = 2;
@@ -175,7 +175,7 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final double[] elevatorPos = { 0.0, 0.75, 15.5, 33.0, 59.75, 45.0, 4.0, 1.0 };
+    public static final double[] elevatorPos = { 0.0, 0.75, 15.5, 33.0, 58.0, 45.0, 4.0, 1.0 };
     public static final int kRightElevatorCanId = 9;
     public static final int kLeftElevatorCanId = 10;
     public static final double kElevatorConstantsGravityFF = .6;
@@ -307,9 +307,9 @@ public final class Constants {
 	  //public static final double ROT_REEF_ALIGNMENT_P = 0.058;
     public static final double ROT_REEF_ALIGNMENT_P = 0.022;
 	  public static final double ROT_SETPOINT_REEF_ALIGNMENT = 0;  // Rotation
-	  public static final double ROT_TOLERANCE_REEF_ALIGNMENT = 0.65;
-	  public static final double X_SETPOINT_REEF_ALIGNMENT = -0.3;  // Vertical pose
-	  public static final double X_TOLERANCE_REEF_ALIGNMENT = 0.5;
+	  public static final double ROT_TOLERANCE_REEF_ALIGNMENT = 1.5;
+	  public static final double X_SETPOINT_REEF_ALIGNMENT = -0.5;  // Vertical pose
+	  public static final double X_TOLERANCE_REEF_ALIGNMENT = 0.2;
 	  public static final double Y_SETPOINT_REEF_ALIGNMENT = 0.165;  // Horizontal pose
 	  public static final double Y_TOLERANCE_REEF_ALIGNMENT = 0.02;
 	  public static final double DONT_SEE_TAG_WAIT_TIME = 0.2;
@@ -318,8 +318,8 @@ public final class Constants {
   
   public static final class ClimberConstants {
     public static final double kWinchRatchetReleased = 0.0;
-    public static final double kWinchRatchetEngaged = 0.25;
-    public static final double[] climberPos = { 125.0, 500.0, 0.0, 300.0 };
+    public static final double kWinchRatchetEngaged = 0.6;
+    public static final double[] climberPos = { 135.0, 500.0, 0.0, 300.0 };
     public static final double[] rotatePos = { 0.1, -14 };
     public static final double[] ratchetPos = { kWinchRatchetEngaged, kWinchRatchetReleased};
     public static final int kWinchCanId = 16;

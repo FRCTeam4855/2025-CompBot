@@ -60,7 +60,9 @@ public class AlignToReefTagRelative extends Command {
         SmartDashboard.putNumber("y", postions[0]);
         double ySpeed = -yController.calculate(postions[0]);
         SmartDashboard.putNumber("yspeed", ySpeed);
+        SmartDashboard.putNumber("Raw rot", postions[4]);
         double rotValue = -rotController.calculate(postions[4]);
+        SmartDashboard.putNumber("rot", rotValue);
 
         if(LimelightHelpers.getTV("limelight")) {
             this.dontSeeTagTimer.reset();

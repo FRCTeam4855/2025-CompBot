@@ -237,7 +237,7 @@ public class RobotContainer {
         new JoystickButton(m_rightDriverController, 14)
             .onTrue(new InstantCommand(() -> m_elevatorSubsystem.AdjustElevator(-0.5)));
 
-        new JoystickButton(m_rightDriverController, 14)
+        new JoystickButton(m_rightDriverController, 15)
             .onTrue(new InstantCommand(() -> m_elevatorSubsystem.ElevatorAdjustReset()));
 
         //Operator Controls

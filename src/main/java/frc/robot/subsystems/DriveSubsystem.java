@@ -26,6 +26,8 @@ import frc.utils.SwerveUtils;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -209,7 +211,7 @@ public class DriveSubsystem extends Subsystem {
    * @return
    */
   private double getStdAngle() {
-    // (m_gyro.getAngle() + 180) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    //return (m_gyro.getAngle() + 180) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
     return (m_gyro.getAngle() + autoGyroOffset) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 
@@ -473,6 +475,9 @@ private void drive(ChassisSpeeds speeds, boolean fieldRelative) {
   public void drive(Translation2d translation, double rot, boolean fieldRelative) {
     drive(translation.getX(), translation.getY(), rot, fieldRelative, true);
   }
+
+  private int mt2GyroOffset;
+
   /** Updates the field relative position of the robot. */
   public void updateOdometry() {
     m_poseEstimator.update(
@@ -482,13 +487,12 @@ private void drive(ChassisSpeeds speeds, boolean fieldRelative) {
         m_frontRight.getPosition(),
         m_rearLeft.getPosition(),
         m_rearRight.getPosition()
-      }
+      } 
     );
-
-    boolean useMegaTag2 = false; //set to false to use MegaTag1
+    
+    boolean useMegaTag2 = true; //set to false to use MegaTag1
     boolean doRejectUpdate = false;
-    if(useMegaTag2 == false)
-    {
+    if (useMegaTag2 == false) {
       LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
       
       if(mt1 != null) {
@@ -519,7 +523,22 @@ private void drive(ChassisSpeeds speeds, boolean fieldRelative) {
     }
     else if (useMegaTag2 == true)
     {
-      LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+      var alliance = DriverStation.getAlliance();
+      if (alliance.isPresent()) {
+        if(alliance.get() == DriverStation.Alliance.Red){
+          //System.out.println("Driver's station set to RED");
+          mt2GyroOffset = 0;
+        } else {
+          //System.out.println("Driver's station set to BLUE");
+          mt2GyroOffset = 180;
+        }
+      } /*else {
+        System.out.println("No Alliance color set");
+        //mt2GyroOffset = 0;
+      }*/
+
+      //LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+      LimelightHelpers.SetRobotOrientation("limelight", (getStdAngle() + mt2GyroOffset), 0, 0, 0, 0, 0);
       LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
       if(Math.abs(m_gyro.getRate()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
       {
