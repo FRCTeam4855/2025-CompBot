@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.LightsConstants;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.ManipulatorConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AlignToReefTagRelative;
@@ -52,6 +53,7 @@ public class RobotContainer {
     public final DriveSubsystem m_robotDrive = DriveSubsystem.getInstance();
     public final AlgaeSubsystem m_algaeSubsystem = AlgaeSubsystem.getInstance();
     private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance();
+    public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
     
     // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
@@ -141,31 +143,37 @@ public class RobotContainer {
         NamedCommands.registerCommand("Align Left Reef Branch", new SequentialCommandGroup(
             new AlignToReefTagRelative(false),
             new PushAgainstElement(.25, 0.25),
-            new InstantCommand(() -> DataLogManager.log("Left reef alignment completed"))
-                    ));
+            new InstantCommand(() -> DataLogManager.log("Left reef alignment completed"))));
 
         NamedCommands.registerCommand("Align Right Reef Branch", new SequentialCommandGroup(
             new AlignToReefTagRelative(true),
             new PushAgainstElement(0.25, 0.25),
-            new InstantCommand(() -> DataLogManager.log("Right reef alignment completed"))
-            ));
+            new InstantCommand(() -> DataLogManager.log("Right reef alignment completed"))));
 
         NamedCommands.registerCommand("Prepare to climb", new SequentialCommandGroup(
             new InstantCommand(() -> m_lights.setLEDs(LightsConstants.STROBE_RED)),
             new InstantCommand(() -> m_climberSubsystem.WinchRatchetSetPosition(1)),
             new InstantCommand(() -> m_climberSubsystem.ClimberIntakeToSetpoint(1)),
             new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(1)),
-            new InstantCommand(() -> DataLogManager.log("Climber preparation Completed"))
-            )
-        );
+            new InstantCommand(() -> DataLogManager.log("Climber preparation Completed"))));
 
         NamedCommands.registerCommand("Climb", new SequentialCommandGroup(
             new InstantCommand(() -> m_lights.setLEDs(LightsConstants.RED)),
             new InstantCommand(() -> m_climberSubsystem.WinchRatchetSetPosition(0)),
             new InstantCommand(() -> m_climberSubsystem.ClimberWinchToSetpoint(0)),
-            new InstantCommand(() -> DataLogManager.log("Climbing"))
-            )
-        );
+            new InstantCommand(() -> DataLogManager.log("Climbing"))));
+
+        NamedCommands.registerCommand("Filter Limelight Red Center", new SequentialCommandGroup(
+            new InstantCommand(() -> m_limelight.setFilters(LimelightConstants.kRedCenterAutoIDs))));
+
+        NamedCommands.registerCommand("Filter Limelight Red Side", new SequentialCommandGroup(
+            new InstantCommand(() -> m_limelight.setFilters(LimelightConstants.kRedSideAutoIDs))));
+
+        NamedCommands.registerCommand("Filter Limelight Blue Center", new SequentialCommandGroup(
+            new InstantCommand(() -> m_limelight.setFilters(LimelightConstants.kBlueCenterAutoIDs))));
+
+        NamedCommands.registerCommand("Filter Limelight Blue Side", new SequentialCommandGroup(
+            new InstantCommand(() -> m_limelight.setFilters(LimelightConstants.kBlueSideAutoIDs))));
 
         //Take up any space between the robot and the human player station
         NamedCommands.registerCommand("Go To Feeder Station", 
@@ -188,25 +196,26 @@ public class RobotContainer {
 
         //Driver Controls
 
-       new JoystickButton(m_leftDriverController,OIConstants.kJS_BB)
+        new JoystickButton(m_leftDriverController,OIConstants.kJS_BB)
             .whileTrue(new RunCommand(
                 () -> m_robotDrive.setX(),
                 m_robotDrive).alongWith(
-                    new InstantCommand(() -> DataLogManager.log("L Driver JS_BB (SetX) pressed"))));
+                    new InstantCommand(() -> DataLogManager.log("L Driver JS_BB (SetX) pressed"))).alongWith(
+                    new InstantCommand(() -> m_lights.setLEDs(LightsConstants.C1_AND_C2_SINELON))));
 
-        new JoystickButton(m_rightDriverController, OIConstants.kJS_RB).debounce(0.1)  //Gyro reset
+        new JoystickButton(m_rightDriverController, OIConstants.kJS_RB).debounce(0.1) //Gyro reset
             .whileTrue(new InstantCommand(
                 () -> m_robotDrive.zeroHeading(),
                 m_robotDrive).alongWith(
                     new InstantCommand(() -> DataLogManager.log("R Driver JS_RB (Zero gyro) pressed")))); 
 
-        new JoystickButton(m_rightDriverController, OIConstants.kJS_LB)  //Field oriented toggle
+        new JoystickButton(m_rightDriverController, OIConstants.kJS_LB) //Field oriented toggle
             .whileTrue(new InstantCommand(
                 () -> toggleFieldOriented()).alongWith(
                     new InstantCommand(() -> DataLogManager.log("R Driver JS_LB (Field Oriented) pressed"))));
 
         new JoystickButton(m_leftDriverController, OIConstants.kJS_Trigger)  
-            .whileTrue(new InstantCommand(  //Precise Driving Mode set
+            .whileTrue(new InstantCommand( //Precise Driving Mode set
                 () -> speedMultiplier=OIConstants.kSpeedMultiplierPrecise).alongWith(
                     new InstantCommand(() -> DataLogManager.log("L Driver Trigger (Precision Driving) pressed")))) 
             .whileFalse(new InstantCommand( //Precise Driving Mode clear
@@ -236,7 +245,7 @@ public class RobotContainer {
         new JoystickButton(m_rightDriverController, 14)
             .onTrue(new InstantCommand(() -> m_elevatorSubsystem.AdjustElevator(-0.5)));
 
-        new JoystickButton(m_rightDriverController, 14)
+        new JoystickButton(m_rightDriverController, 15)
             .onTrue(new InstantCommand(() -> m_elevatorSubsystem.ElevatorAdjustReset()));
 
         //Operator Controls
@@ -295,7 +304,6 @@ public class RobotContainer {
             .onTrue(new IntakeCoralCommandClearJam(ManipulatorConstants.kManipulatorMedSpeed).alongWith(
                 new InstantCommand(() -> DataLogManager.log("BB15 (IntakeCoral) pressed"))));
 
-        
         new JoystickButton(m_operatorBoard, 19)
             .onTrue(new InstantCommand(
                 () -> m_manipulator.StopManipulator(), m_manipulator).alongWith(
