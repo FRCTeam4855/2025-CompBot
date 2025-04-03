@@ -35,10 +35,10 @@ public class PowerSubsystem extends Subsystem {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Battery Voltage", m_pdp.getVoltage());
+        /*SmartDashboard.putNumber("Battery Voltage", m_pdp.getVoltage());
         SmartDashboard.putNumber("Total Current", m_pdp.getTotalCurrent());
         for (int i = 0; i < m_pdbNumChannels; i++) {
             SmartDashboard.putNumber("Channel " + i + " Current", m_pdp.getCurrent(i));
-        }
+        }*/
     }
 }
