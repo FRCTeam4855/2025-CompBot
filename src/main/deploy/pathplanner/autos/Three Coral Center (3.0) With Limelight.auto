@@ -11,12 +11,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "BottomWallStart-B Center"
-          }
-        },
-        {
           "type": "sequential",
           "data": {
             "commands": [
@@ -27,7 +21,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Align Left Reef Branch"
+                        "name": "Align Right Reef Branch"
                       }
                     },
                     {
@@ -61,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "B-BottomFeeder"
+                  "pathName": "ARight-TopFeeder"
                 }
               },
               {
@@ -92,13 +86,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BottomFeeder-C Center"
+                  "pathName": "TopFeeder - E Center"
                 }
               },
               {
-                "type": "named",
+                "type": "race",
                 "data": {
-                  "name": "Align Right Reef Branch"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Left Reef Branch"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 10.0
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -123,7 +130,82 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "C Right-BottomFeeder"
+                  "pathName": "E Left - TopFeeder"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Level 0"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Go To Feeder Station"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "TopFeeder - E Center"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Right Reef Branch"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 10.0
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Level 4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DeliverCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "E Right-TopFeeder"
                 }
               },
               {
