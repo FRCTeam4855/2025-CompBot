@@ -300,7 +300,7 @@ public final class Constants {
     public final static double DARK_GRAY = .97;
     public final static double BLACK = .99;
   }
-  
+
   public static final class ReefAlignConstants {
     //public static final double X_REEF_ALIGNMENT_P = 2.5;
 	  //public static final double Y_REEF_ALIGNMENT_P = 4.5;
@@ -317,12 +317,12 @@ public final class Constants {
 	  public static final double DONT_SEE_TAG_WAIT_TIME = 0.2;
 	  public static final double POSE_VALIDATION_TIME = 0.3;
   }
-  
+
   public static final class ClimberConstants {
     public static final double kWinchRatchetReleased = 0.0;
     public static final double kWinchRatchetEngaged = 0.6;
-    public static final double[] climberPos = { 135.0, 500.0, 0.0, 300.0 };
-    public static final double[] rotatePos = { 0.1, -14 };
+    public static final double[] climberPos = { 134.0, 500.0, 0.0, 300.0 };
+    public static final double[] rotatePos = { 0.25, -14 };
     public static final double[] ratchetPos = { kWinchRatchetEngaged, kWinchRatchetReleased};
     public static final int kWinchCanId = 16;
     public static final int kRotateCanId = 17;
@@ -330,7 +330,7 @@ public final class Constants {
   }
 
   public static final class PowerSubsystemConstants {
-    public static final int kPDP_CAN_ID = 9;
+    public static final int kPDP_CAN_ID = 15;
     public static final ModuleType kPDP_ModuleType = ModuleType.kRev;
   }
 

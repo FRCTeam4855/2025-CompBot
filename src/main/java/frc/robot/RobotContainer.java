@@ -53,7 +53,7 @@ public class RobotContainer {
     public final DriveSubsystem m_robotDrive = DriveSubsystem.getInstance();
     public final AlgaeSubsystem m_algaeSubsystem = AlgaeSubsystem.getInstance();
     private final ClimberSubsystem m_climberSubsystem = ClimberSubsystem.getInstance();
-    public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
+    //public final PowerDistribution m_pdp = new PowerDistribution(9, ModuleType.kRev);
     
     // The driver controllers
     Joystick m_leftDriverController = new Joystick(OIConstants.kLeftDriverControllerPort);
