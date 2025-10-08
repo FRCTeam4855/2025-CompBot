@@ -39,6 +39,7 @@ public class ManipulatorSubsystem extends Subsystem {
     @Override
         public void teleopInit() {
         DataLogManager.log("ManipulatorSubsystem in teleopInit");
+        StopManipulator();
     }
 
     private static ManipulatorSubsystem mInstance;
