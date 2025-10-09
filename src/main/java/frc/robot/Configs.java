@@ -161,6 +161,7 @@ public final class Configs {
     public static final class ClimberSubsystem {
 
         public static final SparkMaxConfig climberWinchConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig climberWinchConfigSetup = new SparkMaxConfig();
         public static final SparkMaxConfig climberRotateConfig = new SparkMaxConfig();
 
         static {
@@ -169,10 +170,23 @@ public final class Configs {
                     .idleMode(IdleMode.kCoast)
                     .inverted(true)
                     .closedLoopRampRate(.05)
-                    .smartCurrentLimit(40);
+                    .smartCurrentLimit(10);
                 climberWinchConfig.encoder
                     .positionConversionFactor(1);
                 climberWinchConfig.closedLoop
+                    .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                    .pidf(.5, 0, 0, 0)
+                    .outputRange(-1, 1);
+
+
+                climberWinchConfigSetup
+                    .idleMode(IdleMode.kCoast)
+                    .inverted(true)
+                    .closedLoopRampRate(.05)
+                    .smartCurrentLimit(2);
+                climberWinchConfigSetup.encoder
+                    .positionConversionFactor(1);
+                climberWinchConfigSetup.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                     .pidf(.5, 0, 0, 0)
                     .outputRange(-1, 1);

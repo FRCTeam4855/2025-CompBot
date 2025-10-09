@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkBase.PersistMode;
 
 import frc.robot.Configs;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.commands.SetClimberZeroCommand;
 
 public class ClimberSubsystem extends Subsystem {
 
@@ -41,7 +42,8 @@ public class ClimberSubsystem extends Subsystem {
     @Override
     public void teleopInit() {
         DataLogManager.log("ClimberSubsystem in teleopInit");
-        ClimberWinchToSetpoint(climberStartPos.getSelected());
+        new SetClimberZeroCommand().schedule();
+        //ClimberWinchToSetpoint(climberStartPos.getSelected());
     }
 
     private static ClimberSubsystem mInstance;
