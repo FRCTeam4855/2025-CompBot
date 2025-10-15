@@ -14,7 +14,7 @@ public class SetClimberZeroCommand extends Command {
 
     public void initialize() {
         // Configs.ClimberSubsystem.climberWinchConfig.smartCurrentLimit(2);
-        m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfigSetup, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig_Setup, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_climber.ClimberWinchDriveDirect(-.25);
     }
 
@@ -23,13 +23,13 @@ public class SetClimberZeroCommand extends Command {
     }
 
     public boolean isFinished() {
-        //if (m_climber.m_winchSpark.getOutputCurrent() >= 4) {
-          //  m_climber.ClimberWinchDriveDirect(0);
-            //m_climber.m_winchEncoder.setPosition(0);
-            //Configs.ClimberSubsystem.climberWinchConfig.smartCurrentLimit(40);
-            //return true;
-        //} else {
+        if (m_climber.m_winchSpark.getOutputCurrent() >= 12) {
+            m_climber.ClimberWinchDriveDirect(0);
+            m_climber.m_winchEncoder.setPosition(0);
+            m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+            return true;
+        } else {
             return false;
-        //}
+        }
     }
 }

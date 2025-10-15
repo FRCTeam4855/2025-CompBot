@@ -54,7 +54,6 @@ public class ElevatorSubsystem extends Subsystem {
   
 
     public ElevatorSubsystem() {
-
         rightSpark = new SparkFlex(ElevatorConstants.kRightElevatorCanId, MotorType.kBrushless);
         leftSpark = new SparkFlex(ElevatorConstants.kLeftElevatorCanId, MotorType.kBrushless);
         rightEncoder = rightSpark.getEncoder();
