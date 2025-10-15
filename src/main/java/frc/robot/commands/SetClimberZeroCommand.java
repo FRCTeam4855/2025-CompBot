@@ -14,7 +14,7 @@ public class SetClimberZeroCommand extends Command {
 
     public void initialize() {
         // Configs.ClimberSubsystem.climberWinchConfig.smartCurrentLimit(2);
-        m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+        m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfigSetup, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_climber.ClimberWinchDriveDirect(-.25);
     }
 
