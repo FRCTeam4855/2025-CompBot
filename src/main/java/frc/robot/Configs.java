@@ -170,7 +170,7 @@ public final class Configs {
                     .idleMode(IdleMode.kCoast)
                     .inverted(true)
                     .closedLoopRampRate(.05)
-                    .smartCurrentLimit(10);
+                    .smartCurrentLimit(40);
                 climberWinchConfig.encoder
                     .positionConversionFactor(1);
                 climberWinchConfig.closedLoop

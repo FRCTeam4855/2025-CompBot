@@ -13,8 +13,8 @@ public class SetClimberZeroCommand extends Command {
     private ClimberSubsystem m_climber = ClimberSubsystem.getInstance();
 
     public void initialize() {
-        // Configs.ClimberSubsystem.climberWinchConfig.smartCurrentLimit(2);
-        m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig_Setup, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        Configs.ClimberSubsystem.climberWinchConfig.smartCurrentLimit(3);
+        m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         m_climber.ClimberWinchDriveDirect(-.25);
     }
 
@@ -26,7 +26,10 @@ public class SetClimberZeroCommand extends Command {
         if (m_climber.m_winchSpark.getOutputCurrent() >= 12) {
             m_climber.ClimberWinchDriveDirect(0);
             m_climber.m_winchEncoder.setPosition(0);
+            
+            Configs.ClimberSubsystem.climberWinchConfig.smartCurrentLimit(40);
             m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+            //m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
             return true;
         } else {
             return false;
