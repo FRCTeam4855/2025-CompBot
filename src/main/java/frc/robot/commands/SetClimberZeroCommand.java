@@ -25,11 +25,9 @@ public class SetClimberZeroCommand extends Command {
     public boolean isFinished() {
         if (m_climber.m_winchSpark.getOutputCurrent() >= 12) {
             m_climber.ClimberWinchDriveDirect(0);
-            m_climber.m_winchEncoder.setPosition(0);
-            
+            m_climber.m_winchEncoder.setPosition(0);            
             Configs.ClimberSubsystem.climberWinchConfig.smartCurrentLimit(40);
             m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-            //m_climber.m_winchSpark.configure(Configs.ClimberSubsystem.climberWinchConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
             return true;
         } else {
             return false;
