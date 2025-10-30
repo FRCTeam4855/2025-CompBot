@@ -73,8 +73,8 @@ public final class Configs {
                     .positionConversionFactor(1);
                 rightElevatorConfig.closedLoop
                     .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-                    .pidf(0.25, 0, 0, 0)
-                    .outputRange(-.4, 1)
+                    .pidf(.25, 0, 0, 0)
+                    .outputRange(-.85, 1)
                     .positionWrappingEnabled(false);
 
                 //LEFT ELEVATOR CONFIG
@@ -89,8 +89,8 @@ public final class Configs {
                 leftElevatorConfig.externalEncoder
                     .positionConversionFactor(6);
                 leftElevatorConfig.closedLoop
-                    .pidf(0.25, 0, 0, 0)
-                    .outputRange(-.4, 1)
+                    .pidf(.25, 0, 0, 0)
+                    .outputRange(-.85, 1)
                     .positionWrappingEnabled(false);
         }
     }
